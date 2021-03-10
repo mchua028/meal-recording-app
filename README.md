@@ -44,10 +44,10 @@ Pixel 3a API 30x86
 ## Important Java classes
 directory: MealTracker/app/src/main/java/com.example.mealtracker
     - files were used to connect the various fragments (pages):
-      - main thing to connect all fragments: MainActivity
-      - fragments: accountAndSettings, foodRecommendations, myCalories, myMeals 
+        - main thing to connect all fragments: MainActivity
+        - fragments: accountAndSettings, foodRecommendations, myCalories, myMeals 
     - files used for buttons etc for login and register:
-      - GoogleLogin, Login, LoginOrRegister, Register
+        - GoogleLogin, Login, LoginOrRegister, Register
   
   
   
