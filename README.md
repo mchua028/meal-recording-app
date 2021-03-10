@@ -1,7 +1,8 @@
 # CZ2006-Project
 
 
-# How to download directly into Android Studio
+
+## How to download directly into Android Studio
 Note: I have not tried this myself because I only uploaded before
 1. File>Settings>Git
   - Add "Path to Git executable: *the suggested path*" at the top
@@ -16,7 +17,8 @@ Note: I have not tried this myself because I only uploaded before
 4. END
 
 
-# How to upload to Github from Android Studio
+
+## How to upload to Github from Android Studio
 After logging in and doing all of the above steps 1 and 2,
 1. At the top right bar on your Android Studio screen, you can see Git followed by an arrow and a tick
 2. Click the tick to commit, select relevant files and add a really short Commit message (e.g. Changed *something*)
@@ -28,8 +30,10 @@ After logging in and doing all of the above steps 1 and 2,
 4. END idk if u need to do anything after that...
 
 
+
 ## Emulator I used to run app: 
 Pixel 3a API 30x86
+
 
 
 ## Important Java classes
@@ -39,6 +43,7 @@ directory: MealTracker/app/src/main/java/com.example.mealtracker
   - fragments: accountAndSettings, foodRecommendations, myCalories, myMeals 
 - files used for buttons etc for login and register:
   - GoogleLogin, Login, LoginOrRegister, Register
+  
   
   
 ## xml classes - for aesthetic purposes, shifting around/adding/deleting attributes and textboxes
