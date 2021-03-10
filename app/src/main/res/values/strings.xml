@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Meal Tracker</string>
+    <string name="login_to_your_account">Login to your account</string>
+    <string name="google_sign_in">Google Sign In</string>
+    <string name="create_account">CREATE ACCOUNT</string>
+    <string name="i_already_have_an_account">I ALREADY HAVE AN ACCOUNT</string>
+
+    <string name="main_create_account">CREATE ACCOUNT</string>
+    <string name="main_log_in">LOG IN</string>
+
+    <string name="log_out">LOG OUT</string>
+
+    <string name="facebook_app_id">848587729254369</string>
+    <string name="fb_login_protocol_scheme">fb848587729254369</string>
+    <string name="email_or_username">Email or Username</string>
+    <string name="password">Password</string>
+    <string name="log_in">LOG IN</string>
+    <string name="log_in_via_google">LOG IN VIA GOOGLE</string>
+    <string name="forgot_password"><u>Forgot Password</u></string>
+
+    <string name="open_nav_drawer">Navigation Drawer Open</string>
+    <string name="close_nav_drawer">Navigation Drawer Close</string>
+    <string name="menu_my_calories">My Calories</string>
+    <string name="menu_my_meals">My Meals</string>
+    <string name="menu_food_recommendations">Food Recommendations</string>
+    <string name="menu_account_and_settings">Account and Settings</string>
+    <string name="menu_log_out">Log Out</string>
+
+</resources>
