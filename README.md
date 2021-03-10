@@ -5,12 +5,12 @@
 ## How to download directly into Android Studio
 Note: I have not tried this myself because I only uploaded before
 1. File>Settings>Git
-  - Add "Path to Git executable: *the suggested path*" at the top
+    - Add "Path to Git executable: *the suggested path*" at the top
 2. File>Settings>Github
-  - Login to your account:
-    - Go to your webpage with your account logged in
-    - Settings>Developer settings>Personal Access Token
-    - Copy your Personal Access Token into the Android Studio Github settings thing
+    - Login to your account:
+      - Go to your webpage with your account logged in
+      - Settings>Developer settings>Personal Access Token
+      - Copy your Personal Access Token into the Android Studio Github settings thing
 3. File>New>Project From Version Control...
   - Simply enter Repository URL 
   - Click Clone
