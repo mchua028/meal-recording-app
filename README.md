@@ -31,6 +31,11 @@ After logging in and doing all of the above steps 1 and 2,
 
 
 
+## How to get updated code directly from Github to Android Studio
+Have not tried
+
+
+
 ## Emulator I used to run app: 
 Pixel 3a API 30x86
 
