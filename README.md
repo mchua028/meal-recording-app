@@ -12,8 +12,8 @@ Note: I have not tried this myself because I only uploaded before
       - Settings>Developer settings>Personal Access Token
       - Copy your Personal Access Token into the Android Studio Github settings thing
 3. File>New>Project From Version Control...
-  - Simply enter Repository URL 
-  - Click Clone
+      - Simply enter Repository URL 
+      - Click Clone
 4. END
 
 
@@ -22,11 +22,11 @@ Note: I have not tried this myself because I only uploaded before
 After logging in and doing all of the above steps 1 and 2,
 1. At the top right bar on your Android Studio screen, you can see Git followed by an arrow and a tick
 2. Click the tick to commit, select relevant files and add a really short Commit message (e.g. Changed *something*)
-  - Click Commit at the bottom left
+      - Click Commit at the bottom left
 3. VCS>Git>Push
-  - Click the blue underlined thingy (Define remote or something) beside master->*the-blue-underlined-thing*
-  - Add this repository's url: https://github.com/potassiumnitrate/CZ2006-Project/
-  - Click Push
+      - Click the blue underlined thingy (Define remote or something) beside master->*the-blue-underlined-thing*
+      - Add this repository's url: https://github.com/potassiumnitrate/CZ2006-Project/
+      - Click Push
 4. END idk if u need to do anything after that...
 
 
@@ -38,22 +38,22 @@ Pixel 3a API 30x86
 
 ## Important Java classes
 directory: MealTracker/app/src/main/java/com.example.mealtracker
-- files were used to connect the various fragments (pages):
-  - main thing to connect all fragments: MainActivity
-  - fragments: accountAndSettings, foodRecommendations, myCalories, myMeals 
-- files used for buttons etc for login and register:
-  - GoogleLogin, Login, LoginOrRegister, Register
+    - files were used to connect the various fragments (pages):
+      - main thing to connect all fragments: MainActivity
+      - fragments: accountAndSettings, foodRecommendations, myCalories, myMeals 
+    - files used for buttons etc for login and register:
+      - GoogleLogin, Login, LoginOrRegister, Register
   
   
   
 ## xml classes - for aesthetic purposes, shifting around/adding/deleting attributes and textboxes
 directory: MealTracker/app/src/main/res/menu
--  nav_menu.xml (purpose: navigation/sidebar)
+    -  nav_menu.xml (purpose: navigation/sidebar)
 
 directory: MealTracker/app/src/main/res/layout (has one xml class for each of the above java class)
-- activity_google_login.xml, activity_login.xml, activity_login_or_register.xml, activity_register.xml
-- activity_main.xml, fragment_account_and_settings.xml, fragment_food_recommendations.xml, fragment_my_calories.xml, fragment_my_meals.xml
-- nav_header_layout.xml (purpose: navigation/sidebar)
+    - activity_google_login.xml, activity_login.xml, activity_login_or_register.xml, activity_register.xml
+    - activity_main.xml, fragment_account_and_settings.xml, fragment_food_recommendations.xml, fragment_my_calories.xml, fragment_my_meals.xml
+    - nav_header_layout.xml (purpose: navigation/sidebar)
 
 directory: MealTracker/app/src/main/res/values
-- colors.xml, strings.xml, styles.xml, themes.xml
+    - colors.xml, strings.xml, styles.xml, themes.xml
