@@ -42,7 +42,7 @@ Pixel 3a API 30x86
 
 
 ## Important Java classes
-directory: MealTracker/app/src/main/java/com.example.mealtracker
+1. directory: MealTracker/app/src/main/java/com.example.mealtracker
     - files were used to connect the various fragments (pages):
         - main thing to connect all fragments: MainActivity
         - fragments: accountAndSettings, foodRecommendations, myCalories, myMeals 
@@ -52,13 +52,13 @@ directory: MealTracker/app/src/main/java/com.example.mealtracker
   
   
 ## xml classes - for aesthetic purposes, shifting around/adding/deleting attributes and textboxes
-directory: MealTracker/app/src/main/res/menu
+1. directory: MealTracker/app/src/main/res/menu
     -  nav_menu.xml (purpose: navigation/sidebar)
 
-directory: MealTracker/app/src/main/res/layout (has one xml class for each of the above java class)
+2. directory: MealTracker/app/src/main/res/layout (has one xml class for each of the above java class)
     - activity_google_login.xml, activity_login.xml, activity_login_or_register.xml, activity_register.xml
     - activity_main.xml, fragment_account_and_settings.xml, fragment_food_recommendations.xml, fragment_my_calories.xml, fragment_my_meals.xml
     - nav_header_layout.xml (purpose: navigation/sidebar)
 
-directory: MealTracker/app/src/main/res/values
+3. directory: MealTracker/app/src/main/res/values
     - colors.xml, strings.xml, styles.xml, themes.xml
