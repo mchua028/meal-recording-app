@@ -41,6 +41,13 @@ Pixel 3a API 30x86
 
 
 
+## Running the app:
+1. Just log in via Google, the rest are not ready.
+2. You will be able to tap the sidebar's hamburger icon (top left, 3 horizontal stripes = hamburger) and switch between fragments (pages)
+3. You can also click Log out to logout.
+
+
+
 ## Important Java classes
 1. directory: MealTracker/app/src/main/java/com.example.mealtracker
     - files were used to connect the various fragments (pages):
