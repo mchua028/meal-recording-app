@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="UnusedIds">
+
+    <selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Checked Color"
+        android:color="@color/dark_blue_grey"
+        android:state_checked="true"/>
+    <item android:title="Unchecked Color"
+        android:color="@color/blue_grey" />
+    </selector>
+
+    <group
+        android:id="@+id/group"
+        android:checkableBehavior="single">
+            <item android:id="@+id/nav_myCalories"
+                android:title="@string/menu_my_calories"></item>
+            <item android:id="@+id/nav_myMeals"
+                android:title="@string/menu_my_meals"></item>
+            <item android:id="@+id/nav_foodRecommendations"
+                android:title="@string/menu_food_recommendations"></item>
+            <item android:id="@+id/nav_accountAndSettings"
+                android:title="@string/menu_account_and_settings"></item>
+    </group>
+
+    <item android:id="@+id/OTHERS"
+        android:title="OTHERS">
+        <menu>
+            <item android:id="@+id/nav_logout"
+                android:title="@string/menu_log_out"></item>
+        </menu>
+    </item>
+
+</menu>

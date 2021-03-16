@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "249093754452",
+    "project_id": "mealtracker-dc280",
+    "storage_bucket": "mealtracker-dc280.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:249093754452:android:771ef46117a470d314a7c1",
+        "android_client_info": {
+          "package_name": "com.example.mealtracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "249093754452-0r7gtf9k3hs3g4iuvf3k0s2bb7fe8vp8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mealtracker",
+            "certificate_hash": "12f7fa4920e0fedb6b863685dc972e9ab111bc35"
+          }
+        },
+        {
+          "client_id": "249093754452-bpdgjm5t32frtngpbndpbk04ck3coign.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDT7Jck1zaWkJAQ90W0pN4a_UIoj1i8RUs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "249093754452-bpdgjm5t32frtngpbndpbk04ck3coign.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
