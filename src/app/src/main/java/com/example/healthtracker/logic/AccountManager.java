@@ -1,7 +1,5 @@
 package com.example.healthtracker.logic;
 
-import com.example.healthtracker.data_access.Account;
-
 import java.util.HashMap;
 
 public class AccountManager {
