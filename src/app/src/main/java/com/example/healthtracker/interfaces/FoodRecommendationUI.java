@@ -1,7 +1,8 @@
 package com.example.healthtracker.interfaces;
 
-public class MealRecordMainUI extends UI{
-    public MealRecordMainUI() {
+public class FoodRecommendationUI extends UI{
+    public FoodRecommendationUI() {
+
     }
 
     @Override

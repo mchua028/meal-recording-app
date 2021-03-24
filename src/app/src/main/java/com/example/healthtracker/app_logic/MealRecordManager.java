@@ -1,16 +1,20 @@
-package com.example.healthtracker.logic;
+package com.example.healthtracker.app_logic;
 
 import com.example.healthtracker.data_access.Food;
 import com.example.healthtracker.data_access.MealRecord;
 
+import java.util.Date;
 import java.util.HashMap;
 
 public class MealRecordManager {
 
 	private static MealRecordManager singleton;
 
+	private MealRecordManager() {
+	}
+
 	public MealRecordManager getSingleton() {
-		return this.singleton;
+		return singleton;
 	}
 
 	/**
@@ -18,7 +22,7 @@ public class MealRecordManager {
 	 * @param foodName
 	 */
 	public Food query(String foodName) {
-		// TODO - implement com.example.healthtracker.logic.MealRecordManager.query
+		// TODO - implement com.example.healthtracker.app_logic.MealRecordManager.query
 		throw new UnsupportedOperationException();
 	}
 
@@ -27,7 +31,7 @@ public class MealRecordManager {
 	 * @param foods
 	 */
 	public void addMealRecord(Food[] foods) {
-		// TODO - implement com.example.healthtracker.logic.MealRecordManager.addMealRecord
+		// TODO - implement com.example.healthtracker.app_logic.MealRecordManager.addMealRecord
 		throw new UnsupportedOperationException();
 	}
 
@@ -36,16 +40,16 @@ public class MealRecordManager {
 	 * @param mealRecordId
 	 */
 	public void deleteMealRecord(double mealRecordId) {
-		// TODO - implement com.example.healthtracker.logic.MealRecordManager.deleteMealRecord
+		// TODO - implement com.example.healthtracker.app_logic.MealRecordManager.deleteMealRecord
 		throw new UnsupportedOperationException();
 	}
 
 	/**
-	 * 
+	 * TODO: feel free to replace image data type
 	 * @param img
 	 */
 	public Food[] queryFoodInImage(Image img) {
-		// TODO - implement com.example.healthtracker.logic.MealRecordManager.queryFoodInImage
+		// TODO - implement com.example.healthtracker.app_logic.MealRecordManager.queryFoodInImage
 		throw new UnsupportedOperationException();
 	}
 
@@ -54,7 +58,7 @@ public class MealRecordManager {
 	 * @param foodInfo
 	 */
 	public void addFood(HashMap<String, String> foodInfo) {
-		// TODO - implement com.example.healthtracker.logic.MealRecordManager.addFood
+		// TODO - implement com.example.healthtracker.app_logic.MealRecordManager.addFood
 		throw new UnsupportedOperationException();
 	}
 
@@ -64,7 +68,7 @@ public class MealRecordManager {
 	 * @param endDate
 	 */
 	public MealRecord[] query(Date startDate, Date endDate) {
-		// TODO - implement com.example.healthtracker.logic.MealRecordManager.query
+		// TODO - implement com.example.healthtracker.app_logic.MealRecordManager.query
 		throw new UnsupportedOperationException();
 	}
 
@@ -74,12 +78,17 @@ public class MealRecordManager {
 	 * @param newInfo
 	 */
 	public void editMealRecord(double idInList, Food[] newInfo) {
-		// TODO - implement com.example.healthtracker.logic.MealRecordManager.editMealRecord
+		// TODO - implement com.example.healthtracker.app_logic.MealRecordManager.editMealRecord
 		throw new UnsupportedOperationException();
 	}
 
 	private MealRecordManager MealRecordManager() {
-		// TODO - implement com.example.healthtracker.logic.MealRecordManager.com.example.healthtracker.logic.MealRecordManager
+		// TODO - implement com.example.healthtracker.app_logic.MealRecordManager.com.example.healthtracker.app_logic.MealRecordManager
+		throw new UnsupportedOperationException();
+	}
+
+	public int calculateCalorieQuotaRemainingToday() {
+		// TODO - implement com.example.healthtracker.app_logic.MealRecordManager.calculateCalorieQuotaRemainingToday
 		throw new UnsupportedOperationException();
 	}
 

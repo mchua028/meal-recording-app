@@ -1,12 +1,9 @@
 package com.example.healthtracker.interfaces;
 
-public class FoodCustomUI extends UI {
+public class FoodCustomUI extends UI{
+	public FoodCustomUI() {
 
-	private void submitCustomFood() {
-		// TODO - implement com.example.healthtracker.interfaces.FoodCustomUI.submitCustomFood
-		throw new UnsupportedOperationException();
 	}
-
 
 	@Override
 	public void display() {
@@ -14,12 +11,18 @@ public class FoodCustomUI extends UI {
 	}
 
 	@Override
-	public void printErrorMessage() {
+	public void displayErrorMessage() {
 
 	}
 
 	@Override
-	public void printSuccessfulMessage() {
+	public void printSucceesulMessage() {
 
 	}
+
+	private void submitCustomFood() {
+		// TODO - implement com.example.healthtracker.interfaces.FoodCustomUI.submitCustomFood
+		throw new UnsupportedOperationException();
+	}
+
 }

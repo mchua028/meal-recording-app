@@ -3,10 +3,7 @@ package com.example.healthtracker.interfaces;
 import com.example.healthtracker.data_access.Food;
 
 public class FoodRecordUI extends UI{
-
-	public Food searchFood() {
-		// TODO - implement com.example.healthtracker.interfaces.FoodRecordUI.searchFood
-		throw new UnsupportedOperationException();
+	public FoodRecordUI() {
 	}
 
 	@Override
@@ -15,12 +12,17 @@ public class FoodRecordUI extends UI{
 	}
 
 	@Override
-	public void printErrorMessage() {
+	public void displayErrorMessage() {
 
 	}
 
 	@Override
-	public void printSuccessfulMessage() {
+	public void printSucceesulMessage() {
 
+	}
+
+	public Food searchFood() {
+		// TODO - implement com.example.healthtracker.interfaces.FoodRecordUI.searchFood
+		throw new UnsupportedOperationException();
 	}
 }

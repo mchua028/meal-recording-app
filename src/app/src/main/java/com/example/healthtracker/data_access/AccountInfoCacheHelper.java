@@ -1,28 +1,46 @@
 package com.example.healthtracker.data_access;
 
-import com.example.healthtracker.logic.AccountManager;
-
 import java.util.HashMap;
 
 public class AccountInfoCacheHelper {
-    private String cacheFilePath;
-    static private AccountManager singleton;
-    private String username;
-    private String password;
 
-    private AccountInfoCacheHelper() {
-    }
+	private String cacheFilePath;
+	private static AccountInfoCacheHelper singleton;
+	private String username;
+	private String password;
 
-    public Account parseAccountInfo() {
+	public String getUsername() {
+		return this.username;
+	}
 
-    }
+	public String getPassword() {
+		return this.password;
+	}
 
-    static public AccountInfoCacheHelper getSingleton() {
+	/**
+	 * private initializer
+	 */
+	private AccountInfoCacheHelper() {
+		// TODO - implement com.example.healthtracker.data_access.AccountInfoCacheHelper.com.example.healthtracker.data_access.AccountInfoCacheHelper
+		throw new UnsupportedOperationException();
+	}
 
-    }
+	public Account parseAccountInfo() {
+		// TODO - implement com.example.healthtracker.data_access.AccountInfoCacheHelper.parseAccountInfo
+		throw new UnsupportedOperationException();
+	}
 
-    public void updateCache(HashMap<String, String> parameter) {
+	public static AccountInfoCacheHelper getSingleton() {
+		return singleton;
+	}
 
-    }
+	/**
+	 * 
+	 * @param parameter
+	 */
+	public void updateCache(HashMap<String, String> parameter) {
+		// TODO - implement com.example.healthtracker.data_access.AccountInfoCacheHelper.updateCache
+		throw new UnsupportedOperationException();
+	}
 
 }

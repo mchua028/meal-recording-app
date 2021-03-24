@@ -1,10 +1,7 @@
 package com.example.healthtracker.interfaces;
 
 public class PasswordChangeUI extends UI {
-
-	private void submitNewPassword() {
-		// TODO - implement com.example.healthtracker.interfaces.PasswordChangeUI.submitNewPassword
-		throw new UnsupportedOperationException();
+	public PasswordChangeUI() {
 	}
 
 	@Override
@@ -13,12 +10,18 @@ public class PasswordChangeUI extends UI {
 	}
 
 	@Override
-	public void printErrorMessage() {
+	public void displayErrorMessage() {
 
 	}
 
 	@Override
-	public void printSuccessfulMessage() {
+	public void printSucceesulMessage() {
 
 	}
+
+	private void submitNewPassword() {
+		// TODO - implement com.example.healthtracker.interfaces.PasswordChangeUI.submitNewPassword
+		throw new UnsupportedOperationException();
+	}
+
 }

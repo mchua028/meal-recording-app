@@ -1,49 +1,46 @@
 package com.example.healthtracker.interfaces;
 
 public class LoginUI extends UI {
-    public LoginUI() {
-    }
 
-    @Override
-    public void display() {
+	/**
+	 * Logs in the user automatically by using the cache file that contains username and password.
+	 */
+	private boolean autoLogIn() {
+		// TODO - implement com.example.healthtracker.interfaces.LoginUI.autoLogIn
+		throw new UnsupportedOperationException();
+	}
 
-    }
+	private void LogInViaFacebook() {
+		// TODO - implement com.example.healthtracker.interfaces.LoginUI.LogInViaFacebook
+		throw new UnsupportedOperationException();
+	}
 
-    @Override
-    public void printErrorMessage() {
+	public LoginUI() {
 
-    }
+	}
 
-    @Override
-    public void printSuccessfulMessage() {
+	private void LogInViaGoogle() {
+		// TODO - implement com.example.healthtracker.interfaces.LoginUI.LogInViaGoogle
+		throw new UnsupportedOperationException();
+	}
 
-    }
+	private void submitLogInInfo() {
+		// TODO - implement com.example.healthtracker.interfaces.LoginUI.submitLogInInfo
+		throw new UnsupportedOperationException();
+	}
 
-    /*
-    Triggers auto login by getting username and password (e.g. remember me) from local cache file.
-     */
-    public boolean autoLogin() {
-        return false;
-    }
+	@Override
+	public void display() {
 
-    /*
-    Triggers login by Facebook.
-     */
-    public void loginViaFacebook() {
+	}
 
-    }
+	@Override
+	public void displayErrorMessage() {
 
-    /*
-    Triggers login by Google.
-     */
-    public void loginViaGoogle() {
+	}
 
-    }
+	@Override
+	public void printSucceesulMessage() {
 
-    /*
-    Triggers to submit the user's input login info to the server.
-     */
-    private void submitLoginInfo() {
-
-    }
+	}
 }

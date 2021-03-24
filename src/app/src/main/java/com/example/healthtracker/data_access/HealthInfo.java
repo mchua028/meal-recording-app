@@ -12,6 +12,16 @@ public class HealthInfo {
 	private Activity dailyActivityLevel;
 	private int suggestCalorieIntake;
 
+	public HealthInfo(double height, double weight, int age, double goalWeight, Gender gender, Activity dailyActivityLevel, int suggestCalorieIntake) {
+		this.height = height;
+		this.weight = weight;
+		this.age = age;
+		this.goalWeight = goalWeight;
+		this.gender = gender;
+		this.dailyActivityLevel = dailyActivityLevel;
+		this.suggestCalorieIntake = suggestCalorieIntake;
+	}
+
 	public double getHeight() {
 		return this.height;
 	}

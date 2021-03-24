@@ -1,10 +1,7 @@
 package com.example.healthtracker.interfaces;
 
 public class PastMealRecordUI extends UI{
-
-	private void submitQueryDate() {
-		// TODO - implement com.example.healthtracker.interfaces.PastMealRecordUI.submitQueryDate
-		throw new UnsupportedOperationException();
+	public PastMealRecordUI() {
 	}
 
 	@Override
@@ -13,12 +10,18 @@ public class PastMealRecordUI extends UI{
 	}
 
 	@Override
-	public void printErrorMessage() {
+	public void displayErrorMessage() {
 
 	}
 
 	@Override
-	public void printSuccessfulMessage() {
+	public void printSucceesulMessage() {
 
 	}
+
+	private void submitQueryDate() {
+		// TODO - implement com.example.healthtracker.interfaces.PastMealRecordUI.submitQueryDate
+		throw new UnsupportedOperationException();
+	}
+
 }

@@ -1,7 +1,7 @@
 package com.example.healthtracker.data_access;
 
-
 public class Account {
+
 	private String username;
 	private String password;
 	private String firstName;
@@ -47,7 +47,7 @@ public class Account {
 	 * @param firstName
 	 * @param lastName
 	 */
-	public Account Account(String username, String password, String firstName, String lastName) {
+	public Account(String username, String password, String firstName, String lastName) {
 		// TODO - implement com.example.healthtracker.data_access.Account.com.example.healthtracker.data_access.Account
 		throw new UnsupportedOperationException();
 	}

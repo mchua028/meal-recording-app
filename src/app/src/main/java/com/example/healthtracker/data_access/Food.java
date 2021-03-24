@@ -1,18 +1,35 @@
 package com.example.healthtracker.data_access;
 
-import java.util.HashMap;
-
 public class Food {
 
 	private String name;
-	private HashMap<String, String> nutrients;
+	private Nutrient nutrients;
+	private double actualIntake = 0;
+	private int suggestedIntake = 0;
+
+	public Food(String name, Nutrient nutrients) {
+		this.name = name;
+		this.nutrients = nutrients;
+	}
 
 	public String getName() {
 		return this.name;
 	}
 
-	public void setNutrients(HashMap<String, String> nutrients) {
+	public void setNutrients(Nutrient nutrients) {
 		this.nutrients = nutrients;
+	}
+
+	public double getActualIntake() {
+		return this.actualIntake;
+	}
+
+	public void setActualIntake(double actualIntake) {
+		this.actualIntake = actualIntake;
+	}
+
+	public void setSuggestedIntake(int suggestedIntake) {
+		this.suggestedIntake = suggestedIntake;
 	}
 
 	/**
@@ -49,10 +66,24 @@ public class Food {
 
 	/**
 	 * 
-	 * @param img image file supported by Android
+	 * @param img
 	 */
 	public static Food[] searchFoods(Image img) {
 		// TODO - implement com.example.healthtracker.data_access.Food.searchFoods
+		throw new UnsupportedOperationException();
+	}
+
+	public Nutrient getNutrients() {
+		return this.nutrients;
+	}
+
+	/**
+	 * 
+	 * @param nutrientName
+	 * @param top_k
+	 */
+	public static Food[] searchFoodsRichInNutrient(String nutrientName, int top_k) {
+		// TODO - implement com.example.healthtracker.data_access.Food.searchFoodsRichInNutrient
 		throw new UnsupportedOperationException();
 	}
 

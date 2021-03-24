@@ -1,35 +1,32 @@
 package com.example.healthtracker.interfaces;
 
-public class MainUI extends UI{
-    public MainUI() {
-    }
+public class MainUI extends UI {
+	@Override
+	public void display() {
 
-    @Override
-    public void display() {
+	}
 
-    }
+	@Override
+	public void displayErrorMessage() {
 
-    @Override
-    public void printErrorMessage() {
+	}
 
-    }
+	public MainUI() {
+	}
 
-    @Override
-    public void printSuccessfulMessage() {
+	@Override
+	public void printSucceesulMessage() {
 
-    }
+	}
 
-    /*
-        Directs user to login ui when hit the button.
-         */
-    private void displayLogInUI() {
+	private void displayLoginUI() {
+		// TODO - implement com.example.healthtracker.interfaces.MainUI.displayLoginUI
+		throw new UnsupportedOperationException();
+	}
 
-    }
+	private void displayRegistrationUI() {
+		// TODO - implement com.example.healthtracker.interfaces.MainUI.displayRegistrationUI
+		throw new UnsupportedOperationException();
+	}
 
-    /*
-    Directs user to registration ui when hit the button.
-    */
-    private void displayRegistrationUI() {
-
-    }
 }

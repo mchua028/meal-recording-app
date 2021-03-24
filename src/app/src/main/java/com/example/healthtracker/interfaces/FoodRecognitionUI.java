@@ -1,10 +1,7 @@
 package com.example.healthtracker.interfaces;
 
 public class FoodRecognitionUI extends UI{
-
-	public void submitImage() {
-		// TODO - implement com.example.healthtracker.interfaces.FoodRecognitionUI.submitImage
-		throw new UnsupportedOperationException();
+	public FoodRecognitionUI() {
 	}
 
 	@Override
@@ -13,12 +10,18 @@ public class FoodRecognitionUI extends UI{
 	}
 
 	@Override
-	public void printErrorMessage() {
+	public void displayErrorMessage() {
 
 	}
 
 	@Override
-	public void printSuccessfulMessage() {
+	public void printSucceesulMessage() {
 
 	}
+
+	public void submitImage() {
+		// TODO - implement com.example.healthtracker.interfaces.FoodRecognitionUI.submitImage
+		throw new UnsupportedOperationException();
+	}
+
 }

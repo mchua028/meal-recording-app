@@ -2,49 +2,27 @@ package com.example.healthtracker.data_access;
 
 import java.util.HashMap;
 
-enum Gender {
-    FEMALE,
-    MALE,
-    OTHERS
-}
-
-
-enum Activity {
-    NONE,
-    LITTLE,
-    MODERATE,
-    HIGH
-}
-
-
-
 public class HealthInfoCacheHelper {
-    private double height;
-    private double weight;
-    private double goalWeight;
-    private int age;
-    private Gender gender;
-    private Activity dailyActivityLevel;
-    private String stringPath;
-    static private HealthInfoCacheHelper singleton;
 
-    public HealthInfoCacheHelper(double height, double weight, double goalWeight, int age, Gender gender, Activity dailyActivityLevel, String stringPath) {
-        this.height = height;
-        this.weight = weight;
-        this.goalWeight = goalWeight;
-        this.age = age;
-        this.gender = gender;
-        this.dailyActivityLevel = dailyActivityLevel;
-        this.stringPath = stringPath;
-    }
+	private String StringPath;
+	private static HealthInfoCacheHelper singleton;
 
-    static public HealthInfoCacheHelper getSingleton() {
+	public static HealthInfoCacheHelper getSingleton() {
+		return singleton;
+	}
 
-    }
+	private HealthInfoCacheHelper() {
+		// TODO - implement com.example.healthtracker.data_access.HealthInfoCacheHelper.com.example.healthtracker.data_access.HealthInfoCacheHelper
+		throw new UnsupportedOperationException();
+	}
 
-    public void updateCache(HashMap<String, String> newInfo) {
-
-    }
+	/**
+	 * 
+	 * @param newInfo
+	 */
+	public void updateCache(HashMap<String, String> newInfo) {
+		// TODO - implement com.example.healthtracker.data_access.HealthInfoCacheHelper.updateCache
+		throw new UnsupportedOperationException();
+	}
 
 }
-

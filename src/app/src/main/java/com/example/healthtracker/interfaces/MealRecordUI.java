@@ -4,6 +4,25 @@ import com.example.healthtracker.data_access.Food;
 
 public class MealRecordUI extends UI{
 
+	public MealRecordUI() {
+
+	}
+
+	@Override
+	public void display() {
+
+	}
+
+	@Override
+	public void displayErrorMessage() {
+
+	}
+
+	@Override
+	public void printSucceesulMessage() {
+
+	}
+
 	private void submitFoodsForMealRecord() {
 		// TODO - implement com.example.healthtracker.interfaces.MealRecordUI.submitFoodsForMealRecord
 		throw new UnsupportedOperationException();
@@ -28,19 +47,4 @@ public class MealRecordUI extends UI{
 		throw new UnsupportedOperationException();
 	}
 
-
-	@Override
-	public void display() {
-
-	}
-
-	@Override
-	public void printErrorMessage() {
-
-	}
-
-	@Override
-	public void printSuccessfulMessage() {
-
-	}
 }

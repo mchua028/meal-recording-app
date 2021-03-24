@@ -1,6 +1,8 @@
 package com.example.healthtracker.interfaces;
 
 public class InfoSetUpUI extends UI {
+	public InfoSetUpUI() {
+	}
 
 	@Override
 	public void display() {
@@ -8,12 +10,12 @@ public class InfoSetUpUI extends UI {
 	}
 
 	@Override
-	public void printErrorMessage() {
+	public void displayErrorMessage() {
 
 	}
 
 	@Override
-	public void printSuccessfulMessage() {
+	public void printSucceesulMessage() {
 
 	}
 
@@ -21,7 +23,7 @@ public class InfoSetUpUI extends UI {
 	 * throw exceptions
 	 */
 	private void submitHealthInfo() {
-		// TODO - implement InfoSetupUI.submitHealthInfo
+		// TODO - implement com.example.healthtracker.interfaces.InfoSetUpUI.submitHealthInfo
 		throw new UnsupportedOperationException();
 	}
 

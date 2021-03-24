@@ -1,44 +1,40 @@
 package com.example.healthtracker.interfaces;
 
-public class RegisterAccountUI extends UI{
-    public RegisterAccountUI() {
-    }
+public class RegisterAccountUI extends UI {
+	public RegisterAccountUI() {
+	}
 
-    @Override
-    public void display() {
+	@Override
+	public void display() {
 
-    }
+	}
 
-    @Override
-    public void printErrorMessage() {
+	@Override
+	public void displayErrorMessage() {
 
-    }
+	}
 
-    @Override
-    public void printSuccessfulMessage() {
+	@Override
+	public void printSucceesulMessage() {
 
-    }
+	}
 
-    /*
-    Calls social media handler for extracting user's information from Facebook API,
-    when user hits the button.
-     */
-    private void registerViaFacebook() {
+	private void submitUserRegistrationInfo() {
+		// TODO - implement com.example.healthtracker.interfaces.RegisterAccountUI.submitUserRegistrationInfo
+		throw new UnsupportedOperationException();
+	}
 
-    }
+	/**
+	 * return the personal information got from Facebook
+	 */
+	private void registerViaFacebook() {
+		// TODO - implement com.example.healthtracker.interfaces.RegisterAccountUI.registerViaFacebook
+		throw new UnsupportedOperationException();
+	}
 
-    /*
-    Calls social media handler for extracting user's information from Google API,
-    when user hits the button.
-     */
-    private void registerViaGoogle() {
+	private void registerViaGoogle() {
+		// TODO - implement com.example.healthtracker.interfaces.RegisterAccountUI.registerViaGoogle
+		throw new UnsupportedOperationException();
+	}
 
-    }
-
-    /*
-    Triggers Submitting the information form to the server when user hits the button.
-     */
-    private void submitUserRegisterInfo() {
-
-    }
 }

@@ -1,28 +1,27 @@
 package com.example.healthtracker.interfaces;
 
-public class VerificationUI extends UI{
-    public VerificationUI() {
-    }
+public class VerificationUI extends UI {
+	public VerificationUI() {
+	}
 
-    @Override
-    public void display() {
+	@Override
+	public void display() {
 
-    }
+	}
 
-    @Override
-    public void printErrorMessage() {
+	@Override
+	public void displayErrorMessage() {
 
-    }
+	}
 
-    @Override
-    public void printSuccessfulMessage() {
+	@Override
+	public void printSucceesulMessage() {
 
-    }
+	}
 
-    /*
-    Submits the user input of verification code for app to verify it.
-     */
-    private void submitVerificationCode() {
+	private String submitVerificationCode() {
+		// TODO - implement com.example.healthtracker.interfaces.VerificationUI.submitVerificationCode
+		throw new UnsupportedOperationException();
+	}
 
-    }
 }
