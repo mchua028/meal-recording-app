@@ -11,6 +11,8 @@ public class Account {
 		return this.username;
 	}
 
+	public void setUsername(String username) {this.username=username;}
+
 	public String getPassword() {
 		return this.password;
 	}
@@ -31,13 +33,11 @@ public class Account {
 	 * makes a query to users' database, if the username and the password matches, the information can be retrieved.
 	 */
 	public boolean verifyAccountForLogin() {
-		// TODO - implement com.example.healthtracker.data_access_layer.Account.verifyAccountForLogin
-		throw new UnsupportedOperationException();
+		if()
 	}
 
 	public void registerAccount() {
-		// TODO - implement com.example.healthtracker.data_access_layer.Account.registerAccount
-		throw new UnsupportedOperationException();
+
 	}
 
 	/**
@@ -47,9 +47,13 @@ public class Account {
 	 * @param firstName
 	 * @param lastName
 	 */
-	public Account Account(String username, String password, String firstName, String lastName) {
-		// TODO - implement com.example.healthtracker.data_access_layer.Account.com.example.healthtracker.data_access_layer.Account
-		throw new UnsupportedOperationException();
+	public Account(){}
+
+	public Account(String username, String password, String firstName, String lastName) {
+		this.username=username;
+		this.password=password;
+		this.firstName=firstName;
+		this.lastName=lastName;
 	}
 
 	/**

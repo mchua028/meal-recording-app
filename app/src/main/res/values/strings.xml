@@ -25,5 +25,7 @@
     <string name="menu_food_recommendations">Food Recommendations</string>
     <string name="menu_account_and_settings">Account and Settings</string>
     <string name="menu_log_out">Log Out</string>
+    <string name="logout">Logout</string>
+    <string name="calorie_count">Calorie Count</string>
 
 </resources>

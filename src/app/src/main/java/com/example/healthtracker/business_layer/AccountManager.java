@@ -1,6 +1,9 @@
 package com.example.healthtracker.business_layer;
 
-import java.util.HashMap;
+import java.util.*;
+import java.io.*;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * skeleton
@@ -18,18 +21,18 @@ public class AccountManager {
 		this.isSuccessfulLoggedIn = isSuccessfulLoggedIn;
 	}
 
-	private AccountManager AccountManager() {
-		// TODO - implement com.example.healthtracker.business_layer.AccountManager.com.example.healthtracker.business_layer.AccountManager
-		throw new UnsupportedOperationException();
-	}
+	private AccountManager() {}
 
 	/**
 	 * 
 	 * @param registerInfo
 	 */
 	public void registerAccount(HashMap<String, String> registerInfo) {
-		// TODO - implement com.example.healthtracker.business_layer.AccountManager.registerAccount
-		throw new UnsupportedOperationException();
+
+		Account account = new Account(registerInfo.get("username"),registerInfo.get("password"),
+				registerInfo.get("firstname"),register.get("lastname"));
+		account.registerAccount();
+		logInAccount(registerInfo.get("username"),registerInfo.get("password"));
 	}
 
 	/**
@@ -37,53 +40,49 @@ public class AccountManager {
 	 * @param username
 	 * @param password
 	 */
-	public void logInAccount(String username, String password) {
-		// TODO - implement com.example.healthtracker.business_layer.AccountManager.logInAccount
-		throw new UnsupportedOperationException();
+	public boolean logInAccount(String username, String password) {
+		Account account = new Account();
+		account.setUsername(username);
+		account.setPassword(password);
+		return(account.verifyAccountForLogin());//return to submitlogininfo in loginui, what if is from register?
+
 	}
 
 	public void LogInViaFacebook() {
 		// TODO - implement com.example.healthtracker.business_layer.AccountManager.LogInViaFacebook
-		throw new UnsupportedOperationException();
 	}
 
 	public void LogInViaGoogle() {
 		// TODO - implement com.example.healthtracker.business_layer.AccountManager.LogInViaGoogle
-		throw new UnsupportedOperationException();
 	}
 
 	public void logInViaCacheInfo() {
 		// TODO - implement com.example.healthtracker.business_layer.AccountManager.logInViaCacheInfo
-		throw new UnsupportedOperationException();
 	}
 
 	public void registerUsingGoogle() {
 		// TODO - implement com.example.healthtracker.business_layer.AccountManager.registerUsingGoogle
-		throw new UnsupportedOperationException();
 	}
 
 	public void registerUsingFacebook() {
 		// TODO - implement com.example.healthtracker.business_layer.AccountManager.registerUsingFacebook
-		throw new UnsupportedOperationException();
 	}
 
 	public static AccountManager getSingleton() {
 		return singleton;
 	}
 
-	/**
+	/**	
 	 * 
 	 * @param newPassword
 	 * @param verificationCode
 	 */
 	public void changePassword(String newPassword, String verificationCode) {
 		// TODO - implement com.example.healthtracker.business_layer.AccountManager.changePassword
-		throw new UnsupportedOperationException();
 	}
 
 	private boolean verifyUser() {
 		// TODO - implement com.example.healthtracker.business_layer.AccountManager.verifyUser
-		throw new UnsupportedOperationException();
 	}
 
 }

@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("helloooooooooo1","hi2");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         */
 
         navigationView.setNavigationItemSelectedListener(this);
+        Log.d("helloooooooooo2","hi2");
 
         // get hamburger icon on top left to toggle nav bar ///////////
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
@@ -75,11 +78,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         navigationView.setNavigationItemSelectedListener(this);
+        Log.d("helloooooooooo3","hi2");
 
         // extract email from google
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        Log.d("tag", "onCreate: " + firebaseAuth.getCurrentUser().getEmail()
-                                            + firebaseAuth.getCurrentUser().getDisplayName() );
+        Log.d("tag", "onCreate: " + firebaseAuth.getCurrentUser().getEmail());
+        Log.d("helloooooooooo4","hi2");
 
     }
 

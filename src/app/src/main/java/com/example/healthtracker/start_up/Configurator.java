@@ -1,4 +1,6 @@
 package com.example.healthtracker.start_up;
+import com.google.firebase.auth.FirebaseAuth;
+
 
 public class Configurator {
 
@@ -6,17 +8,16 @@ public class Configurator {
 
 	private Configurator() {
 		// TODO - implement com.example.healthtracker.start_up.Configurator.com.example.healthtracker.start_up.Configurator
-		throw new UnsupportedOperationException();
 	}
 
 	public static Configurator getSingleton() {
 		// TODO - implement com.example.healthtracker.start_up.Configurator.getSingleton
-		throw new UnsupportedOperationException();
 	}
 
 	public void initialize() {
-		// TODO - implement com.example.healthtracker.start_up.Configurator.initialize
-		throw new UnsupportedOperationException();
+		FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+		if(firebaseAuth.getCurrentUser()!=null) {
+		}
 	}
 
 }

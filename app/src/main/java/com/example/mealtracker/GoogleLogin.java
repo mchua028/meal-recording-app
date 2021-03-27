@@ -91,8 +91,8 @@ public class GoogleLogin extends AppCompatActivity {
                     }
                 });
 
-                // Toast.makeText(this, "Your Google Account is Connected to Meal Tracker", Toast.LENGTH_SHORT).show();
-                // startActivity(new Intent(this, MainActivity.class));
+                //Toast.makeText(this, "Your Google Account is Connected to Meal Tracker", Toast.LENGTH_SHORT).show();
+                //startActivity(new Intent(this, MainActivity.class));
             } catch (ApiException e) {
                 e.printStackTrace();
             }

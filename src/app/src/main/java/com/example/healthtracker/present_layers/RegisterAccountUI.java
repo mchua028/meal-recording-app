@@ -20,8 +20,14 @@ public class RegisterAccountUI extends UI {
 	}
 
 	private void submitUserRegistrationInfo() {
-		// TODO - implement com.example.healthtracker.interfaces.RegisterAccountUI.submitUserRegistrationInfo
-		throw new UnsupportedOperationException();
+		mEmail =
+		Hashmap<String,String> registerInfo = new Hashmap<String,String>();
+		registerInfo.put("username","");
+		registerInfo.put("password","");
+		registerInfo.put("firstname","");
+		registerInfo.put("lastname","");
+		AccountManager.registerAccount(registerInfo);
+
 	}
 
 	/**
