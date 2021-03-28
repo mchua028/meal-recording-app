@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,103 +8,118 @@
 
     <Button
         android:id="@+id/createAcctBtn"
-        android:layout_width="222dp"
+        android:layout_width="360dp"
         android:layout_height="47dp"
+        android:layout_below="@id/txtConfirmPassword"
         android:layout_marginTop="48dp"
+        android:layout_marginLeft="10dp"
         android:onClick="onCreateAcctBtnClick"
         android:textColor="@color/white"
         app:backgroundTint="@color/button_grey"
         app:iconTint="@color/button_grey"
-        android:text="@string/create_account"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtConfirmPassword" />
+        android:text="@string/create_account" />
 
     <Button
         android:id="@+id/alrHaveAcctBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="360dp"
         android:layout_height="wrap_content"
+        android:layout_below="@id/createAcctBtn"
         android:layout_marginTop="24dp"
+        android:layout_marginLeft="10dp"
         android:onClick="onAlrHaveAcctBtnClick"
         android:textColor="@color/white"
         app:backgroundTint="@color/button_grey"
         app:iconTint="@color/button_grey"
-        android:text="@string/i_already_have_an_account"
-        app:layout_constraintEnd_toEndOf="@+id/createAcctBtn"
-        app:layout_constraintStart_toStartOf="@+id/createAcctBtn"
-        app:layout_constraintTop_toBottomOf="@+id/createAcctBtn" />
+        android:text="@string/i_already_have_an_account" />
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txtUsername"
-        android:layout_width="wrap_content"
+        android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="90dp"
-        android:ems="10"
-        android:hint="Username"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginLeft="10dp">
+        <EditText
+            android:id="@+id/editUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Username"
+            android:inputType="text"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txtFirstName"
-        android:layout_width="wrap_content"
+        android:layout_width="360dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:hint="First Name"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/txtUsername"
-        app:layout_constraintStart_toStartOf="@+id/txtUsername"
-        app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
+        android:layout_below="@id/txtUsername"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp">
+        <EditText
+            android:id="@+id/editFirstName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="First Name"
+            android:inputType="text"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txtLastName"
-        android:layout_width="wrap_content"
+        android:layout_width="360dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:hint="Last Name"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/txtFirstName"
-        app:layout_constraintStart_toStartOf="@+id/txtFirstName"
-        app:layout_constraintTop_toBottomOf="@+id/txtFirstName" />
+        android:layout_below="@id/txtFirstName"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp">
+        <EditText
+            android:id="@+id/editLastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Last Name"
+            android:inputType="text"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txtEmail"
-        android:layout_width="wrap_content"
+        android:layout_width="360dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/txtLastName"
-        app:layout_constraintStart_toStartOf="@+id/txtLastName"
-        app:layout_constraintTop_toBottomOf="@+id/txtLastName" />
+        android:layout_below="@id/txtLastName"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp">
+        <EditText
+            android:id="@+id/editEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="text"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txtPassword"
-        android:layout_width="wrap_content"
+        android:layout_width="360dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/txtEmail"
-        app:layout_constraintStart_toStartOf="@+id/txtEmail"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
+        android:layout_below="@id/txtEmail"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp">
+        <EditText
+            android:id="@+id/editPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="text"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txtConfirmPassword"
-        android:layout_width="wrap_content"
+        android:layout_width="360dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:hint="Confirm Password"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/txtPassword"
-        app:layout_constraintStart_toStartOf="@+id/txtPassword"
-        app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
+        android:layout_below="@id/txtPassword"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp">
+        <EditText
+            android:id="@+id/editConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Confirm Password"
+            android:inputType="text"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -112,9 +127,6 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:theme="?attr/actionBarTheme" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

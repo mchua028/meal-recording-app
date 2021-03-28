@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -27,64 +29,71 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.activity_register);
     }
 
+    private TextInputLayout textInputUsername, textInputFirstName, textInputLastName, textInputEmail, textInputPassword, textInputConfirmPassword;
+    private EditText editUsername, editFirstName, editLastName, editEmail, editPassword, editConfirmPassword;
+
     public void onCreateAcctBtnClick(View view) {
         Intent goToSetupHealthInfo = new Intent(this, setupHealthInfo.class);
 
-        // access to TextView
-        TextView txtUsername = findViewById(R.id.txtUsername);
-        TextView txtFirstName = findViewById(R.id.txtFirstName);
-        TextView txtLastName = findViewById(R.id.txtLastName);
-        TextView txtEmail = findViewById(R.id.txtEmail);
-        TextView txtPassword = findViewById(R.id.txtPassword);
-        TextView txtConfirmPassword = findViewById(R.id.txtConfirmPassword);
+        // access to textInputLayout
+        textInputUsername = findViewById(R.id.txtUsername);
+        textInputFirstName = findViewById(R.id.txtFirstName);
+        textInputLastName = findViewById(R.id.txtLastName);
+        textInputEmail = findViewById(R.id.txtEmail);
+        textInputPassword = findViewById(R.id.txtPassword);
+        textInputConfirmPassword = findViewById(R.id.txtConfirmPassword);
 
-        EditText editUsername = findViewById(R.id.txtUsername);
-        EditText editFirstName = findViewById(R.id.txtFirstName);
-        EditText editLastName = findViewById(R.id.txtLastName);
-        EditText editEmail = findViewById(R.id.txtEmail);
-        EditText editPassword = findViewById(R.id.txtPassword);
-        EditText editConfirmPassword = findViewById(R.id.txtConfirmPassword);
+        editUsername = findViewById(R.id.editUsername);
+        editFirstName = findViewById(R.id.editFirstName);
+        editLastName = findViewById(R.id.editLastName);
+        editEmail = findViewById(R.id.editEmail);
+        editPassword = findViewById(R.id.editPassword);
+        editConfirmPassword = findViewById(R.id.editConfirmPassword);
 
         //get string from input
-        String username = editUsername.getText().toString().trim();
-        String firstName = editFirstName.getText().toString().trim();
-        String lastName = editLastName.getText().toString().trim();
-        String email = editEmail.getText().toString().trim();
-        String password = editPassword.getText().toString().trim();
-        String confirmPassword = editConfirmPassword.getText().toString().trim();
+        String usernameInput = textInputUsername.getEditText().getText().toString().trim();
+        String firstNameInput = textInputFirstName.getEditText().getText().toString().trim();
+        String lastNameInput = textInputLastName.getEditText().getText().toString().trim();
+        String emailInput = textInputEmail.getEditText().getText().toString().trim();
+        String passwordInput = textInputPassword.getEditText().getText().toString().trim();
+        String confirmPasswordInput = textInputConfirmPassword.getEditText().getText().toString().trim();
 
-        if (TextUtils.isEmpty(username)){
-            editUsername.setError("Username is required.");
+        // just for counting length and comparing passwords
+        String password = textInputPassword.getEditText().getText().toString().trim();
+        String confirmPassword = textInputConfirmPassword.getEditText().getText().toString().trim();
+
+        if (TextUtils.isEmpty(usernameInput)) {
+            textInputUsername.setError("Username is required.");
             return;
         }
 
-        if (TextUtils.isEmpty(firstName)){
-            editFirstName.setError("First Name is required.");
+        if (TextUtils.isEmpty(firstNameInput)){
+            textInputFirstName.setError("First Name is required.");
             return;
         }
 
-        if (TextUtils.isEmpty(lastName)){
-            editLastName.setError("Last Name is required.");
+        if (TextUtils.isEmpty(lastNameInput)){
+            textInputLastName.setError("Last Name is required.");
             return;
         }
 
-        if (TextUtils.isEmpty(email)){
-            editEmail.setError("Email is required.");
+        if (TextUtils.isEmpty(emailInput)){
+            textInputEmail.setError("Email is required.");
             return;
         }
 
-        if (TextUtils.isEmpty(password)){
-            editPassword.setError("Password is required.");
+        if (TextUtils.isEmpty(passwordInput)){
+            textInputPassword.setError("Password is required.");
             return;
         }
 
         if (password.length()<6){
-            editPassword.setError("Password must be at least 6 characters.");
+            textInputPassword.setError("Password must be at least 6 characters.");
             return;
         }
 
         if(password.equals(confirmPassword)==false) {
-            editConfirmPassword.setError("Passwords do not match");
+            textInputConfirmPassword.setError("Passwords do not match");
             return;
         }
 
@@ -93,21 +102,21 @@ public class Register extends AppCompatActivity {
 
         AccountManager accountManager = new AccountManager();
         HashMap<String,String> registerInfo  = new HashMap<String,String>();
-        registerInfo.put("username",username);
-        registerInfo.put("firstName",firstName);
-        registerInfo.put("lastName",lastName);
-        registerInfo.put("email",email);
-        registerInfo.put("password",password);
-        registerInfo.put("confirmPassword",confirmPassword);
+        registerInfo.put("username",usernameInput);
+        registerInfo.put("firstName",firstNameInput);
+        registerInfo.put("lastName",lastNameInput);
+        registerInfo.put("email",emailInput);
+        registerInfo.put("password",passwordInput);
+        registerInfo.put("confirmPassword",confirmPasswordInput);
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        firebaseAuth.createUserWithEmailAndPassword(emailInput,passwordInput).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
                     Log.d("login","successful");
                     Toast.makeText(Register.this, "User created.", Toast.LENGTH_SHORT).show();
                     Log.d("login2","successful2");
-                    //startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    //startActivity(new Intent(getApplicationContext(), setupHealthInfo.class));
                     startActivity(goToSetupHealthInfo);
                 }
                 else{
