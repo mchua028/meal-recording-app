@@ -28,6 +28,8 @@ public class Register extends AppCompatActivity {
     }
 
     public void onCreateAcctBtnClick(View view) {
+        Intent goToSetupHealthInfo = new Intent(this, setupHealthInfo.class);
+
         // access to TextView
         TextView txtUsername = findViewById(R.id.txtUsername);
         TextView txtFirstName = findViewById(R.id.txtFirstName);
@@ -105,25 +107,20 @@ public class Register extends AppCompatActivity {
                     Log.d("login","successful");
                     Toast.makeText(Register.this, "User created.", Toast.LENGTH_SHORT).show();
                     Log.d("login2","successful2");
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    //startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    startActivity(goToSetupHealthInfo);
                 }
                 else{
                     Toast.makeText(Register.this,"Error!"+task.getException().getMessage(),Toast.LENGTH_SHORT).show();
-
                 }
-
             }
         });
 
     }
 
-
-
     public void onAlrHaveAcctBtnClick (View view) {
         // return to log in page
         startActivity(new Intent(view.getContext(), Login.class));
     }
-
-    //TODO: Connect to input health information
 
 }
