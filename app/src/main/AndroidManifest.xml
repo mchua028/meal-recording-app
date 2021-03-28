@@ -17,6 +17,7 @@
         <activity
             android:name=".GoogleLogin"
             android:exported="true"></activity>
+        <activity android:name=".setupHealthInfo" />
         <activity android:name=".LoginOrRegister">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
