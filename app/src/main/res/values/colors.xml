@@ -14,4 +14,6 @@
     <color name="dark_blue_grey">#687E93</color>
     <color name="selected_fragment">#324150</color>
     <color name="dark_grey">#3C3F41</color>
+
+    <color name="default_background">#FAFAFA</color>
 </resources>
