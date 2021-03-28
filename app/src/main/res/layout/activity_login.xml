@@ -63,7 +63,7 @@
         android:id="@+id/login_forgotPassword"
         android:layout_width="129dp"
         android:layout_height="37dp"
-        android:layout_marginEnd="92dp"
+        android:layout_marginEnd="80dp"
         android:background="@android:color/transparent"
         android:text="@string/forgot_password"
         android:textAlignment="viewStart"
