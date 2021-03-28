@@ -124,4 +124,6 @@ public class Register extends AppCompatActivity {
         startActivity(new Intent(view.getContext(), Login.class));
     }
 
+    //TODO: Connect to input health information
+
 }

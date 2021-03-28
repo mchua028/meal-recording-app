@@ -33,6 +33,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     View headerView;
     TextView textViewUsername;
 
+    // TODO: Change password
+    // TODO: Verify email
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("helloooooooooo1","hi2");
