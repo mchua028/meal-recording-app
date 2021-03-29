@@ -36,13 +36,13 @@
             android:text="Upload or Take a Picture" />
 
         <Button
-            android:id="@+id/inputMealBtn"
+            android:id="@+id/inputDetailsBtn"
             android:layout_width="360dp"
             android:layout_height="47dp"
             android:layout_below="@id/uploadPictureBtn"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
-            android:onClick="onInputMealBtnClick"
+            android:onClick="onInputDetailsBtnClick"
             android:textColor="@color/white"
             app:backgroundTint="@color/button_grey"
             app:iconTint="@color/button_grey"
@@ -52,7 +52,7 @@
             android:id="@+id/myCaloriesTodayTxt"
             android:layout_width="360dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/inputMealBtn"
+            android:layout_below="@id/inputDetailsBtn"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/spinner_border"
@@ -74,7 +74,7 @@
             android:id="@+id/imageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/inputMealBtn"
+            android:layout_below="@id/inputDetailsBtn"
             android:layout_marginTop="13dp"
             android:layout_marginRight="48dp"
             android:scaleX="1.2"
