@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_my_calories_instant"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Instant"
+        android:textColor="@color/button_grey"
+        android:textSize="30dp"
+        android:layout_centerInParent="true" />
+
+    <Button
+        android:id="@+id/launchCameraBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:layout_marginLeft="145dp"
+        android:text="Open Camera"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="196dp"
+        android:layout_height="226dp"
+        android:layout_below="@id/launchCameraBtn"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"/>
+
+</RelativeLayout>
