@@ -1,16 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginTop="70dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:text="My Calories"
-        android:textSize="30sp" />
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/picture_description"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="10dp"
+            android:text="Take a picture or input details of your meal for a summary of your meal's calories!"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/uploadPictureBtn"
+            android:layout_width="360dp"
+            android:layout_height="47dp"
+            android:layout_below="@id/picture_description"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:onClick="onUploadPictureBtnClick"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/button_grey"
+            app:iconTint="@color/button_grey"
+            android:text="Upload or Take a Picture" />
+
+        <Button
+            android:id="@+id/inputDetailsBtn"
+            android:layout_width="360dp"
+            android:layout_height="47dp"
+            android:layout_below="@id/uploadPictureBtn"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:onClick="onInputDetailsBtnClick"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/button_grey"
+            app:iconTint="@color/button_grey"
+            android:text="Input Meal Details" />
+
+        <TextView
+            android:id="@+id/myCaloriesTodayTxt"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/inputDetailsBtn"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/spinner_border"
+            android:text=" My Calories Today \n \n \n"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/myCaloriesTodayMiniTxt"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/myCaloriesTodayTxt"
+            android:layout_marginTop="-95dp"
+            android:layout_marginLeft="10dp"
+            android:text="  Maximum Calories Today \n  Calories Eaten \n  Remaining Calories"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/inputDetailsBtn"
+            android:layout_marginTop="13dp"
+            android:layout_marginRight="48dp"
+            android:scaleX="1.2"
+            android:scaleY="1.2"
+            android:layout_alignParentRight="true"
+            app:srcCompat="@drawable/baseline_create_black_18dp" />
+
+        <TextView
+            android:id="@+id/myCaloriesThisWeekTxt"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/myCaloriesTodayTxt"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/spinner_border"
+            android:text=" My Calories This Week \n \n \n \n \n \n \n \n \n"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/myCaloriesThisWeekMiniTxt"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/myCaloriesThisWeekTxt"
+            android:layout_marginTop="-100dp"
+            android:layout_marginLeft="10dp"
+            android:text="  Average calories this week \n  Good Job! You have met..."
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/backToTopBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="47dp"
+            android:layout_below="@id/myCaloriesThisWeekTxt"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:onClick="onBackToTopBtnClick"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/button_grey"
+            app:iconTint="@color/button_grey"
+            android:text="Back to Top" />
+
+    </RelativeLayout>
+</ScrollView>

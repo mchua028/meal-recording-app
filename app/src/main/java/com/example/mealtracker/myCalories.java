@@ -1,9 +1,12 @@
 package com.example.mealtracker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,7 +32,18 @@ public class myCalories extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_my_calories, container, false);
         getActivity().setTitle("My Calories");
-        return inflater.inflate(R.layout.fragment_my_calories, container, false);
+
+        // Upload Picture button
+        Button uploadPictureBtn = (Button) v.findViewById(R.id.uploadPictureBtn);
+        uploadPictureBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(v.getContext(), uploadPicture.class));
+            }
+
+        });
+        return v;
     }
 }
