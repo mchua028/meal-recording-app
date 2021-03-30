@@ -26,8 +26,6 @@ public class HealthInfoManager {
 	}
 
 	private HealthInfoManager HealthInfoManager() {
-		//HashMap<String, String> info = new HashMap<String, String>();
-		//info.put()
 		// TODO - implement com.example.healthtracker.business_layer.HealthInfoManager.com.example.healthtracker.business_layer.HealthInfoManager
 		throw new UnsupportedOperationException();
 	}
@@ -50,6 +48,7 @@ public class HealthInfoManager {
 		// TODO - implement com.example.healthtracker.business_layer.HealthInfoManager.setHealthInfo
 		throw new UnsupportedOperationException();
 	}
+
 
 	public void updateCache() {
 		// TODO - implement com.example.healthtracker.business_layer.HealthInfoManager.updateCache
