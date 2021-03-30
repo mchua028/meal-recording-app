@@ -14,15 +14,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".EditCalories"></activity>
-        <activity android:name=".Login" />
+        <activity android:name=".Login"></activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".Register" />
         <activity
             android:name=".GoogleLogin"
-            android:exported="true" />
+            android:exported="true"></activity>
         <activity android:name=".setupHealthInfo" />
-        <activity android:name=".uploadPicture" />
+        <activity android:name=".uploadPicture"/>
         <activity android:name=".LoginOrRegister">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
