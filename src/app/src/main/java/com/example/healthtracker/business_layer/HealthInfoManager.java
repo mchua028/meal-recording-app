@@ -43,7 +43,7 @@ public class HealthInfoManager {
 		healthInfo.setGender(gender.valueOf(info.get("gender")));
 		Activity activity = new Activity();
 		healthInfo.setDailyActivityLevel(activity.valueOf(info.get("activity")));
-		healthInfo.setSuggestCalorieIntake(info.get("suggested calorie intake"));
+		healthInfo.calculateCalorie();
 
 		// TODO - implement com.example.healthtracker.business_layer.HealthInfoManager.setHealthInfo
 		throw new UnsupportedOperationException();

@@ -68,6 +68,19 @@ public class HealthInfo {
 		this.suggestCalorieIntake = suggestCalorieIntake;
 	}
 
+	public void calculateCalorie() {
+		private int bmi;
+		bmi = weight/(height*height);
+		if (getGender()==Gender.FEMALE){
+
+		}
+
+		if (getGender()==Gender.MALE){
+
+		}
+
+		//setSuggestCalorieIntake()
+	}
 	public void addToServer() {
 		// TODO - implement com.example.healthtracker.data_access_layer.HealthInfo.addToServer
 		throw new UnsupportedOperationException();
@@ -83,6 +96,15 @@ public class HealthInfo {
 	 * @param newInfo
 	 */
 	public void updateAttributes(HashMap<String, String> newInfo) {
+		setHeight(newInfo.get("height"));
+		setWeight(info.get("weight"));
+		setAge(info.get("age"));
+		setGoalWeight(info.get("goal weight"));
+		Gender gender = new Gender():
+		setGender(gender.valueOf(info.get("gender")));
+		Activity activity = new Activity();
+		setDailyActivityLevel(activity.valueOf(info.get("activity")));
+		calculateCalorie();
 		// TODO - implement com.example.healthtracker.data_access_layer.HealthInfo.updateAttributes
 		throw new UnsupportedOperationException();
 	}
