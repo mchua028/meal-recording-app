@@ -6,11 +6,74 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:text="Food Recommendations"
-        android:textSize="30sp"/>
+        android:layout_marginTop="70dp">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
+            <TextView
+                android:id="@+id/remainingCaloriesTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_marginLeft="10dp"
+                android:text="Remaining calories for today:"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/foodRecommendationsTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/remainingCaloriesTxt"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="Foods containing nutrients that I need:"
+                android:textSize="30sp"
+                android:textStyle="bold"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="360dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/foodRecommendationsTxt"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp">
+
+                <TextView
+                    android:id="@+id/vitaminNameTxt"
+                    android:layout_width="360dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/foodRecommendationsTxt"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:text="Vitamin name"
+                    android:textSize="25sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/foodsLabel"
+                    android:layout_width="360dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/vitaminNameTxt"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:text="Foods containing Vitamin name:
+                    \n1.
+                    \n2.
+                    \n3.
+                    \n4.
+                    \n5.
+                    \n6.
+                    \n7.
+                    \n8.
+                    \n9.
+                    \n10."
+                    android:textSize="15sp"/>
+
+            </androidx.cardview.widget.CardView>
+
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>

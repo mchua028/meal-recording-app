@@ -124,10 +124,11 @@ public class uploadPicture extends AppCompatActivity {
                             IMPORT_FRAGMENT_ID = bottomNav.getSelectedItemId();
                             break;
                         case R.id.nav_cancel:
-                            //Intent intent = new Intent(uploadPicture.this, MainActivity.class);
-                            //startActivity(intent);
-                            finish();
+                            Intent intent = new Intent(uploadPicture.this, MainActivity.class);
+                            startActivity(intent);
+                            //finish();
                             // selectedFragment = new CancelFragment();
+                            // TODO: fix this or try to put a cancel button
                             break;
                     }
 
