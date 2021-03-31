@@ -35,16 +35,16 @@ public class CameraFragment extends Fragment {
                 Log.d(TAG, "onClick: launching camera.");
 
                 //if (((uploadPicture)getActivity()).getCurrentTabNumber() == uploadPicture.INSTANT_FRAGMENT_ID) {
-                    //Log.d(TAG, "onClick: first if");
-                    if (((uploadPicture)getActivity()).checkPermissions(Permissions.CAMERA_PERMISSION[0])) {
-                        Log.d(TAG, "onClick: starting camera.");
-                        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
-                    } else {
-                        Intent intent = new Intent(getActivity(), uploadPicture.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                    }
+                //Log.d(TAG, "onClick: first if");
+                if (((uploadPicture)getActivity()).checkPermissions(Permissions.CAMERA_PERMISSION[0])) {
+                    Log.d(TAG, "onClick: starting camera.");
+                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
+                } else {
+                    Intent intent = new Intent(getActivity(), uploadPicture.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
                 //}
             }
         });

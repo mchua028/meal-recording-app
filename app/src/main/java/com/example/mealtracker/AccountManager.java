@@ -60,8 +60,6 @@ public class AccountManager {
             }
         });
         Log.d("login","successful");
-
-
          */
         return true;
 
@@ -77,7 +75,7 @@ public class AccountManager {
      * @param password
      */
     public boolean logInAccount(String email, String password) {
-      //  firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new onCompleteListener<AuthResult>);
+        //  firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new onCompleteListener<AuthResult>);
         return true;
 
     }
