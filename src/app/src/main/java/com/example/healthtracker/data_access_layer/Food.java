@@ -11,6 +11,10 @@ public class Food {
 		return this.name;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public void setNutrients(Nutrient nutrients) {
 		this.nutrients = nutrients;
 	}
@@ -21,6 +25,10 @@ public class Food {
 
 	public void setActualIntake(double actualIntake) {
 		this.actualIntake = actualIntake;
+	}
+
+	public int getSuggestedIntake() {
+		return suggestedIntake;
 	}
 
 	public void setSuggestedIntake(int suggestedIntake) {
@@ -55,6 +63,7 @@ public class Food {
 	}
 
 	public void addFoodToServer() {
+
 		// TODO - implement com.example.healthtracker.data_access_layer.Food.addFoodToServer
 		throw new UnsupportedOperationException();
 	}

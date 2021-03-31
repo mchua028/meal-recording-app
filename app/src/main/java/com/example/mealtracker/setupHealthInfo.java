@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class setupHealthInfo extends AppCompatActivity {
@@ -24,6 +25,8 @@ public class setupHealthInfo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup_health_info);
+
+
 
         // Gender dropdown box
         Spinner gender_spinner = (Spinner) findViewById(R.id.gender_spinner);
@@ -81,6 +84,10 @@ public class setupHealthInfo extends AppCompatActivity {
 
     public void onSubmitBtnClick (View view) {
         // TODO: go to control logic - check input
+        HealthInfoManager healthInfoManager = new HealthInfoManager();
+        HashMap<String, String> info = new HashMap<String, String>();
+        healthInfoManager.setHealthInfo(info);
+
         Toast.makeText(view.getContext(), "Registration successful", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
         // TODO: save to database or change database data
