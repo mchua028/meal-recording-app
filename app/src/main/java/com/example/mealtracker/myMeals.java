@@ -15,6 +15,8 @@ public class myMeals extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getActivity().setTitle("My Meals");
+
+        // TODO: get real data from database
         return inflater.inflate(R.layout.fragment_my_meals, container, false);
     }
 }
