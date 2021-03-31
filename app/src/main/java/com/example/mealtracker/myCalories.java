@@ -36,13 +36,21 @@ public class myCalories extends Fragment {
         getActivity().setTitle("My Calories");
 
         // Upload Picture button
-        Button uploadPictureBtn = (Button) v.findViewById(R.id.uploadPictureBtn);
-        uploadPictureBtn.setOnClickListener(new View.OnClickListener() {
+        Button onUploadPictureBtn = (Button) v.findViewById(R.id.uploadPictureBtn);
+        onUploadPictureBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(v.getContext(), uploadPicture.class));
             }
+        });
 
+        // Manual input meal button
+        Button onInputDetailsBtnClick = (Button) v.findViewById(R.id.inputDetailsBtn);
+        onInputDetailsBtnClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(v.getContext(), InputFoodDetails.class));
+            }
         });
         return v;
     }

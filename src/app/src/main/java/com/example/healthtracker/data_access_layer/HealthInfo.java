@@ -92,7 +92,7 @@ public class HealthInfo {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param newInfo
 	 */
 	public void updateAttributes(HashMap<String, String> newInfo) {

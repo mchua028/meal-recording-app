@@ -4,24 +4,24 @@
     tools:ignore="UnusedIds">
 
     <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="Checked Color"
-        android:color="@color/dark_blue_grey"
-        android:state_checked="true"/>
-    <item android:title="Unchecked Color"
-        android:color="@color/blue_grey" />
+        <item android:title="Checked Color"
+            android:color="@color/dark_blue_grey"
+            android:state_checked="true"/>
+        <item android:title="Unchecked Color"
+            android:color="@color/blue_grey" />
     </selector>
 
     <group
         android:id="@+id/group"
         android:checkableBehavior="single">
-            <item android:id="@+id/nav_myCalories"
-                android:title="@string/menu_my_calories"></item>
-            <item android:id="@+id/nav_myMeals"
-                android:title="@string/menu_my_meals"></item>
-            <item android:id="@+id/nav_foodRecommendations"
-                android:title="@string/menu_food_recommendations"></item>
-            <item android:id="@+id/nav_accountAndSettings"
-                android:title="@string/menu_account_and_settings"></item>
+        <item android:id="@+id/nav_myCalories"
+            android:title="@string/menu_my_calories"></item>
+        <item android:id="@+id/nav_myMeals"
+            android:title="@string/menu_my_meals"></item>
+        <item android:id="@+id/nav_foodRecommendations"
+            android:title="@string/menu_food_recommendations"></item>
+        <item android:id="@+id/nav_accountAndSettings"
+            android:title="@string/menu_account_and_settings"></item>
     </group>
 
     <item android:id="@+id/OTHERS"

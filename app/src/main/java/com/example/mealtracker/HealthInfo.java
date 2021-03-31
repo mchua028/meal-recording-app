@@ -95,18 +95,18 @@ public class HealthInfo {
      *
      * @param newInfo
      */
-    /*public void updateAttributes(HashMap<String, String> newInfo) {
-        setHeight(newInfo.get("height"));
-        setWeight(info.get("weight"));
-        setAge(info.get("age"));
-        setGoalWeight(info.get("goal weight"));
-        Gender gender = new Gender();
-        setGender(gender.valueOf(info.get("gender")));
-        Activity activity = new Activity();
-        setDailyActivityLevel(activity.valueOf(info.get("activity")));
+    public void updateAttributes(HashMap<String, String> newInfo) {
+        setHeight(Double.parseDouble(newInfo.get("height")));
+        setWeight(Double.parseDouble(newInfo.get("weight")));
+        setAge(Integer.parseInt(newInfo.get("age")));
+        setGoalWeight(Double.parseDouble(newInfo.get("goal weight")));
+        //Gender gender = new Gender():
+        setGender(gender.valueOf(newInfo.get("gender")));
+        //Activity activity = new Activity();
+        setDailyActivityLevel(Activity.valueOf(newInfo.get("activity")));
         calculateCalorie();
         // TODO - implement com.example.healthtracker.data_access_layer.HealthInfo.updateAttributes
         throw new UnsupportedOperationException();
     }
-*/
+
 }
