@@ -99,7 +99,7 @@ public class Recommender {
 
     public void setRecommendedFoods(){
         for(String nutrient:lackedNutrients){
-            recommendedFoods.put(nutrient,Food.searchFoodsRichInNutrient(nutrient,10);
+            recommendedFoods.put(nutrient,Food.searchFoodsRichInNutrient(nutrient,10));
         }
     }
 

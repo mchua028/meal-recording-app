@@ -1,5 +1,7 @@
 package com.example.mealtracker;
 
+import java.util.ArrayList;
+
 public class Food {
 
     private String name;
@@ -77,7 +79,7 @@ public class Food {
      * @param nutrientName
      * @param top_k
      */
-    public static Food[] searchFoodsRichInNutrient(String nutrientName, int top_k) {
+    public static ArrayList<String> searchFoodsRichInNutrient(String nutrientName, int top_k) {
         // TODO - implement com.example.healthtracker.data_access_layer.Food.searchFoodsRichInNutrient
         throw new UnsupportedOperationException();
     }
