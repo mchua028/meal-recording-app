@@ -10,15 +10,16 @@ public class HealthInfoManager {
 
     public HealthInfo getHealthInfo() {
         HealthInfo healthInfo = new HealthInfo();
-        /*return healthInfo.getHeight(),
-        healthInfo.getWeight(),
-                healthInfo.getAge(),
-                healthInfo.getGoalWeight(),
-                healthInfo.getGender(),
-                healthInfo.getDailyActivityLevel(),
-                healthInfo.getSuggestCalorieIntake();*/
+        healthInfo.getHeight();
+        healthInfo.getWeight();
+        healthInfo.getAge();
+        healthInfo.getGoalWeight();
+        healthInfo.getGender();
+        healthInfo.getDailyActivityLevel();
+        healthInfo.getSuggestCalorieIntake();
+        return healthInfo;
         // TODO - implement com.example.mealtracker.business_layer.HealthInfoManager.getHealthInfo
-        throw new UnsupportedOperationException();
+
     }
 
     public static HealthInfoManager getSingleton() {

@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.util.*;
+
 public class foodRecommendations extends Fragment {
 
     @Nullable
@@ -16,5 +18,14 @@ public class foodRecommendations extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getActivity().setTitle("Food Recommendations");
         return inflater.inflate(R.layout.fragment_food_recommendations, container, false);
+        /*Recommender recommender = new Recommender();
+        recommender.setSuggestedNutrientAmt();
+        recommender.setActualNutrientAmt();
+        recommender.setLackedNutrients();
+        recommender.setRecommendedFoods();
+        HashMap<String, String> recommendedFoods = recommender.getRecommendedFoods();
+
+         */
+
     }
 }

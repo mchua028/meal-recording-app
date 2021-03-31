@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -13,8 +14,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.GoogleApi;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -23,7 +27,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-public class GoogleLogin extends AppCompatActivity {
+public class GoogleLogin extends AppCompatActivity{
 
     public static final int GOOGLE_SIGN_IN_CODE = 10005;
 
@@ -72,15 +76,17 @@ public class GoogleLogin extends AppCompatActivity {
 
         if (requestCode == GOOGLE_SIGN_IN_CODE) {
             Task<GoogleSignInAccount> signInTask = GoogleSignIn.getSignedInAccountFromIntent(data);
-
             try {
+                Log.d("google","trying to get google account");
                 GoogleSignInAccount signInAcc = signInTask.getResult(ApiException.class);
+                Log.d("google2","trying to get google account2");
 
                 AuthCredential authCredential = GoogleAuthProvider.getCredential(signInAcc.getIdToken(), null);
 
                 firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d("google","got google account");
                         Toast.makeText(getApplicationContext(), "Your Google Account is Connected to Meal Tracker", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     }
@@ -94,7 +100,8 @@ public class GoogleLogin extends AppCompatActivity {
                 //Toast.makeText(this, "Your Google Account is Connected to Meal Tracker", Toast.LENGTH_SHORT).show();
                 //startActivity(new Intent(this, MainActivity.class));
             } catch (ApiException e) {
-                e.printStackTrace();
+                Log.w("tag:","Google sign in failed", e);
+                //e.printStackTrace();
             }
         }
     }

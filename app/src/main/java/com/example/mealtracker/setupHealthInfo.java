@@ -2,12 +2,14 @@ package com.example.mealtracker;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -15,18 +17,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class setupHealthInfo extends AppCompatActivity {
 
+    private String gender, activity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup_health_info);
-
-
 
         // Gender dropdown box
         Spinner gender_spinner = (Spinner) findViewById(R.id.gender_spinner);
@@ -46,6 +49,7 @@ public class setupHealthInfo extends AppCompatActivity {
                 if (parent.getItemAtPosition(position).equals("Select a gender ")) {
                 } else {
                     String item = parent.getItemAtPosition(position).toString();
+                    gender = item;
                     Toast.makeText(parent.getContext(), "Selected gender: " + item, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -73,6 +77,7 @@ public class setupHealthInfo extends AppCompatActivity {
                 if (parent.getItemAtPosition(position).equals("Select an activity ")) {
                 } else {
                     String item = parent.getItemAtPosition(position).toString();
+                    activity = item;
                     Toast.makeText(parent.getContext(), "Selected activity: " + item, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -82,10 +87,36 @@ public class setupHealthInfo extends AppCompatActivity {
         });
     }
 
+    private TextInputLayout textInputHeight, textInputWeight, textInputAge, textInputGoalWeight;
+    private EditText editHeight, editWeight, editAge, editGoalWeight;
+
     public void onSubmitBtnClick (View view) {
         // TODO: go to control logic - check input
+        textInputHeight = findViewById(R.id.height_txt);
+        textInputWeight = findViewById(R.id.weight_txt);
+        textInputAge = findViewById(R.id.age_txt);
+        textInputGoalWeight = findViewById(R.id.goal_weight_txt);
+
+        editHeight = findViewById(R.id.editHeight);
+        editWeight = findViewById(R.id.editWeight);
+        editAge = findViewById(R.id.editAge);
+        editGoalWeight = findViewById(R.id.editGoalWeight);
+
+        //get string from input
+        String heightInput = textInputHeight.getEditText().getText().toString().trim();
+        String weightInput = textInputWeight.getEditText().getText().toString().trim();
+        String ageInput = textInputAge.getEditText().getText().toString().trim();
+        String goalWeightInput = textInputGoalWeight.getEditText().getText().toString().trim();
+
         HealthInfoManager healthInfoManager = new HealthInfoManager();
         HashMap<String, String> info = new HashMap<String, String>();
+        info.put("height", heightInput);
+        info.put("weight", weightInput);
+        info.put("age", ageInput);
+        info.put("goal weight", goalWeightInput);
+        info.put("gender", gender);
+        info.put("activity", activity);
+
         healthInfoManager.setHealthInfo(info);
 
         Toast.makeText(view.getContext(), "Registration successful", Toast.LENGTH_SHORT).show();

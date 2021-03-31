@@ -78,6 +78,7 @@
         android:layout_marginLeft="10dp">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editAge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Age" />
@@ -92,6 +93,7 @@
         android:layout_marginLeft="10dp">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editHeight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Height                                                            cm" />
@@ -106,6 +108,7 @@
         android:layout_marginLeft="10dp">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editWeight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Weight                                                            kg" />
@@ -120,6 +123,7 @@
         android:layout_marginLeft="10dp">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editGoalWeight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Goal Weight                                                   kg" />
