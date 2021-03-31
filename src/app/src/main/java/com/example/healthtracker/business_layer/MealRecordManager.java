@@ -106,4 +106,7 @@ public class MealRecordManager {
 		throw new UnsupportedOperationException();
 	}
 
+	public Nutrients calculateNutrientRemaining(){
+
+	}
 }
