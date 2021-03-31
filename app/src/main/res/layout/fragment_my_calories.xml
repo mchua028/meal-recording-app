@@ -104,7 +104,7 @@
             android:text="  Average calories this week \n  Good Job! You have met..."
             android:textSize="20sp" />
 
-        <Button
+        <!--Button
             android:id="@+id/backToTopBtn"
             android:layout_width="wrap_content"
             android:layout_height="47dp"
@@ -115,7 +115,7 @@
             android:textColor="@color/white"
             app:backgroundTint="@color/button_grey"
             app:iconTint="@color/button_grey"
-            android:text="Back to Top" />
+            android:text="Back to Top" /-->
 
     </RelativeLayout>
 </ScrollView>
