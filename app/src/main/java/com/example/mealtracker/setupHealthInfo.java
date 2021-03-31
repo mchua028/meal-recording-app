@@ -2,6 +2,7 @@ package com.example.mealtracker;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import java.util.List;
 
 public class setupHealthInfo extends AppCompatActivity {
 
+    private String gender, activity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +49,7 @@ public class setupHealthInfo extends AppCompatActivity {
                 if (parent.getItemAtPosition(position).equals("Select a gender ")) {
                 } else {
                     String item = parent.getItemAtPosition(position).toString();
+                    gender = item;
                     Toast.makeText(parent.getContext(), "Selected gender: " + item, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -74,6 +77,7 @@ public class setupHealthInfo extends AppCompatActivity {
                 if (parent.getItemAtPosition(position).equals("Select an activity ")) {
                 } else {
                     String item = parent.getItemAtPosition(position).toString();
+                    activity = item;
                     Toast.makeText(parent.getContext(), "Selected activity: " + item, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -110,6 +114,8 @@ public class setupHealthInfo extends AppCompatActivity {
         info.put("weight", weightInput);
         info.put("age", ageInput);
         info.put("goal weight", goalWeightInput);
+        info.put("gender", gender);
+        info.put("activity", activity);
 
         healthInfoManager.setHealthInfo(info);
 
