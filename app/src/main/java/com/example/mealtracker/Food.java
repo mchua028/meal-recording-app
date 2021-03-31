@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Food {
 
     private String name;
-    private String nutrients;
+    private Nutrient nutrients;
     private double actualIntake = 0;
     private int suggestedIntake = 0;
 
@@ -17,7 +17,7 @@ public class Food {
         this.name = name;
     }
 
-    public void setNutrients(String nutrients) {
+    public void setNutrients(Nutrient nutrients) {
         this.nutrients = nutrients;
     }
 
@@ -75,7 +75,7 @@ public class Food {
         throw new UnsupportedOperationException();
     }
 */
-    public String getNutrients() {
+    public Nutrient getNutrients() {
         return this.nutrients;
     }
 

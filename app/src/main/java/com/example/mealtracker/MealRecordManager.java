@@ -12,6 +12,8 @@ public class MealRecordManager {
         return this.singleton;
     }
 
+    private ArrayList<MealRecord> mealRecord = new ArrayList<MealRecord>();
+
     /**
      *
      * @param foodName
@@ -26,9 +28,9 @@ public class MealRecordManager {
      *
      * @param foods
      */
-    public void addMealRecord(Food[] foods) {
+    public void addMealRecord(Food foods) {
         MealRecord mealRecord = new MealRecord();
-        mealRecord.updateFood(foods);
+        mealRecord.getFoods().add(foods);
 
         // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.addMealRecord
         throw new UnsupportedOperationException();
@@ -60,10 +62,13 @@ public class MealRecordManager {
      * @param foodInfo
      */
     public void addFood(HashMap<String, String> foodInfo) {
-        Food food = new Food();
-        food.setName(foodInfo.get("name"));
-        food.setNutrients(foodInfo.get("nutrients"));
-        food.addFoodToServer();
+        Food newFood = new Food();
+        newFood.setName(foodInfo.get("name"));
+        Nutrient newFoodNutrients = new Nutrient();
+        newFood.setNutrients(newFoodNutrients);
+
+        //food.setNutrients(foodInfo.get("nutrients"));
+        //food.addFoodToServer();
         // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.addFood
         throw new UnsupportedOperationException();
     }
@@ -97,12 +102,35 @@ public class MealRecordManager {
     }
 
     public double calculateCalorieQuotaRemainingToday() {
-        Food food = new Food();
-        return food.getSuggestedIntake()-food.getActualIntake();
+        double calorieConsumed = 0;
+        for (int i=0; i<mealRecord.size(); i++){ //TODO - iterate through the meal records in that day
+            for (int j=0; j<mealRecord.get(i).getFoods().size(); j++) {
+                calorieConsumed += mealRecord.get(i).getNutrient().getCaloriePer100g() * mealRecord.get(i).getFoods().get(j).getActualIntake();
+            }
+        }
+        HealthInfo healthInfo = new HealthInfo();
+        double calorieSuggested = healthInfo.getSuggestCalorieIntake();
+        return calorieSuggested - calorieConsumed;
         // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.calculateCalorieQuotaRemainingToday
     }
 
-    /*public Nutrients calculateNutrientRemaining(){
+    public Nutrient calculateTotalNutrient(){
+        Nutrient totalConsumed = new Nutrient();
 
-    }*/
+        for (int i=0; i<mealRecord.size(); i++){
+            totalConsumed.setFat(totalConsumed.getFat()+mealRecord.get(i).getNutrient().getFat());
+            totalConsumed.setCholesterol(totalConsumed.getCholesterol()+mealRecord.get(i).getNutrient().getCholesterol());
+            totalConsumed.setSodium(totalConsumed.getSodium()+mealRecord.get(i).getNutrient().getSodium());
+            totalConsumed.setPotassium(totalConsumed.getPotassium()+mealRecord.get(i).getNutrient().getPotassium());
+            totalConsumed.setSugar(totalConsumed.getSugar()+mealRecord.get(i).getNutrient().getSugar());
+            totalConsumed.setDietaryFibre(totalConsumed.getDietaryFibre()+mealRecord.get(i).getNutrient().getDietaryFibre());
+            totalConsumed.setProtein(totalConsumed.getProtein()+mealRecord.get(i).getNutrient().getProtein());
+            totalConsumed.setCalcium(totalConsumed.getCalcium()+mealRecord.get(i).getNutrient().getCalcium());
+            totalConsumed.setVitaminC(totalConsumed.getVitaminC()+mealRecord.get(i).getNutrient().getVitaminC());
+            totalConsumed.setIron(totalConsumed.getIron()+mealRecord.get(i).getNutrient().getIron());
+            totalConsumed.setCobalamin(totalConsumed.getCobalamin()+mealRecord.get(i).getNutrient().getCobalamin());
+            totalConsumed.setMagnesium(totalConsumed.getMagnesium()+mealRecord.get(i).getNutrient().getMagnesium());
+        }
+        return totalConsumed;
+    }
 }
