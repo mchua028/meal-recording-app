@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class Recommender {
     //private ArrayList<String> nutrients = new ArrayList<String>();
-    private HashMap<String,Double> suggestedNutrientAmt = new HashMap<String,Integer>();
+    private HashMap<String,Double> suggestedNutrientAmt = new HashMap<String,Double>();
     private HashMap<String,Double> actualNutrientAmt;
     private ArrayList<String> lackedNutrients=new ArrayList<String>();
     private HashMap<String,ArrayList<String>> recommendedFoods;

@@ -1,8 +1,6 @@
 package com.example.mealtracker;
 
-import com.example.healthtracker.data_access_layer.Food;
-import com.example.healthtracker.data_access_layer.MealRecord;
-
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -22,7 +20,6 @@ public class MealRecordManager {
         Food food = new Food();
         return food.searchFood(foodName);
         // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.query
-        throw new UnsupportedOperationException();
     }
 
     /**
@@ -41,24 +38,23 @@ public class MealRecordManager {
      *
      * @param mealRecordId
      */
-    public void deleteMealRecord(double mealRecordId) {
-        MealRecord[] mealRecord = new MealRecord[]();
-        mealRecord[mealRecordId].deleteFromServer();
+    public void deleteMealRecord(int mealRecordId) {
+        ArrayList<MealRecord> mealRecord = new ArrayList<MealRecord>();
+        mealRecord.get(mealRecordId).deleteFromServer();
         // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.deleteMealRecord
-        throw new UnsupportedOperationException();
     }
 
     /**
      *
      * @param img
      */
-    public Food[] queryFoodInImage(Image img) {
-        Food[] foodImage = new Food[]();
+    /*public Food[] queryFoodInImage(Image img) {
+        ArrayList<Food> foodImage = new ArrayList<Food>();
         return foodImage.searchFoods(img);
         // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.queryFoodInImage
         throw new UnsupportedOperationException();
     }
-
+*/
     /**
      *
      * @param foodInfo
@@ -77,8 +73,9 @@ public class MealRecordManager {
      * @param startDate
      * @param endDate
      */
-    public MealRecord[] query(Date startDate, Date endDate) {
-        return mealRecord.queryByDate(Date startDate, Date endDate)
+    public ArrayList<MealRecord> query(Date startDate, Date endDate) {
+        ArrayList<MealRecord> mealRecord = new ArrayList<MealRecord>();
+        //return mealRecord.queryByDate(startDate, endDate);
         // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.query
         throw new UnsupportedOperationException();
     }
@@ -99,14 +96,13 @@ public class MealRecordManager {
         throw new UnsupportedOperationException();
     }
 
-    public int calculateCalorieQuotaRemainingToday() {
-        Food food = new food();
-        return food.getSuggestedIntake-food.getActualIntake;
+    public double calculateCalorieQuotaRemainingToday() {
+        Food food = new Food();
+        return food.getSuggestedIntake()-food.getActualIntake();
         // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.calculateCalorieQuotaRemainingToday
-        throw new UnsupportedOperationException();
     }
 
-    public Nutrients calculateNutrientRemaining(){
+    /*public Nutrients calculateNutrientRemaining(){
 
-    }
+    }*/
 }

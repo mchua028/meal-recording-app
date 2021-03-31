@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Food {
 
     private String name;
-    private Nutrient nutrients;
+    private String nutrients;
     private double actualIntake = 0;
     private int suggestedIntake = 0;
 
@@ -13,7 +13,11 @@ public class Food {
         return this.name;
     }
 
-    public void setNutrients(Nutrient nutrients) {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setNutrients(String nutrients) {
         this.nutrients = nutrients;
     }
 
@@ -28,6 +32,10 @@ public class Food {
     public void setSuggestedIntake(int suggestedIntake) {
         this.suggestedIntake = suggestedIntake;
     }
+    public double getSuggestedIntake() {
+       return suggestedIntake;
+    }
+
 
     /**
      *
@@ -61,16 +69,13 @@ public class Food {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     *
-     * @param img
-     */
-    public static Food[] searchFoods(Image img) {
+
+    /*public static Food[] searchFoods(Image img) {
         // TODO - implement com.example.healthtracker.data_access_layer.Food.searchFoods
         throw new UnsupportedOperationException();
     }
-
-    public Nutrient getNutrients() {
+*/
+    public String getNutrients() {
         return this.nutrients;
     }
 
