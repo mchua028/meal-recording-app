@@ -1,8 +1,19 @@
 package com.example.mealtracker;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class MealRecord {
+
+    private ArrayList<Food> foods = new ArrayList<Food>();
+
+    public ArrayList<Food> getFoods(){
+        return foods;
+    }
+
+    public void setFoods(ArrayList<Food> foods){
+        this.foods = foods;
+    }
 
     private long idInServer;
 
