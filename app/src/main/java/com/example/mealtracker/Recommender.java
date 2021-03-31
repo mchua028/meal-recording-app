@@ -62,8 +62,8 @@ public class Recommender {
 
     public void setActualNutrientAmt() {
         MealRecordManager mrm = new MealRecordManager();
-       // actualNutrientAmt = mrm.calculateNutrientRemaining();
-        actualNutrientAmt=actualNutrientAmt;
+        //actualNutrientAmt = mrm.calculateTotalNutrient();
+        //actualNutrientAmt=actualNutrientAmt;
     }
 
     public ArrayList<String> getLackedNutrients() {
