@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -52,6 +53,16 @@ public class myCalories extends Fragment {
                 startActivity(new Intent(v.getContext(), InputFoodDetails.class));
             }
         });
+
+        // Edit meal button
+        ImageButton onEditCaloriesBtnClick = (ImageButton) v.findViewById(R.id.editCaloriesBtn);
+        onEditCaloriesBtnClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(v.getContext(), editCalories.class));
+            }
+        });
+
         return v;
     }
 }
