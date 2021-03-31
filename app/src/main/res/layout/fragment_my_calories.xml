@@ -71,7 +71,7 @@
             android:textSize="20sp" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/editCaloriesBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/inputDetailsBtn"
