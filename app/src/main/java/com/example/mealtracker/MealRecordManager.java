@@ -1,8 +1,12 @@
 package com.example.mealtracker;
 
+import com.example.mealtracker.Exceptions.EmptyInputException;
+import com.example.mealtracker.Exceptions.EmptyResultException;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+
 
 public class MealRecordManager {
 
@@ -20,8 +24,12 @@ public class MealRecordManager {
      */
     public Food query(String foodName) {
         Food food = new Food();
-        return food.searchFood(foodName);
-        // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.query
+        try {
+            return food.searchFood(foodName);
+        } catch (EmptyInputException | EmptyResultException e) {
+            e.printStackTrace();
+        }
+        return new Food();
     }
 
     /**

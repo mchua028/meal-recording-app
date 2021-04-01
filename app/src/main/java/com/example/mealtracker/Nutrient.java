@@ -2,122 +2,143 @@ package com.example.mealtracker;
 
 public class Nutrient {
 
-    private float caloriePer100g;
-    private float fat;
-    private float cholesterol;
-    private float sodium;
-    private float potassium;
-    private float sugar;
+    private double caloriePer100g;
+    private double fat;
+    private double cholesterol;
+    private double sodium;
+    private double potassium;
+    private double sugar;
     private double dietaryFibre;
-    private float protein;
-    private float calcium;
-    private float vitaminC;
-    private float iron;
-    private float cobalamin;
-    private float magnesium;
+    private double protein;
+    private double calcium;
+    private double vitaminC;
+    private double iron;
+    private double cobalamin;
+    private double magnesium;
 
-    public float getCaloriePer100g() {
-        return this.caloriePer100g;
+    public Nutrient() {
     }
 
-    public void setCaloriePer100g(float caloriePer100g) {
+    public void setCaloriePer100g(double caloriePer100g) {
         this.caloriePer100g = caloriePer100g;
     }
 
-    public float getFat() {
-        return this.fat;
-    }
-
-    public void setFat(float fat) {
+    public void setFat(double fat) {
         this.fat = fat;
     }
 
-    public float getCholesterol() {
-        return this.cholesterol;
-    }
-
-    public void setCholesterol(float cholesterol) {
+    public void setCholesterol(double cholesterol) {
         this.cholesterol = cholesterol;
     }
 
-    public float getSodium() {
-        return this.sodium;
-    }
-
-    public void setSodium(float sodium) {
+    public void setSodium(double sodium) {
         this.sodium = sodium;
     }
 
-    public float getPotassium() {
-        return this.potassium;
-    }
-
-    public void setPotassium(float potassium) {
+    public void setPotassium(double potassium) {
         this.potassium = potassium;
     }
 
-    public float getSugar() {
-        return this.sugar;
-    }
-
-    public void setSugar(float sugar) {
+    public void setSugar(double sugar) {
         this.sugar = sugar;
-    }
-
-    public double getDietaryFibre() {
-        return this.dietaryFibre;
     }
 
     public void setDietaryFibre(double dietaryFibre) {
         this.dietaryFibre = dietaryFibre;
     }
 
-    public float getProtein() {
-        return this.protein;
-    }
-
-    public void setProtein(float protein) {
+    public void setProtein(double protein) {
         this.protein = protein;
     }
 
-    public float getCalcium() {
-        return this.calcium;
-    }
-
-    public void setCalcium(float calcium) {
+    public void setCalcium(double calcium) {
         this.calcium = calcium;
     }
 
-    public float getVitaminC() {
-        return this.vitaminC;
-    }
-
-    public void setVitaminC(float vitaminC) {
+    public void setVitaminC(double vitaminC) {
         this.vitaminC = vitaminC;
     }
 
-    public float getIron() {
-        return this.iron;
-    }
-
-    public void setIron(float iron) {
+    public void setIron(double iron) {
         this.iron = iron;
     }
 
-    public float getCobalamin() {
-        return this.cobalamin;
-    }
-
-    public void setCobalamin(float cobalamin) {
+    public void setCobalamin(double cobalamin) {
         this.cobalamin = cobalamin;
     }
 
-    public float getMagnesium() {
-        return this.magnesium;
-    }
-
-    public void setMagnesium(float magnesium) {
+    public void setMagnesium(double magnesium) {
         this.magnesium = magnesium;
     }
 
+    public double getCaloriePer100g() {
+        return caloriePer100g;
+    }
+
+    public double getFat() {
+        return fat;
+    }
+
+    public double getCholesterol() {
+        return cholesterol;
+    }
+
+    public double getSodium() {
+        return sodium;
+    }
+
+    public double getPotassium() {
+        return potassium;
+    }
+
+    public double getSugar() {
+        return sugar;
+    }
+
+    public double getDietaryFibre() {
+        return dietaryFibre;
+    }
+
+    public double getProtein() {
+        return protein;
+    }
+
+    public double getCalcium() {
+        return calcium;
+    }
+
+    public double getVitaminC() {
+        return vitaminC;
+    }
+
+    public double getIron() {
+        return iron;
+    }
+
+    public double getCobalamin() {
+        return cobalamin;
+    }
+
+    public double getMagnesium() {
+        return magnesium;
+    }
+
+    @Override
+    public String toString() {
+        return "Nutrient{" +
+                "caloriePer100g=" + caloriePer100g +
+                ", fat=" + fat +
+                ", cholesterol=" + cholesterol +
+                ", sodium=" + sodium +
+                ", potassium=" + potassium +
+                ", sugar=" + sugar +
+                ", dietaryFibre=" + dietaryFibre +
+                ", protein=" + protein +
+                ", calcium=" + calcium +
+                ", vitaminC=" + vitaminC +
+                ", iron=" + iron +
+                ", cobalamin=" + cobalamin +
+                ", magnesium=" + magnesium +
+                '}';
+    }
 }
