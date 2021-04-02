@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.lang.reflect.Array;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -21,52 +22,73 @@ import java.util.ArrayList;
  */
 @RunWith(AndroidJUnit4.class)
 public class MealRecordInstrumentedTest {
-    private String testUserName = "christang";
     private Database d = Database.getSingleton();
 
 
+//    @Test
+//    public MealRecord post_MealRecord() {
+//        ArrayList<Food> foods = getFoods();
+//        MealRecord mealRecord = null;
+//        try {
+//            mealRecord = new MealRecord(foods, LocalDateTime.now());
+//        } catch (ValueCannotBeNonPositiveException e) {
+//            e.printStackTrace();
+//        }
+//        d.postNewMealRecord(mealRecord);
+//        return mealRecord;
+//   }
+//
+//    private ArrayList<Food> getFoods() {
+//        String[] foodNames = new String[3];
+//        ArrayList<Food> foods = new ArrayList<>();
+//        foodNames[0] = "Steak";
+//        foodNames[1] = "Subway Sandwich";
+//        foodNames[2] = "Apple";
+//
+//        for (int i = 0; i < foodNames.length; i++) {
+//            try {
+//                Food newFood = Food.searchFood(foodNames[i]);
+//                newFood.setActualIntake(15);
+//                foods.add(newFood);
+//            } catch (EmptyInputException e) {
+//
+//            } catch (EmptyResultException e) {
+//                System.out.printf("%s is not found", foodNames[i]);
+//            }
+//
+//        }
+//        return foods;
+//    }
+
+//    @Test
+//    public void delete_MealRecord() {
+//        MealRecord m = post_MealRecord();
+//        try {
+//            m.deleteFromServer();
+//        } catch (RecordNotInServerException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public void get_MealRecord() {
+//
+//    }
+//
+//    @Test
+//    public void update_MealRecord() {
+//        MealRecord mealRecord = post_MealRecord();
+//        LocalDateTime dt = LocalDateTime.of(2019,11,30,15,16,17);
+//        mealRecord.setTime(dt);
+//        mealRecord.updateToServer();
+//    }
+
+    /**
+     * TODO: test multiple dates
+     */
     @Test
-    public MealRecord post_MealRecord() {
-        ArrayList<Food> foods = getFoods();
-        MealRecord mealRecord = null;
-        try {
-            mealRecord = new MealRecord(foods, LocalDateTime.now());
-        } catch (ValueCannotBeNonPositiveException e) {
-            e.printStackTrace();
-        }
-        d.postNewMealRecord(mealRecord);
-        return mealRecord;
-    }
-
-    private ArrayList<Food> getFoods() {
-        String[] foodNames = new String[3];
-        ArrayList<Food> foods = new ArrayList<>();
-        foodNames[0] = "Steak";
-        foodNames[1] = "Subway Sandwich";
-        foodNames[2] = "Apple";
-
-        for (int i = 0; i < foodNames.length; i++) {
-            try {
-                Food newFood = Food.searchFood(foodNames[i]);
-                newFood.setActualIntake(15);
-                foods.add(newFood);
-            } catch (EmptyInputException e) {
-
-            } catch (EmptyResultException e) {
-                System.out.printf("%s is not found", foodNames[i]);
-            }
-
-        }
-        return foods;
-    }
-
-    @Test
-    public void delete_MealRecord() {
-        MealRecord m = post_MealRecord();
-        try {
-            m.deleteFromServer();
-        } catch (RecordNotInServerException e) {
-            e.printStackTrace();
-        }
+    public void queryMealRecordByDate() {
+        LocalDate startDate = LocalDate.of(2021, 4, 2);
+        LocalDate endDate = LocalDate.of(2021, 4, 3);
+        MealRecord.queryByDate(startDate, endDate);
     }
 }

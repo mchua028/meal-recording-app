@@ -12,10 +12,10 @@ import androidx.annotation.RequiresApi;
 import com.example.mealtracker.Exceptions.RecordNotInServerException;
 import com.example.mealtracker.Exceptions.ValueCannotBeNonPositiveException;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 
 
 public class MealRecord {
@@ -39,6 +39,9 @@ public class MealRecord {
         this.time = time;
     }
 
+    public MealRecord() {
+    }
+
     /**
      * Get time attribute as formatted date time.
      * @return String, formattedDateTime
@@ -48,6 +51,10 @@ public class MealRecord {
         DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
         String formattedDateTime = time.format(formatter);
         return formattedDateTime;
+    }
+
+    public void setTime(LocalDateTime time) {
+        this.time = time;
     }
 
     public String getId() {
@@ -77,20 +84,22 @@ public class MealRecord {
         Database.getSingleton().deleteMealRecord(this);
     }
 
+    //WANG1448
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void updateToServer() {
-        // TODO - implement com.example.healthtracker.data_access_layer.MealRecord.updateToServer
-        throw new UnsupportedOperationException();
+        Database.getSingleton().updateMealRecord(this);
     }
 
     /**
-     *
-     * @param startDate
-     * @param endDate
+     * @param startDate LocalDate
+     * @param endDate, LocalDate
+     * @Author: WANG1448
      */
-    public static MealRecord[] queryByDate(Date startDate, Date endDate) {
-        // TODO - implement com.example.healthtracker.data_access_layer.MealRecord.queryByDate
-        throw new UnsupportedOperationException();
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static MealRecord[] queryByDate (LocalDate startDate, LocalDate endDate){
+        return Database.getSingleton().queryByDate(startDate, endDate);
     }
+
 
     /**
      *
@@ -121,6 +130,10 @@ public class MealRecord {
 
         // TODO - implement com.example.healthtracker.data_access_layer.MealRecord.getNutrient
 
+    }
+
+    public void addFood(Food food) {
+        foods.add(food);
     }
 
 }
