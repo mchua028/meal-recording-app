@@ -1,11 +1,13 @@
-/**
- * Data access object related to Food
- * @Author: Tang Yuting
+/*
+  Data access object related to Food
+  @Author: Tang Yuting
  */
 
 
 package com.example.mealtracker;
 
+
+import androidx.annotation.RecentlyNonNull;
 
 import com.example.mealtracker.Exceptions.EmptyInputException;
 import com.example.mealtracker.Exceptions.EmptyResultException;
@@ -16,7 +18,6 @@ import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -71,7 +72,6 @@ public class Food {
      * @return Food, the searched food
      * @throws EmptyInputException when name is empty string
      * FIXME:
-     *  - Stackoverflow for Steak
      *  - the name of the food
      */
     public static Food searchFood(String name) throws EmptyInputException, EmptyResultException {
@@ -191,32 +191,8 @@ public class Food {
     }
 
     /**
-     * from https://stackoverflow.com/a/10752935/11180198
-     * @param is
-     * @return
+     * @return String displaying info of food
      */
-    private static String convertStreamToString(InputStream is) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
-
-        String line = null;
-        try {
-            while ((line = reader.readLine()) != null) {
-                sb.append(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return sb.toString();
-    }
-
-
     @Override
     public String toString() {
         return "Food{" +
