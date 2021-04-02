@@ -1,5 +1,5 @@
 /**
- * Database helper to access Firebase Realtime Database/
+ * Database helper to access Firebase Realtime Database.
  * @Author: Tang Yuting
  */
 package com.example.mealtracker;
@@ -91,13 +91,17 @@ public class Database {
     }
 
 
-//WANG1448
+    /**
+     *
+     * @param mealRecord MealRecord
+     * @Author: Wang Binli
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void updateMealRecord(MealRecord mealRecord) {
-        DatabaseReference mealRecordReference = this.mealRecordReference.child(mealRecord.getId());
-        DatabaseReference foodRecords = mealRecordReference.child("FoodRecords");
+        DatabaseReference mealRecordRefToEdit = this.mealRecordReference.child(mealRecord.getId());
+        DatabaseReference foodRecords = mealRecordRefToEdit.child("FoodRecords");
 
-        mealRecordReference.child("Datetime").setValue(mealRecord.getTimeString());
+        mealRecordRefToEdit.child("Datetime").setValue(mealRecord.getTimeString());
         foodRecords.removeValue();
         for (Food food: mealRecord.getFoods()) {
             DatabaseReference foodRecord = foodRecords.push();

@@ -7,8 +7,6 @@
 package com.example.mealtracker;
 
 
-import androidx.annotation.RecentlyNonNull;
-
 import com.example.mealtracker.Exceptions.EmptyInputException;
 import com.example.mealtracker.Exceptions.EmptyResultException;
 

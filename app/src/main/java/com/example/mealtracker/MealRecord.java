@@ -84,7 +84,9 @@ public class MealRecord {
         Database.getSingleton().deleteMealRecord(this);
     }
 
-    //WANG1448
+    /**
+     * @Author: Wang Binli
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void updateToServer() {
         Database.getSingleton().updateMealRecord(this);
