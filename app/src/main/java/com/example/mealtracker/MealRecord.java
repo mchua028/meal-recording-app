@@ -1,11 +1,65 @@
+/**
+ * Data access object
+ * @Author: Tang Yuting
+ */
+
 package com.example.mealtracker;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
+import com.example.mealtracker.Exceptions.ValueCannotBeNonPositiveException;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class MealRecord {
 
+public class MealRecord {
     private ArrayList<Food> foods = new ArrayList<Food>();
+    private LocalDateTime time;
+    private long id;
+
+    /**
+     * Constructor
+     * @param foods ArrayList of Food
+     * @param time LocalDateTime which the meal record refers to
+     * @throws ValueCannotBeNonPositiveException when there is food with actualIntake 0
+     */
+    public MealRecord(ArrayList<Food> foods, LocalDateTime time) throws ValueCannotBeNonPositiveException {
+        for (Food f: foods) {
+            if (f.getActualIntake() <= 0) {
+                throw new ValueCannotBeNonPositiveException();
+            }
+        }
+        this.foods = foods;
+        this.time = time;
+    }
+
+    /**
+     * Get time attribute as formatted date time.
+     * @return String, formattedDateTime
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public String getTimeString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+        String formattedDateTime = time.format(formatter);
+        return formattedDateTime;
+    }
+
+    public void setTime(LocalDateTime time) {
+        this.time = time;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public ArrayList<Food> getFoods(){
         return foods;
@@ -15,15 +69,8 @@ public class MealRecord {
         this.foods = foods;
     }
 
-    private long idInServer;
-
-    public long getIdInServer() {
-        return this.idInServer;
-    }
 
     public void addToServer() {
-        // TODO - implement com.example.healthtracker.data_access_layer.MealRecord.addToServer
-        throw new UnsupportedOperationException();
     }
 
     public void deleteFromServer() {

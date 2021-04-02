@@ -1,3 +1,9 @@
+/**
+ * Data access object related to Food
+ * @Author: Tang Yuting
+ */
+
+
 package com.example.mealtracker;
 
 
@@ -17,20 +23,15 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 
-/**
- * Data access object related to Food
- * @Author: Tang Yuting
- */
 public class Food {
     private String name;
     private Nutrient nutrients;
     private double actualIntake = 0;
     private int suggestedIntake = 0;
-
-    private static final int MAX_FOOD_SEARCHED= 5;
 
     public Food() {
 
@@ -69,15 +70,18 @@ public class Food {
      * @param name, String of the food name.
      * @return Food, the searched food
      * @throws EmptyInputException when name is empty string
-     * FIXME: the name of the food
+     * FIXME:
+     *  - Stackoverflow for Steak
+     *  - the name of the food
      */
     public static Food searchFood(String name) throws EmptyInputException, EmptyResultException {
-        name = name.replace(" ", "%"); // Due to syntax error in url
-        if (name.isEmpty()) throw new EmptyInputException();
-        String url_string = String.format("https://api.nal.usda.gov/fdc/v1/foods/search?api_key=DEMO_KEY&query=%s", name);
-        URL api_url = null;
         Food returnFood = new Food();
         returnFood.name = name;
+        if (name.isEmpty()) throw new EmptyInputException();
+        name = name.replace(" ", "%"); // Due to syntax error in url
+        String url_string = String.format("https://api.nal.usda.gov/fdc/v1/foods/search?api_key=DEMO_KEY&query=%s", name);
+        URL api_url = null;
+
         try {
             api_url = new URL(url_string);
         } catch (MalformedURLException e) {
@@ -88,12 +92,13 @@ public class Food {
             HttpURLConnection con = (HttpURLConnection) api_url.openConnection();
             con.setRequestMethod("GET");
             InputStream inputStream = con.getInputStream();
+
             JSONParser jsonParser = new JSONParser();
-            String jsonString = jsonParser.parse(new InputStreamReader(inputStream, "UTF-8")).toString();
+            String jsonString = jsonParser.parse(new InputStreamReader(inputStream, StandardCharsets.UTF_8)).toString();
+
             JSONObject jsonObject = new JSONObject(jsonString);
-            Nutrient nutrient = parseSearchFoodQuery(jsonObject);
-            returnFood.nutrients = nutrient;
-        } catch (IOException | ParseException | JSONException e) {
+            returnFood.nutrients = parseSearchFoodQuery(jsonObject);
+        } catch (IOException | ParseException | JSONException ignored) {
         }
         return returnFood;
     }
@@ -102,14 +107,15 @@ public class Food {
      * Parses json from food api on searching with keyword/food name.
      * @param jsonObject JSONObject to parse
      * @return Nutrient where the result is to stored
-     * @throws JSONException
+     * @throws JSONException when parsing error occurs
+     * @throws EmptyResultException when the food cannot be searched
      */
     private static Nutrient parseSearchFoodQuery(JSONObject jsonObject) throws JSONException, EmptyResultException {
         Nutrient nutrient = new Nutrient();
         JSONArray foods = jsonObject.getJSONArray("foods");
         JSONObject foodJson;
         try {
-            foodJson = foods.getJSONObject(0);
+            foodJson = foods.getJSONObject(1);
         } catch (JSONException e) {
             throw new EmptyResultException();
         }
@@ -117,18 +123,25 @@ public class Food {
         for (int i = 0; i < nutrients.length(); i++) {
             JSONObject n = nutrients.getJSONObject(i);
             String nutrientName = n.getString("nutrientName");
-            if (nutrientName.equals("Protein")) {
-                nutrient.setProtein(n.getDouble("value"));
-            } else if (nutrientName.equals("Total lipid (fat)")) {
-                nutrient.setFat(n.getDouble("value"));
-            } else if (nutrientName.equals("Energy")) {
-                nutrient.setCaloriePer100g(n.getDouble("value"));
-            } else if (nutrientName.equals("Sugars, total including NLEA")) {
-                nutrient.setSugar(n.getDouble("value"));
-            } else if (nutrientName.equals("Sodium, Na")) {
-                nutrient.setSodium(n.getDouble("value"));
-            } else if (nutrientName.equals("Vitamin C, total ascorbic acid")) {
-                nutrient.setVitaminC(n.getDouble("value"));
+            switch (nutrientName) {
+                case "Protein":
+                    nutrient.setProtein(n.getDouble("value"));
+                    break;
+                case "Total lipid (fat)":
+                    nutrient.setFat(n.getDouble("value"));
+                    break;
+                case "Energy":
+                    nutrient.setCaloriePer100g(n.getDouble("value"));
+                    break;
+                case "Sugars, total including NLEA":
+                    nutrient.setSugar(n.getDouble("value"));
+                    break;
+                case "Sodium, Na":
+                    nutrient.setSodium(n.getDouble("value"));
+                    break;
+                case "Vitamin C, total ascorbic acid":
+                    nutrient.setVitaminC(n.getDouble("value"));
+                    break;
             }
         }
         return nutrient;

@@ -37,8 +37,8 @@ public class MealRecordManager {
      * @param foods
      */
     public void addMealRecord(Food foods) {
-        MealRecord mealRecord = new MealRecord();
-        mealRecord.getFoods().add(foods);
+//        MealRecord mealRecord = new MealRecord();
+//        mealRecord.getFoods().add(foods);
 
         // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.addMealRecord
         throw new UnsupportedOperationException();
