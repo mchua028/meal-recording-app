@@ -9,6 +9,7 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.mealtracker.Exceptions.RecordNotInServerException;
 import com.example.mealtracker.Exceptions.ValueCannotBeNonPositiveException;
 
 import java.time.LocalDateTime;
@@ -20,7 +21,7 @@ import java.util.Date;
 public class MealRecord {
     private ArrayList<Food> foods = new ArrayList<Food>();
     private LocalDateTime time;
-    private long id;
+    private String id;
 
     /**
      * Constructor
@@ -49,15 +50,11 @@ public class MealRecord {
         return formattedDateTime;
     }
 
-    public void setTime(LocalDateTime time) {
-        this.time = time;
-    }
-
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -70,12 +67,14 @@ public class MealRecord {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void addToServer() {
+        Database.getSingleton().postNewMealRecord(this);
     }
 
-    public void deleteFromServer() {
-        // TODO - implement com.example.healthtracker.data_access_layer.MealRecord.deleteFromServer
-        throw new UnsupportedOperationException();
+    public void deleteFromServer() throws RecordNotInServerException {
+        if (this.id.isEmpty()) throw new RecordNotInServerException();
+        Database.getSingleton().deleteMealRecord(this);
     }
 
     public void updateToServer() {

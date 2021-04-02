@@ -18,9 +18,12 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 
+/**
+ * Singleton.
+ */
 public class Database {
-    // this url is Yuting's for testing purpose
-    final String DATABASE_URL = "https://healthtracker-cz2006-default-rtdb.firebaseio.com";
+
+    static private Database singleton;
     private FirebaseDatabase database;
     // Database Reference: like the table in relational database
     private DatabaseReference userReference;
@@ -28,12 +31,18 @@ public class Database {
 
     /**
      * Constructor,
-     * @param username
      */
-    public Database(String username) {
+    private Database() {
         database = FirebaseDatabase.getInstance(DATABASE_URL);
         userReference = database.getReference("User").child(username);
         mealReference = userReference.child("MealRecords");
+    }
+
+    static public Database getSingleton() {
+        if (singleton == null) {
+            singleton = new Database();
+        }
+        return singleton;
     }
 
     /**
@@ -43,6 +52,7 @@ public class Database {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void postNewMealRecord(MealRecord mealRecord) {
         DatabaseReference newMealRecord = mealReference.push();
+        mealRecord.setId(newMealRecord.getKey());
         newMealRecord.child("Datetime").setValue(mealRecord.getTimeString());
         DatabaseReference foodRecords = newMealRecord.child("FoodRecords");
 
@@ -60,6 +70,12 @@ public class Database {
             foodRecord.child("VitaminC").setValue(nutrient.getVitaminC());
             foodRecord.child("weight").setValue(food.getActualIntake());
         }
+    }
+
+
+    public void deleteMealRecord(MealRecord mealRecord) {
+        DatabaseReference mealRecordReference = mealReference.child(mealRecord.getId());
+        mealRecordReference.setValue(null);  // the deletion operation mentioned in Firebase api
     }
 
 //    public void getUserRecord(String username) {

@@ -2,6 +2,7 @@ package com.example.mealtracker;
 
 import com.example.mealtracker.Exceptions.EmptyInputException;
 import com.example.mealtracker.Exceptions.EmptyResultException;
+import com.example.mealtracker.Exceptions.RecordNotInServerException;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,7 +51,11 @@ public class MealRecordManager {
      */
     public void deleteMealRecord(int mealRecordId) {
         ArrayList<MealRecord> mealRecord = new ArrayList<MealRecord>();
-        mealRecord.get(mealRecordId).deleteFromServer();
+        try {
+            mealRecord.get(mealRecordId).deleteFromServer();
+        } catch (RecordNotInServerException e) {
+            e.printStackTrace();
+        }
         // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.deleteMealRecord
     }
 

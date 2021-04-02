@@ -4,6 +4,7 @@ import androidx.test.runner.AndroidJUnit4;
 
 import com.example.mealtracker.Exceptions.EmptyInputException;
 import com.example.mealtracker.Exceptions.EmptyResultException;
+import com.example.mealtracker.Exceptions.RecordNotInServerException;
 import com.example.mealtracker.Exceptions.ValueCannotBeNonPositiveException;
 
 import org.junit.Test;
@@ -21,11 +22,11 @@ import java.util.ArrayList;
 @RunWith(AndroidJUnit4.class)
 public class MealRecordInstrumentedTest {
     private String testUserName = "christang";
-    private Database d = new Database(testUserName);
+    private Database d = Database.getSingleton();
 
 
     @Test
-    public void MealRecordPostTest() {
+    public MealRecord post_MealRecord() {
         ArrayList<Food> foods = getFoods();
         MealRecord mealRecord = null;
         try {
@@ -34,6 +35,7 @@ public class MealRecordInstrumentedTest {
             e.printStackTrace();
         }
         d.postNewMealRecord(mealRecord);
+        return mealRecord;
     }
 
     private ArrayList<Food> getFoods() {
@@ -56,5 +58,15 @@ public class MealRecordInstrumentedTest {
 
         }
         return foods;
+    }
+
+    @Test
+    public void delete_MealRecord() {
+        MealRecord m = post_MealRecord();
+        try {
+            m.deleteFromServer();
+        } catch (RecordNotInServerException e) {
+            e.printStackTrace();
+        }
     }
 }
