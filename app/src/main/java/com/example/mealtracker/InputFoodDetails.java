@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 import java.util.ArrayList;
 
 public class InputFoodDetails extends AppCompatActivity {
@@ -21,6 +23,9 @@ public class InputFoodDetails extends AppCompatActivity {
 
     private Button insertBtn;
     private Button removeBtn;
+
+    private TextInputLayout mText1;
+    private TextInputLayout mText2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,9 +77,7 @@ public class InputFoodDetails extends AppCompatActivity {
     // for recycle view
     public void createExampleList() {
         mExampleList = new ArrayList<>();
-        mExampleList.add(new ExampleItem("Line 1", "Line 2"));
-        mExampleList.add(new ExampleItem("Line 3", "Line 4"));
-        mExampleList.add(new ExampleItem("Line 5", "Line 6"));
+        mExampleList.add(new ExampleItem(mText1, mText2));
     }
 
     // for recycle view
@@ -91,7 +94,7 @@ public class InputFoodDetails extends AppCompatActivity {
     // insert card views
     public void insertItem(int position) {
         Log.d("insert item","position is" + position);
-        mExampleList.add(position, new ExampleItem("New item at position" + position, "This is Line 2"));
+        mExampleList.add(position, new ExampleItem(mText1, mText2));
         mAdapter.notifyItemInserted(position);
     }
 
