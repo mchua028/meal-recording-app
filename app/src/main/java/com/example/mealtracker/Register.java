@@ -34,7 +34,7 @@ public class Register extends AppCompatActivity {
 
     public void onCreateAcctBtnClick(View view) {
         Intent goToSetupHealthInfo = new Intent(getApplicationContext(), setupHealthInfo.class);
-        Intent goToVerifyEmailUI = new Intent(getApplicationContext(), VerifyEmailUI.class);
+        Intent goToVerifyRegisteredEmail = new Intent(getApplicationContext(), VerifyRegisteredEmail.class);
 
         // access to textInputLayout
         textInputUsername = findViewById(R.id.txtUsername);
@@ -120,10 +120,10 @@ public class Register extends AppCompatActivity {
                     //startActivity(new Intent(getApplicationContext(), setupHealthInfo.class));
                     Log.d("verifyemail","hello");
 
-                    //startActivity(goToVerifyEmailUI);
+                    startActivity(goToVerifyRegisteredEmail);
                     Log.d("verifyemail","successful");
 
-                    startActivity(goToSetupHealthInfo);
+                    //startActivity(goToSetupHealthInfo);
                 }
                 else{
                     Toast.makeText(Register.this,"Error!"+task.getException().getMessage(),Toast.LENGTH_SHORT).show();
