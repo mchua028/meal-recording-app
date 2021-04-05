@@ -124,4 +124,8 @@ public class AccountManager {
         throw new UnsupportedOperationException();
     }
 
+
+    public boolean verifyEmail(){
+        return true;
+    }
 }

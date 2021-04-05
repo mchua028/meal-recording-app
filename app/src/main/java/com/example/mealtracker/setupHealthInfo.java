@@ -120,6 +120,7 @@ public class setupHealthInfo extends AppCompatActivity {
         healthInfoManager.setHealthInfo(info);
 
         Toast.makeText(view.getContext(), "Registration successful", Toast.LENGTH_SHORT).show();
+
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
         // TODO: save to database or change database data
     }

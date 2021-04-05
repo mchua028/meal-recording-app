@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".VerifyEmailUI">
+
+    <Button
+        android:id="@+id/verifyBtn"
+        android:layout_width="360dp"
+        android:layout_height="47dp"
+        android:layout_below="@id/txtVerifiCode"
+        android:layout_marginTop="48dp"
+        android:layout_marginLeft="10dp"
+        android:onClick="onVerifyEmailClick"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/button_grey"
+        app:iconTint="@color/button_grey"
+        android:text="verify email" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtVerifiCode"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="49dp">
+
+        <EditText
+            android:id="@+id/editVerifiCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Verification Code"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="368dp"
+        android:layout_height="45dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="98dp"
+        android:layout_marginEnd="30dp"
+        android:text="A verification code has been sent to your email"
+        android:textAllCaps="false"
+        android:textColor="#393636"
+        android:textSize="20dp" />
+
+</RelativeLayout>

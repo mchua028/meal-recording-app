@@ -5,7 +5,6 @@
 package com.example.mealtracker;
 
 import android.os.Build;
-import android.provider.ContactsContract;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -16,16 +15,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.EventListener;
-import java.util.HashMap;
 
 
 /**
