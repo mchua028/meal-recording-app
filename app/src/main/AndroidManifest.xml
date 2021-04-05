@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".editCalories"></activity>
-        <activity android:name=".InputFoodDetails" />
+        <activity android:name=".InputFoodDetails"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity android:name=".Login" />
         <activity android:name=".MainActivity" />
         <activity android:name=".Register" />
