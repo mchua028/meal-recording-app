@@ -98,9 +98,6 @@ public class Register extends AppCompatActivity {
             return;
         }
 
-        //verify email
-
-
         AccountManager accountManager = new AccountManager();
         HashMap<String,String> registerInfo  = new HashMap<String,String>();
         registerInfo.put("username",usernameInput);
