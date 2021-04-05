@@ -1,6 +1,7 @@
 package com.example.mealtracker;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +18,16 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class accountAndSettings extends Fragment {
+
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
@@ -108,6 +115,25 @@ public class accountAndSettings extends Fragment {
     }
 
     public void onChangePWBtnClick (View view) {
-        // TODO: go to change password UI
+        String email = firebaseAuth.getCurrentUser().getEmail();
+        firebaseAuth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d("resetpwemail", "Email sent.");
+                            Toast.makeText(getActivity().getApplicationContext(),
+                                    "Reset password link sent to" + email,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Log.e("emailError", "sendResetPwEmail", task.getException());
+                            Toast.makeText(getActivity().getApplicationContext(),
+                                    "Failed to send reset password email.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+        firebaseAuth.signOut();
     }
 }

@@ -117,11 +117,13 @@ public class setupHealthInfo extends AppCompatActivity {
         info.put("gender", gender);
         info.put("activity", activity);
 
+        Log.d("setting","healthinfo");
+
         healthInfoManager.setHealthInfo(info);
+        Log.d("sethealthinfo","success");
 
         Toast.makeText(view.getContext(), "Registration successful", Toast.LENGTH_SHORT).show();
-
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        startActivity(new Intent(view.getContext(), MainActivity.class));
         // TODO: save to database or change database data
     }
 
