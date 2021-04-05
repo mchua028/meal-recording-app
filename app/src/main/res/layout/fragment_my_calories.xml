@@ -117,5 +117,11 @@
             app:iconTint="@color/button_grey"
             android:text="Back to Top" /-->
 
+        <View
+            android:id="@+id/empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_below="@id/myCaloriesThisWeekTxt" />
+
     </RelativeLayout>
 </ScrollView>

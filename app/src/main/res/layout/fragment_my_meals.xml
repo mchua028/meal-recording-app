@@ -57,6 +57,8 @@
         android:text="Click on the date to see meals and nutrition information for that particular date."
         android:textSize="20sp" />
 
+    <!-- TODO: Make the search accept input -->
+
     <SearchView
         android:id="@+id/searchView"
         android:layout_width="360dp"
