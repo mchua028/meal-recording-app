@@ -14,6 +14,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 
 public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleViewHolder> {
+
     private ArrayList<ExampleItem> mExampleList;
 
     public static class ExampleViewHolder extends RecyclerView.ViewHolder {

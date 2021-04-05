@@ -30,7 +30,6 @@ public class InputFoodDetails extends AppCompatActivity {
         createExampleList();
         buildRecyclerView();
 
-
         insertBtn = findViewById(R.id.insertBtn);
         removeBtn = findViewById(R.id.removeBtn);
 

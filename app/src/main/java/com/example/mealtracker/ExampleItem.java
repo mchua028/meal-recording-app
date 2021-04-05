@@ -1,6 +1,7 @@
 package com.example.mealtracker;
 
 public class ExampleItem {
+
     private String mText1;
     private String mText2;
 

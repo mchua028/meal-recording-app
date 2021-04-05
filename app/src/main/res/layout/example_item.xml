@@ -47,5 +47,6 @@
                 android:hint="Food Weight"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
+
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
