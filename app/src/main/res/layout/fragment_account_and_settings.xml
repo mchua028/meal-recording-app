@@ -77,26 +77,11 @@
           android:hint="Username" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- TODO: Display real email -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/email_txt"
-        android:layout_width="360dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/username_txt"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp">
-
-      <com.google.android.material.textfield.TextInputEditText
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:hint="Email" />
-    </com.google.android.material.textfield.TextInputLayout>
-
     <TextView
         android:id="@+id/gender_spinner_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/email_txt"
+        android:layout_below="@+id/username_txt"
         android:layout_marginLeft="13dp"
         android:layout_marginTop="5dp"
         android:text="Gender" />
