@@ -1,8 +1,13 @@
 package com.example.mealtracker;
 
+import com.example.mealtracker.Exceptions.EmptyInputException;
+import com.example.mealtracker.Exceptions.EmptyResultException;
+import com.example.mealtracker.Exceptions.RecordNotInServerException;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+
 
 public class MealRecordManager {
 
@@ -20,8 +25,12 @@ public class MealRecordManager {
      */
     public Food query(String foodName) {
         Food food = new Food();
-        return food.searchFood(foodName);
-        // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.query
+        try {
+            return food.searchFood(foodName);
+        } catch (EmptyInputException | EmptyResultException e) {
+            e.printStackTrace();
+        }
+        return new Food();
     }
 
     /**
@@ -29,8 +38,8 @@ public class MealRecordManager {
      * @param foods
      */
     public void addMealRecord(Food foods) {
-        MealRecord mealRecord = new MealRecord();
-        mealRecord.getFoods().add(foods);
+//        MealRecord mealRecord = new MealRecord();
+//        mealRecord.getFoods().add(foods);
 
         // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.addMealRecord
         throw new UnsupportedOperationException();
@@ -42,7 +51,11 @@ public class MealRecordManager {
      */
     public void deleteMealRecord(int mealRecordId) {
         ArrayList<MealRecord> mealRecord = new ArrayList<MealRecord>();
-        mealRecord.get(mealRecordId).deleteFromServer();
+        try {
+            mealRecord.get(mealRecordId).deleteFromServer();
+        } catch (RecordNotInServerException e) {
+            e.printStackTrace();
+        }
         // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.deleteMealRecord
     }
 

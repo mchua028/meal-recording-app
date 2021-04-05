@@ -33,7 +33,8 @@ public class Register extends AppCompatActivity {
     private EditText editUsername, editFirstName, editLastName, editEmail, editPassword, editConfirmPassword;
 
     public void onCreateAcctBtnClick(View view) {
-        Intent goToSetupHealthInfo = new Intent(this, setupHealthInfo.class);
+        Intent goToSetupHealthInfo = new Intent(getApplicationContext(), setupHealthInfo.class);
+        Intent goToVerifyEmailUI = new Intent(getApplicationContext(), VerifyEmailUI.class);
 
         // access to textInputLayout
         textInputUsername = findViewById(R.id.txtUsername);
@@ -117,6 +118,11 @@ public class Register extends AppCompatActivity {
                     Toast.makeText(Register.this, "User created.", Toast.LENGTH_SHORT).show();
                     Log.d("login2","successful2");
                     //startActivity(new Intent(getApplicationContext(), setupHealthInfo.class));
+                    Log.d("verifyemail","hello");
+
+                    //startActivity(goToVerifyEmailUI);
+                    Log.d("verifyemail","successful");
+
                     startActivity(goToSetupHealthInfo);
                 }
                 else{
