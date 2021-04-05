@@ -80,4 +80,8 @@ public class Login extends AppCompatActivity {
         startActivity(new Intent(view.getContext(), FBLogin.class));
     }
      */
+
+    public void onForgotPasswordButtonClick (View view){
+        startActivity(new Intent(view.getContext(), ForgotPassword.class));
+    }
 }

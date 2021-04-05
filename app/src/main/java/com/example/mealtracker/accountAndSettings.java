@@ -1,6 +1,8 @@
 package com.example.mealtracker;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +19,18 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class accountAndSettings extends Fragment {
+
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
@@ -59,6 +69,7 @@ public class accountAndSettings extends Fragment {
                     Toast.makeText(parent.getContext(), "Selected gender: " + item, Toast.LENGTH_SHORT).show();
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -86,6 +97,7 @@ public class accountAndSettings extends Fragment {
                     Toast.makeText(parent.getContext(), "Selected activity: " + item, Toast.LENGTH_SHORT).show();
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -104,10 +116,65 @@ public class accountAndSettings extends Fragment {
             }
 
         });
-        return v;
-    }
 
-    public void onChangePWBtnClick (View view) {
-        // TODO: go to change password UI
+        //change password button
+        Button changePWBtn = (Button) v.findViewById(R.id.change_password_btn);
+        changePWBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(v.getContext(), ChangePassword.class));
+
+                String email = firebaseAuth.getCurrentUser().getEmail();
+                /*firebaseAuth.sendPasswordResetEmail(email)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d("resetpwemail", "Email sent.");
+                                    Toast.makeText(getActivity().getApplicationContext(),
+                                            "Reset password link sent to" + email,
+                                            Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Log.e("emailError", "sendResetPwEmail", task.getException());
+                                    Toast.makeText(getActivity().getApplicationContext(),
+                                            "Failed to send reset password email.",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                firebaseAuth.getCurrentUser().reauthenticateAndRetrieveData();
+            }
+
+        });*/
+                /*AuthCredential credential = EmailAuthProvider
+                        .getCredential(email, "password1234");
+
+                // Prompt the user to re-provide their sign-in credentials
+                user.reauthenticate(credential)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    user.updatePassword(newPass).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Log.d(TAG, "Password updated");
+                                            } else {
+                                                Log.d(TAG, "Error password not updated")
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    Log.d(TAG, "Error auth failed")
+                                }
+                            }
+                        });
+
+                 */
+            }
+        });
+        return v;
+
     }
 }
