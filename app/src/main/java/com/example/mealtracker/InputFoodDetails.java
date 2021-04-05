@@ -8,14 +8,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 
 public class InputFoodDetails extends AppCompatActivity {
-    private ArrayList<ExampleItem> mExampleList;
+    private ArrayList<FoodDetailsExampleItem> mExampleList;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -77,7 +76,7 @@ public class InputFoodDetails extends AppCompatActivity {
     // for recycle view
     public void createExampleList() {
         mExampleList = new ArrayList<>();
-        mExampleList.add(new ExampleItem(mText1, mText2));
+        mExampleList.add(new FoodDetailsExampleItem(mText1, mText2));
     }
 
     // for recycle view
@@ -85,7 +84,7 @@ public class InputFoodDetails extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new ExampleAdapter(mExampleList);
+        mAdapter = new FoodDetailsExampleAdapter(mExampleList);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
@@ -94,7 +93,7 @@ public class InputFoodDetails extends AppCompatActivity {
     // insert card views
     public void insertItem(int position) {
         Log.d("insert item","position is" + position);
-        mExampleList.add(position, new ExampleItem(mText1, mText2));
+        mExampleList.add(position, new FoodDetailsExampleItem(mText1, mText2));
         mAdapter.notifyItemInserted(position);
     }
 
