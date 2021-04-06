@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -99,9 +100,14 @@ public class InputFoodDetails extends AppCompatActivity {
 
     // remove card views
     public void removeItem(int position) {
-        Log.d("remove item","position is" + position);
-        mExampleList.remove(position);
-        mAdapter.notifyItemRemoved(position);
+        if (getExampleListSize() != 0) {
+            Log.d("remove item","position is" + position);
+            mExampleList.remove(position);
+            mAdapter.notifyItemRemoved(position);
+        }
+        else {
+            Toast.makeText(this, "No more items to remove!",Toast.LENGTH_SHORT).show();
+        }
     }
 
     // get mExampleList size
