@@ -20,8 +20,6 @@ import com.squareup.picasso.Picasso;
 
 public class GalleryFragment extends Fragment {
 
-    // TODO: CONNECT WITH GALLERY
-
     private static final String TAG = "GalleryFragment";
 
     private static final int PICK_IMAGE_REQUEST = 1;

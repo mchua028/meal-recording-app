@@ -10,8 +10,6 @@
 
     <string name="log_out">LOG OUT</string>
 
-    <string name="facebook_app_id">848587729254369</string>
-    <string name="fb_login_protocol_scheme">fb848587729254369</string>
     <string name="email_or_username">Email or Username</string>
     <string name="password">Password</string>
     <string name="log_in">LOG IN</string>
