@@ -5,28 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Instant"
-        android:textColor="@color/button_grey"
-        android:textSize="30dp"
-        android:layout_centerInParent="true" />
-
     <Button
         android:id="@+id/launchCameraBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
-        android:layout_marginLeft="145dp"
+        android:layout_marginTop="70dp"
+        android:layout_centerHorizontal="true"
         android:text="Open Camera"/>
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="196dp"
-        android:layout_height="226dp"
+        android:id="@+id/cameraImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@id/launchCameraBtn"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginBottom="140dp"/>
 
 </RelativeLayout>

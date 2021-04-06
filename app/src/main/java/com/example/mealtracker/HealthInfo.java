@@ -1,5 +1,7 @@
 package com.example.mealtracker;
 
+import android.util.Log;
+
 import java.util.HashMap;
 
 public class HealthInfo {
@@ -10,7 +12,9 @@ public class HealthInfo {
     private double goalWeight;
     private Gender gender;
     private Activity dailyActivityLevel;
-    private int suggestCalorieIntake;
+    private double suggestCalorieIntake;
+
+    public HealthInfo(){};
 
     public double getHeight() {
         return this.height;
@@ -60,28 +64,43 @@ public class HealthInfo {
         this.dailyActivityLevel = dailyActivityLevel;
     }
 
-    public int getSuggestCalorieIntake() {
+    public double getSuggestCalorieIntake() {
         return this.suggestCalorieIntake;
     }
 
-    public void setSuggestCalorieIntake(int suggestCalorieIntake) {
+    public void setSuggestCalorieIntake(double suggestCalorieIntake) {
         this.suggestCalorieIntake = suggestCalorieIntake;
     }
 
     public void calculateCalorie() {
-        double bmi;
-        bmi = weight/(height*height);
-        if (getGender()==Gender.FEMALE){
+        Log.d("healthinfo", "into healthinfo");
+        double bmr = 0;
+        double new_weight;
 
+        if (getGender() == Gender.FEMALE) {
+            bmr = 9.247*getWeight() + 3.098*getHeight() - 4.330*getAge() + 447.593;
         }
 
-        if (getGender()==Gender.MALE){
-
+        else if (getGender() == Gender.MALE) {
+            bmr = 13.397*getWeight() + 4.799*getHeight() - 5.677*getAge() + 88.362;
         }
 
-        //setSuggestCalorieIntake()
+        if (getDailyActivityLevel() == Activity.HIGH) {
+            bmr = bmr * 1.8;
+        } else if (getDailyActivityLevel() == Activity.MODERATE) {
+            bmr = bmr * 1.65;
+        } else if (getDailyActivityLevel() == Activity.LITTLE) {
+            bmr = bmr * 1.55;
+        } else if (getDailyActivityLevel() == Activity.NONE){
+            bmr = bmr * 1.3;
+        }
+
+        bmr = bmr - getGoalWeight()/0.45 * 3500/30; //assume one month has 30 days, to lose 0.45kg, need to reduce 3500calories in total
+        suggestCalorieIntake = bmr;
+        Log.d("healthinfo", "finish healthinfo");
     }
-    public void addToServer() {
+
+    public void addToServer(){
         // TODO - implement com.example.healthtracker.data_access_layer.HealthInfo.addToServer
         throw new UnsupportedOperationException();
     }

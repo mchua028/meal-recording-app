@@ -6,18 +6,8 @@ import java.util.HashMap;
 
 public class SocialMediaHandler {
 
-	public HashMap<String, String> getFacebookInfo() {
-		// TODO - implement com.example.healthtracker.data_access_layer.SocialMediaHandler.getFacebookInfo
-		throw new UnsupportedOperationException();
-	}
-
 	public HashMap<String, String> getGoogleInfo() {
 		// TODO - implement com.example.healthtracker.data_access_layer.SocialMediaHandler.getGoogleInfo
-		throw new UnsupportedOperationException();
-	}
-
-	public Account verifyFacebookAccount() {
-		// TODO - implement com.example.healthtracker.data_access_layer.SocialMediaHandler.verifyFacebookAccount
 		throw new UnsupportedOperationException();
 	}
 

@@ -33,7 +33,8 @@ public class Register extends AppCompatActivity {
     private EditText editUsername, editFirstName, editLastName, editEmail, editPassword, editConfirmPassword;
 
     public void onCreateAcctBtnClick(View view) {
-        Intent goToSetupHealthInfo = new Intent(this, setupHealthInfo.class);
+        Intent goToSetupHealthInfo = new Intent(getApplicationContext(), setupHealthInfo.class);
+        Intent goToVerifyRegisteredEmail = new Intent(getApplicationContext(), VerifyRegisteredEmail.class);
 
         // access to textInputLayout
         textInputUsername = findViewById(R.id.txtUsername);
@@ -97,9 +98,6 @@ public class Register extends AppCompatActivity {
             return;
         }
 
-        //verify email
-
-
         AccountManager accountManager = new AccountManager();
         HashMap<String,String> registerInfo  = new HashMap<String,String>();
         registerInfo.put("username",usernameInput);
@@ -117,7 +115,12 @@ public class Register extends AppCompatActivity {
                     Toast.makeText(Register.this, "User created.", Toast.LENGTH_SHORT).show();
                     Log.d("login2","successful2");
                     //startActivity(new Intent(getApplicationContext(), setupHealthInfo.class));
-                    startActivity(goToSetupHealthInfo);
+                    Log.d("verifyemail","hello");
+
+                    startActivity(goToVerifyRegisteredEmail);
+                    Log.d("verifyemail","successful");
+
+                    //startActivity(goToSetupHealthInfo);
                 }
                 else{
                     Toast.makeText(Register.this,"Error!"+task.getException().getMessage(),Toast.LENGTH_SHORT).show();

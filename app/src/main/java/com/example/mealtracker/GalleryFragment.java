@@ -1,77 +1,80 @@
 package com.example.mealtracker;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class GalleryFragment extends Fragment {
+import com.squareup.picasso.Picasso;
 
-    // TODO: CONNECT WITH GALLERY
+
+public class GalleryFragment extends Fragment {
 
     private static final String TAG = "GalleryFragment";
 
-    // constants
-    private static final int NUM_GRID_COLUMNS = 3;
-
-    // widgets
-    private GridView gridView;
-    private ImageView galleryImage;
+    private static final int PICK_IMAGE_REQUEST = 1;
+    private static final int RESULT_OK = -1;
+    private Button mChooseImageBtn;
+    private Button mUploadBtn;
+    private ImageView mImageView;
     private ProgressBar mProgressBar;
-    private Spinner directorySpinner;
+    private Uri mImageUri;
 
-    // vars
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_calories_gallery, container, false);
-        galleryImage = (ImageView) view.findViewById(R.id.galleryImageView);
-        gridView = (GridView) view.findViewById(R.id.gridView);
-        directorySpinner = (Spinner) view.findViewById(R.id.spinner_directory);
-        mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
-        mProgressBar.setVisibility(View.GONE);
-        Log.d(TAG, "onCreateView: started.");
 
-        ImageView imageViewClose = (ImageView) view.findViewById(R.id.imageViewClose);
-        imageViewClose.setOnClickListener(new View.OnClickListener() {
+        Log.d(TAG, "onCreateView");
+
+        mChooseImageBtn = view.findViewById(R.id.chooseImageBtn);
+        mUploadBtn = view.findViewById(R.id.uploadBtn);
+        mImageView = view.findViewById(R.id.imageView);
+        mProgressBar = view.findViewById(R.id.progressBar);
+        
+        mChooseImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: closing the gallery fragment.");
-                getActivity().finish();
+                openFileChooser();
             }
         });
-
-        TextView nextScreen = (TextView) view.findViewById(R.id.textViewNext);
-        nextScreen.setOnClickListener(new View.OnClickListener() {
+        
+        mUploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: navigating to the final share screen.");
-
+                
             }
         });
+        
         return view;
     }
+    
+    private void openFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
 
-    private void setupGridView() {
-        Log.d(TAG, "setupGridView: directory chosen. " + Environment.getExternalStorageDirectory().getPath());
-        final String imgURLs = Environment.getExternalStorageDirectory().getPath();
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
+            mImageUri = data.getData();
 
-        // set the grid column width
-        int gridWidth = getResources().getDisplayMetrics().widthPixels;
-        int imageWidth = gridWidth/NUM_GRID_COLUMNS;
-        gridView.setColumnWidth(imageWidth);
-
-        // use the grid adapter to adapt the images to gridview
+        Picasso.with(getActivity()).load(mImageUri).into(mImageView);
+        }
     }
 }

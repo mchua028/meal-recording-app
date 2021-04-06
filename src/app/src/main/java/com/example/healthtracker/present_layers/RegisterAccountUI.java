@@ -30,14 +30,6 @@ public class RegisterAccountUI extends UI {
 
 	}
 
-	/**
-	 * return the personal information got from Facebook
-	 */
-	private void registerViaFacebook() {
-		// TODO - implement com.example.healthtracker.interfaces.RegisterAccountUI.registerViaFacebook
-		throw new UnsupportedOperationException();
-	}
-
 	private void registerViaGoogle() {
 		// TODO - implement com.example.healthtracker.interfaces.RegisterAccountUI.registerViaGoogle
 		throw new UnsupportedOperationException();

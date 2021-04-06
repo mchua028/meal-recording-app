@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="8dp"
+    android:divider="@android:color/transparent"
+    android:dividerHeight="0.0px"
+    android:clipToPadding="false"
+    android:clipChildren="false"
+    app:cardElevation="10dp"
+    app:cardPreventCornerOverlap="false"
+    app:cardCornerRadius="4dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="4dp">
+
+        <TextView
+            android:id="@+id/dateTxt"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:text="31/03/2021"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/dayText"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="-10dp"
+            android:text="Wednesday"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/mealRecord"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/dateTxt"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="10dp"
+            android:text="Food Item 1\nFood Item 2"
+            android:textSize="20sp"/>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

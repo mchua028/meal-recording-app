@@ -6,11 +6,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <TextView
+        android:id="@+id/remainingCaloriesTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:text="Food Recommendations"
-        android:textSize="30sp"/>
+        android:layout_marginTop="70dp"
+        android:layout_marginLeft="10dp"
+        android:text="Remaining calories for today:"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/foodRecommendationsTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/remainingCaloriesTxt"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="Foods containing nutrients that I need:"
+        android:textSize="30sp"
+        android:textStyle="bold"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/myMealsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/foodRecommendationsTxt"
+        android:padding="8dp"
+        android:clipToPadding="false"
+        android:scrollbars="vertical"
+        android:background="@color/real_grey"/>
 
 </RelativeLayout>
