@@ -2,9 +2,15 @@ package com.example.mealtracker;
 
 //import com.example.healthtracker.data_access_layer.HealthInfo;
 
+import android.util.Log;
+
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.HashMap;
 
 public class HealthInfoManager {
+
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     private static HealthInfoManager singleton = null;
 
@@ -36,17 +42,45 @@ public class HealthInfoManager {
      * @param info
      */
     public void setHealthInfo(HashMap<String, String> info) {
+        Log.d("manager", "went into sethealthinfo");
         HealthInfo healthInfo = new HealthInfo();
         healthInfo.setHeight(Double.parseDouble(info.get("height")));
         healthInfo.setWeight(Double.parseDouble(info.get("weight")));
         healthInfo.setAge(Integer.parseInt(info.get("age")));
         healthInfo.setGoalWeight(Double.parseDouble(info.get("goal weight")));
+        Log.d("manager", "sethealthinfo1");
         //Gender gender = new Gender();
-        healthInfo.setGender(Gender.valueOf(info.get("gender")));
+        if (info.get("gender") == "Female"){
+            healthInfo.setGender(Gender.FEMALE);
+        }
+        else if (info.get("gender") == "Male"){
+            healthInfo.setGender(Gender.MALE);
+        }
+        Log.d("manager", "sethealthinfo2");
         //Activity activity = new Activity();
-        healthInfo.setDailyActivityLevel(Activity.valueOf(info.get("activity")));
+        if (info.get("activity") == "None"){
+            healthInfo.setDailyActivityLevel(Activity.NONE);
+        }
+
+        else if (info.get("activity") == "Little"){
+            healthInfo.setDailyActivityLevel(Activity.LITTLE);
+        }
+
+        else if (info.get("activity") == "Moderate (Min 2 hours/day of activity)"){
+            healthInfo.setDailyActivityLevel(Activity.MODERATE);
+        }
+
+        else if (info.get("activity") == "High (Min 4 hours/day of activity)"){
+            healthInfo.setDailyActivityLevel(Activity.HIGH);
+        }
+        Log.d("manager", "sethealthinfo3");
+
         healthInfo.calculateCalorie();
 
+        Log.d("manager", "finish sethealthinfo");
+
         // TODO - implement com.example.healthtracker.business_layer.HealthInfoManager.setHealthInfo
-        throw new UnsupportedOperationException();
-    }}
+        //throw new UnsupportedOperationException();
+    }
+
+}

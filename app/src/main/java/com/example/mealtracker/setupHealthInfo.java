@@ -18,12 +18,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class setupHealthInfo extends AppCompatActivity {
+
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     private String gender, activity;
     @Override
@@ -50,6 +53,7 @@ public class setupHealthInfo extends AppCompatActivity {
                 } else {
                     String item = parent.getItemAtPosition(position).toString();
                     gender = item;
+                    Log.d("gender", item);
                     Toast.makeText(parent.getContext(), "Selected gender: " + item, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -64,8 +68,8 @@ public class setupHealthInfo extends AppCompatActivity {
         activity_spinner_values.add(0, "Select an activity ");
         activity_spinner_values.add("None");
         activity_spinner_values.add("Little");
-        activity_spinner_values.add("Moderate");
-        activity_spinner_values.add("High");
+        activity_spinner_values.add("Moderate (Min 2 hours/day of activity)");
+        activity_spinner_values.add("High (Min 4 hours/day of activity)");
 
         ArrayAdapter<String> activity_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, activity_spinner_values);
         activity_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
@@ -91,6 +95,7 @@ public class setupHealthInfo extends AppCompatActivity {
     private EditText editHeight, editWeight, editAge, editGoalWeight;
 
     public void onSubmitBtnClick (View view) {
+        Log.d("setting","submit healthinfo");
         // TODO: go to control logic - check input
         textInputHeight = findViewById(R.id.height_txt);
         textInputWeight = findViewById(R.id.weight_txt);
@@ -110,6 +115,8 @@ public class setupHealthInfo extends AppCompatActivity {
 
         HealthInfoManager healthInfoManager = new HealthInfoManager();
         HashMap<String, String> info = new HashMap<String, String>();
+        Log.d("gender2", gender);
+        Log.d("activity", activity);
         info.put("height", heightInput);
         info.put("weight", weightInput);
         info.put("age", ageInput);
@@ -117,13 +124,11 @@ public class setupHealthInfo extends AppCompatActivity {
         info.put("gender", gender);
         info.put("activity", activity);
 
-        Log.d("setting","healthinfo");
-
         healthInfoManager.setHealthInfo(info);
-        Log.d("sethealthinfo","success");
 
         Toast.makeText(view.getContext(), "Registration successful", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(view.getContext(), MainActivity.class));
+        //startActivity(new Intent(getApplicationContext(), MainActivity.class));
         // TODO: save to database or change database data
     }
 
