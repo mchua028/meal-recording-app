@@ -126,7 +126,7 @@
             android:id="@+id/editGoalWeight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Goal Weight                                                   kg" />
+            android:hint="Goal Weight Loss Per Month                      kg" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
