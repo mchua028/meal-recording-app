@@ -27,11 +27,6 @@ public class LoginUI extends UI {
 		throw new UnsupportedOperationException();
 	}
 
-	private void LogInViaFacebook() {
-		// TODO - implement com.example.healthtracker.interfaces.LoginUI.LogInViaFacebook
-		throw new UnsupportedOperationException();
-	}
-
 	private void LogInViaGoogle() {
 		// TODO - implement com.example.healthtracker.interfaces.LoginUI.LogInViaGoogle
 		throw new UnsupportedOperationException();
