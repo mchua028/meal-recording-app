@@ -2,7 +2,9 @@ package com.example.mealtracker;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.ParseException;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -14,9 +16,31 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.squareup.picasso.Picasso;
+
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.ByteArrayBody;
+import org.apache.http.entity.mime.content.ContentBody;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 
 public class CameraFragment extends Fragment {
@@ -65,6 +89,7 @@ public class CameraFragment extends Fragment {
         return view;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
@@ -74,6 +99,115 @@ public class CameraFragment extends Fragment {
 
             Bitmap image = (Bitmap) data.getExtras().get("data");
             mImageView.setImageBitmap(image);
+            String filename = "filename.jpg";
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            image.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            Log.d("image",bos.toString());
+            ContentBody contentPart = new ByteArrayBody(bos.toByteArray(), filename);
+            Log.d("contentPart",contentPart.toString());
+            String url_string = String.format("https://api.logmeal.es/v2/recognition/complete");
+            MultipartEntity reqEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+            reqEntity.addPart("picture", contentPart);
+            Log.d("reqentity","hellooo");
+            Log.d("reqentity",reqEntity.toString());
+            Log.d("before","multipost");
+            String response = multipost(url_string, reqEntity);
+            Log.d("response",response);
+/*
+            String url_string = String.format("https://api.logmeal.es/v2/recognition/complete");
+
+            String credentials = "Bearer f73890fbb9658a20272f33fc426601bc42533516";
+           // HttpResponse<String> response = Unirest.post("http://35.192.98.23:8080/oauth/token")
+             //       .header("content-type", "application/json")
+               //     .header("Authorization", base64)
+
+            URL api_url = null;
+
+            try {
+                api_url = new URL(url_string);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            // make request
+            try {
+                HttpURLConnection con = (HttpURLConnection) api_url.openConnection();
+                con.setRequestMethod("POST");
+                con.setRequestProperty("Authorization",credentials);
+                InputStream inputStream = con.getInputStream();
+
+                JSONParser jsonParser = new JSONParser();
+                String jsonString = jsonParser.parse(new InputStreamReader(inputStream, StandardCharsets.UTF_8)).toString();
+
+                JSONObject jsonObject = new JSONObject(jsonString);
+                //returnFood.nutrients = parseSearchFoodQuery(jsonObject);
+            } catch (IOException | ParseException | JSONException | org.json.simple.parser.ParseException ignored) {
+            }
+
+ */
         }
     }
+
+    private static String multipost(String urlString, MultipartEntity reqEntity) {
+        try {
+            Log.d("multipost","entering");
+            URL url = new URL(urlString);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            //conn.setReadTimeout(10000);
+            //conn.setConnectTimeout(15000);
+            conn.setRequestMethod("POST");
+            conn.setUseCaches(false);
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+
+            String credentials = "Bearer f73890fbb9658a20272f33fc426601bc42533516";
+            conn.setRequestProperty("Authorization",credentials);
+            conn.setRequestProperty("Connection", "Keep-Alive");
+           // conn.addRequestProperty("Content-length", reqEntity.getContentLength()+"");
+           // conn.addRequestProperty(reqEntity.getContentType().getName(), reqEntity.getContentType().getValue());
+            Log.d("multipost","beforeOutputStream");
+            Log.d("outputstream",conn.getOutputStream().toString());
+            OutputStream os = conn.getOutputStream();
+            Log.d("outputstream",os.toString());
+            Log.d("multipost","beforereqEntity");
+            reqEntity.writeTo(conn.getOutputStream());
+            Log.d("multipost","afterRedEntity");
+            os.close();
+            Log.d("multipost","afterClose");
+            conn.connect();
+            Log.d("multipost","afterConnect");
+
+            if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                return readStream(conn.getInputStream());
+            }
+
+        } catch (Exception e) {
+            Log.e(TAG, "multipart post error " + e + "(" + urlString + ")");
+        }
+        return null;
+    }
+
+    private static String readStream(InputStream in) {
+        BufferedReader reader = null;
+        StringBuilder builder = new StringBuilder();
+        try {
+            reader = new BufferedReader(new InputStreamReader(in));
+            String line = "";
+            while ((line = reader.readLine()) != null) {
+                builder.append(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return builder.toString();
+    }
+
+
 }

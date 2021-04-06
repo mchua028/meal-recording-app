@@ -85,7 +85,7 @@ public class Database {
     }
 
 
-//WANG1448
+    //WANG1448
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void updateMealRecord(MealRecord mealRecord) {
         DatabaseReference mealRecordReference = this.mealRecordReference.child(mealRecord.getId());

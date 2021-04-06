@@ -1,9 +1,11 @@
 package com.example.mealtracker;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -108,6 +110,7 @@ public class Register extends AppCompatActivity {
         registerInfo.put("confirmPassword",confirmPasswordInput);
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.createUserWithEmailAndPassword(emailInput,passwordInput).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
@@ -116,6 +119,9 @@ public class Register extends AppCompatActivity {
                     Log.d("login2","successful2");
                     //startActivity(new Intent(getApplicationContext(), setupHealthInfo.class));
                     Log.d("verifyemail","hello");
+                    //Account newAccount = new Account(usernameInput,firstNameInput,lastNameInput,emailInput,passwordInput);
+                    //Database database = Database.getSingleton();
+                    //database.postNewAccount(newAccount);
 
                     startActivity(goToVerifyRegisteredEmail);
                     Log.d("verifyemail","successful");
