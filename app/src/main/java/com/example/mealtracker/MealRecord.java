@@ -1,6 +1,6 @@
-/**
- * Data access object
- * @Author: Tang Yuting
+/*
+  Data access object for Meal Record
+  @Author: Tang Yuting
  */
 
 package com.example.mealtracker;
@@ -19,13 +19,13 @@ import java.util.ArrayList;
 
 
 public class MealRecord {
-    private ArrayList<Food> foods = new ArrayList<Food>();
+    private ArrayList<Food> foods = new ArrayList<>();
     private LocalDateTime time;
     private String id;
 
     /**
      * Constructor
-     * @param foods ArrayList of Food
+     * @param foods ArrayList of Food, the actual intake cannot be non-positive.
      * @param time LocalDateTime which the meal record refers to
      * @throws ValueCannotBeNonPositiveException when there is food with actualIntake 0
      */
@@ -49,8 +49,7 @@ public class MealRecord {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public String getTimeString() {
         DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
-        String formattedDateTime = time.format(formatter);
-        return formattedDateTime;
+        return time.format(formatter);
     }
 
     public void setTime(LocalDateTime time) {
@@ -74,14 +73,23 @@ public class MealRecord {
     }
 
 
+    /**
+     * adds the meal record to database under the user, with the meal record id updated.
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void addToServer() {
-        Database.getSingleton().postNewMealRecord(this);
+        this.id = Database.getSingleton().postNewMealRecord(this);
     }
 
+    /**
+     * Deletes the meal record from the server.
+     * @throws RecordNotInServerException when the meal record has empty ID,
+     * which means not found in the server.
+     */
     public void deleteFromServer() throws RecordNotInServerException {
         if (this.id.isEmpty()) throw new RecordNotInServerException();
         Database.getSingleton().deleteMealRecord(this);
+        this.id = "";  // indicates the index is removed from the server
     }
 
     /**
@@ -102,16 +110,9 @@ public class MealRecord {
         return Database.getSingleton().queryByDate(startDate, endDate);
     }
 
-
     /**
-     *
-     * @param newFoods
+     * @return Nutrient that contains the amount of consumption of nutrients in the meal record
      */
-    public void updateFood(Food[] newFoods) {
-        // TODO - implement com.example.healthtracker.data_access_layer.MealRecord.updateFood
-        throw new UnsupportedOperationException();
-    }
-
     public Nutrient getNutrient() {
         Nutrient nutrientConsumedInOneMeal = new Nutrient();
         for (int i=0; i<foods.size(); i++){
@@ -129,11 +130,12 @@ public class MealRecord {
             nutrientConsumedInOneMeal.setMagnesium(nutrientConsumedInOneMeal.getMagnesium()+nutrientConsumedInOneMeal.getMagnesium());
         }
         return nutrientConsumedInOneMeal;
-
-        // TODO - implement com.example.healthtracker.data_access_layer.MealRecord.getNutrient
-
     }
 
+    /**
+     * Appends new food at the end of the food list
+     * @param food Food, new food to add to the array list
+     */
     public void addFood(Food food) {
         foods.add(food);
     }

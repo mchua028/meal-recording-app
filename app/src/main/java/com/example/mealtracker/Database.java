@@ -54,10 +54,12 @@ public class Database {
     /**
      * Post meal record to the server.
      * @param mealRecord MealRecord
+     * @return the key(id) of the newly added meal record
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void postNewMealRecord(MealRecord mealRecord) {
+    public String postNewMealRecord(MealRecord mealRecord) {
         DatabaseReference newMealRecord = mealRecordReference.push();
+        String newMealRecordKey = newMealRecord.getKey();
         mealRecord.setId(newMealRecord.getKey());
         newMealRecord.child("Datetime").setValue(mealRecord.getTimeString());
         DatabaseReference foodRecords = newMealRecord.child("FoodRecords");
@@ -76,6 +78,8 @@ public class Database {
             foodRecord.child("VitaminC").setValue(nutrient.getVitaminC());
             foodRecord.child("weight").setValue(food.getActualIntake());
         }
+
+        return newMealRecordKey;
     }
 
 
@@ -86,7 +90,7 @@ public class Database {
 
 
     /**
-     *
+     * Updates by re-writing
      * @param mealRecord MealRecord
      * @Author: Wang Binli
      */
