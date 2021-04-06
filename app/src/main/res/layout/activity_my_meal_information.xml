@@ -33,9 +33,21 @@
     </RelativeLayout>
 
     <Button
+        android:id="@+id/addToTodaysCaloriesBtn"
+        android:layout_width="170dp"
+        android:layout_height="55dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="@color/button_grey"
+        android:text="Add to today's calories"
+        android:textColor="@color/white" />
+
+    <Button
         android:id="@+id/myMealInformationCancelBtn"
         android:layout_width="170dp"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginRight="20dp"

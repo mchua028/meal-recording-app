@@ -57,6 +57,11 @@ public class uploadPicture extends AppCompatActivity {
         });
     }
 
+    public void goToMyMealInformation(View view) {
+        Intent intent = new Intent(this, MyMealInformation.class);
+        startActivity(intent);
+    }
+
     /**
      * return current tab number
      * 0 = Instant

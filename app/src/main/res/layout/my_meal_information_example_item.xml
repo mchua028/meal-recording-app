@@ -55,7 +55,7 @@
             android:layout_below="@id/foodNameTxt"
             android:gravity="right"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="-10dp"
             android:text="Weight 1\nWeight 2"
             android:textSize="20sp"/>
 
