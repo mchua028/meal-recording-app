@@ -6,6 +6,8 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,6 +47,14 @@ public class uploadPicture extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new CameraFragment()).commit();
+
+        Button onClickCancelBtn = (Button) findViewById(R.id.uploadPictureCancelBtn);
+        onClickCancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     /**
@@ -122,13 +132,6 @@ public class uploadPicture extends AppCompatActivity {
                         case R.id.nav_import:
                             selectedFragment = new GalleryFragment();
                             IMPORT_FRAGMENT_ID = bottomNav.getSelectedItemId();
-                            break;
-                        case R.id.nav_cancel:
-                            Intent intent = new Intent(uploadPicture.this, MainActivity.class);
-                            startActivity(intent);
-                            //finish();
-                            // selectedFragment = new CancelFragment();
-                            // TODO: fix this or try to put a cancel button
                             break;
                     }
 

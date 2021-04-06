@@ -11,9 +11,4 @@
         android:icon="@drawable/baseline_collections_black_18dp"
         android:title="Import from Gallery" />
 
-    <item
-        android:id="@+id/nav_cancel"
-        android:icon="@drawable/baseline_clear_black_18dp"
-        android:title="Cancel" />
-
 </menu>
