@@ -71,16 +71,6 @@ public class MyMealInformation extends AppCompatActivity {
 
     }
 
-    // for recycle view
-    public void createExampleList() {
-
-    }
-
-    // for recycle view
-    public void buildRecyclerView() {
-
-    }
-
     // get mExampleList size
     public int getExampleListSize() {
         return mExampleList.size();
