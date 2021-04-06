@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".ChangePassword"></activity>
+        <activity android:name=".MyMealInformation" />
+        <activity android:name=".ChangePassword" />
         <activity android:name=".ForgotPassword" />
         <activity android:name=".VerifyRegisteredEmail" />
         <activity android:name=".editCalories" />
