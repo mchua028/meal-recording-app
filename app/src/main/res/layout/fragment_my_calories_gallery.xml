@@ -4,8 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- TODO: CONNECT TO GALLERY, SHOW GALLERY GRID AND UI -->
-
     <RelativeLayout
         android:id="@+id/relLayout1"
         android:layout_width="match_parent"
@@ -43,7 +41,5 @@
             android:layout_alignParentEnd="true"
             android:text="Upload"/>
 
-        <!-- gallery toolbar -->
-        <!--include layout="@layout/snippet_top_gallerytoolbar"/-->
     </RelativeLayout>
 </RelativeLayout>
