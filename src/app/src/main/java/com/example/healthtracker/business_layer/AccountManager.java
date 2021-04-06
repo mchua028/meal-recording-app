@@ -48,10 +48,6 @@ public class AccountManager {
 
 	}
 
-	public void LogInViaFacebook() {
-		// TODO - implement com.example.healthtracker.business_layer.AccountManager.LogInViaFacebook
-	}
-
 	public void LogInViaGoogle() {
 		// TODO - implement com.example.healthtracker.business_layer.AccountManager.LogInViaGoogle
 	}
@@ -62,10 +58,6 @@ public class AccountManager {
 
 	public void registerUsingGoogle() {
 		// TODO - implement com.example.healthtracker.business_layer.AccountManager.registerUsingGoogle
-	}
-
-	public void registerUsingFacebook() {
-		// TODO - implement com.example.healthtracker.business_layer.AccountManager.registerUsingFacebook
 	}
 
 	public static AccountManager getSingleton() {

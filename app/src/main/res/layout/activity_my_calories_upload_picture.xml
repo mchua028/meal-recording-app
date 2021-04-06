@@ -67,6 +67,19 @@
         </androidx.appcompat.widget.Toolbar>
 
         <Button
+            android:id="@+id/uploadPictureCountCaloriesBtn"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="70dp"
+            android:onClick="goToMyMealInformation"
+            android:backgroundTint="@color/button_grey"
+            android:text="Count My Calories!"
+            android:textColor="@color/white" />
+
+        <Button
             android:id="@+id/uploadPictureCancelBtn"
             android:layout_width="170dp"
             android:layout_height="wrap_content"

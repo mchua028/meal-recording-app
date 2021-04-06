@@ -19,6 +19,6 @@
         android:layout_height="match_parent"
         android:layout_below="@id/launchCameraBtn"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="100dp"/>
+        android:layout_marginBottom="140dp"/>
 
 </RelativeLayout>

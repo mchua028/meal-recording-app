@@ -24,7 +24,6 @@ import java.util.ArrayList;
 public class MealRecordInstrumentedTest {
     private Database d = Database.getSingleton();
 
-
 //    @Test
 //    public MealRecord post_MealRecord() {
 //        ArrayList<Food> foods = getFoods();
@@ -74,21 +73,29 @@ public class MealRecordInstrumentedTest {
 //
 //    }
 //
+
+//    /**
+//     * TODO: test multiple dates
+//     */
 //    @Test
-//    public void update_MealRecord() {
-//        MealRecord mealRecord = post_MealRecord();
-//        LocalDateTime dt = LocalDateTime.of(2019,11,30,15,16,17);
-//        mealRecord.setTime(dt);
-//        mealRecord.updateToServer();
+//    public void queryMealRecordByDate() {
+//        LocalDate startDate = LocalDate.of(2021, 4, 2);
+//        LocalDate endDate = LocalDate.of(2021, 4, 3);
+//        MealRecord mealRecord = MealRecord.queryByDate(startDate, endDate)[0];
 //    }
 
     /**
-     * TODO: test multiple dates
+     * TODO:
+     *  - add more test case like edit number of food
      */
     @Test
-    public void queryMealRecordByDate() {
+    public void update_MealRecord() {
         LocalDate startDate = LocalDate.of(2021, 4, 2);
         LocalDate endDate = LocalDate.of(2021, 4, 3);
-        MealRecord.queryByDate(startDate, endDate);
+        MealRecord mealRecord = MealRecord.queryByDate(startDate, endDate)[0];
+
+        LocalDateTime dt = LocalDateTime.of(2020,5,20,13,14,9);
+        mealRecord.setTime(dt);
+        mealRecord.updateToServer();
     }
 }

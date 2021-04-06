@@ -16,3 +16,5 @@ documentations/
 .externalNativeBuild
 .cxx
 local.properties
+app/src/test/java/com/example/mealtracker/sushi.jpg
+.idea/dictionaries/chris.xml
