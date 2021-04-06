@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,8 +36,10 @@ public class accountAndSettings extends Fragment {
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
 
+    TextInputLayout txtInputUsername;
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
@@ -47,6 +50,8 @@ public class accountAndSettings extends Fragment {
         getActivity().setTitle("Account and Settings");
 
         View v = inflater.inflate(R.layout.fragment_account_and_settings, container, false);
+
+        txtInputUsername = (TextInputLayout) v.findViewById(R.id.username_txt);
 
         // Gender dropdown box
         Spinner gender_spinner = (Spinner) v.findViewById(R.id.gender_spinner);
