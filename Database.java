@@ -1,6 +1,6 @@
 /**
  * Database helper to access Firebase Realtime Database/
- * @Author: Tang Yuting
+ * @Author: Tang Yuting, Wang Binli
  */
 package com.example.mealtracker;
 
@@ -225,7 +225,38 @@ public class Database {
         healthInoReference.child("height").setValue(healthInfo.getHeight());
         healthInoReference.child("weight").setValue(healthInfo.getWeight());
     }
+
+    /**
+     * Post account to the server.
+     * @param account Account
+     * Author : Wang Binili
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void postNewAccount(Account account) {
+        DatabaseReference newUserAccount = userReference.push();
+        newUserAccount.setValue(account.getUsername());
+        newUserAccount.child("firstName").setValue(account.getFirstName());
+        newUserAccount.child("lastName").setValue(account.getLastName());
+        newUserAccount.child("email").setValue(account.getEmail());
+        newUserAccount.child("password").setValue(account.getPassword());
+    }
+
+    /**
+     * Update account information to the server.
+     * @param account Account
+     * Author : Wang Binli
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void updateHealthInfo(Account account) {
+        DatabaseReference userRef = this.userReference;
+        userRef.setValue(account.getUsername());
+        userRef.child("firstName").setValue(account.getFirstName());
+        userRef.child("lastName").setValue(account.getLastName());
+        userRef.child("email").setValue(account.getEmail());
+        userRef.child("password").setValue(account.getPassword());
+    }
 }
+
 
 //    public void getUserRecord(String username) {
 //        DatabaseReference ref = database.getReference("message");
