@@ -23,6 +23,9 @@ import androidx.fragment.app.Fragment;
 
 //import com.squareup.picasso.Picasso;
 
+import com.example.mealtracker.Exceptions.EmptyResultException;
+import com.example.mealtracker.Exceptions.HttpsErrorException;
+
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
@@ -33,6 +36,7 @@ import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,6 +45,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
@@ -102,158 +107,24 @@ public class CameraFragment extends Fragment {
             Bitmap image = (Bitmap) data.getExtras().get("data");
             mImageView.setImageBitmap(image);
 
+            int byteSize = image.getRowBytes() * image.getHeight();
+            ByteBuffer byteBuffer = ByteBuffer.allocate(byteSize);
+            image.copyPixelsToBuffer(byteBuffer);
 
-/*            String filename = "filename.jpg";
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            image.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-            Log.d("image",bos.toString());
-            ContentBody contentPart = new ByteArrayBody(bos.toByteArray(), filename);
-            Log.d("contentPart",contentPart.toString());
-            String url_string = "https://api.logmeal.es/v2/recognition/complete";
-            MultipartEntity reqEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-            reqEntity.addPart("picture", contentPart);
-            Log.d("reqentity","hellooo");
-            Log.d("reqentity",reqEntity.toString());
-            Log.d("before","multipost");
-            String response = multipost(url_string, reqEntity);
-            Log.d("response",response);
+            byte[] byteArray = byteBuffer.array();
 
+            ByteArrayInputStream bs = new ByteArrayInputStream(byteArray);
 
-
- */
-
-            String urlString = "https://api.logmeal.es/v2/profile/changeLanguage";
+            Food food_img = new Food();
             try {
-                URL url=null;
-                try {
-                    url = new URL("https://api.logmeal.es/v2/profile/changeLanguage");
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("POST");
-                conn.setRequestProperty("Accept","application/json");
-                conn.setRequestProperty("Content-Type","application/json");
-                conn.setRequestProperty("language","eng");
-                OutputStream os = conn.getOutputStream();
-
-
-                int respCode = conn.getResponseCode();
-                Log.d("multipost","afterConnect,respCode="+Integer.toString(respCode));
-                conn.disconnect();
-
-                if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                    Log.d("in","IF");
-                    conn.disconnect();
-                    Log.d("after","disconnect");
-                    InputStream is = conn.getInputStream();
-                }
-
-            } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(TAG, "multipart post error " + e + "(" + urlString + ")");
-        }
-
-
-
-        }
-    }
-
-    private static String multipost(String urlString, MultipartEntity reqEntity) throws NetworkOnMainThreadException {
-        try {
-            StrictMode.ThreadPolicy policy =
-                    new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-            Log.d("multipost","entering");
-            URL url = null;
-            try {
-                url = new URL("http://api.foodai.org/v1/classify");
-            }catch(MalformedURLException e){
-                Log.d("error","malformedURL");
+                food_img = Food.searchFoodsFromImg(bs);
+                Log.d("food", food_img.getName());
+            } catch (HttpsErrorException e) {
+                e.printStackTrace();
+            } catch (EmptyResultException e) {
                 e.printStackTrace();
             }
-            Log.d("responseCode","hellooo");
-
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            //Log.d("responseCode",Integer.toString(conn.getResponseCode()));
-
-            Log.d("after","get responseCode");
-            //conn.setReadTimeout(10000);
-            //conn.setConnectTimeout(15000);
-
-
-            Log.d("assigning","credential");
-            String credentials = "Basic d92e24ca047db8f24d1088204e2ccba9b74ccd7c";
-            Log.d("setting","credentials");
-            conn.setRequestProperty("606cb4dc1561c479ab26c645",credentials);
-            Log.d("credentials","set");
-
-            conn.setRequestMethod("POST");
-            Log.d("setting","POST");
-            //conn.setRequestProperty("Content-Type","multipart/form-data");
-            conn.setRequestProperty("Accept","application/json");
-            conn.setUseCaches(false);
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-            conn.setInstanceFollowRedirects(false);
-            conn.setRequestProperty("Connection", "Keep-Alive");
-            conn.addRequestProperty("Content-length", reqEntity.getContentLength()+"");
-            conn.addRequestProperty(reqEntity.getContentType().getName(), reqEntity.getContentType().getValue());
-
-            Log.d("multipost","beforeOutputStream");
-            Log.d("outputstream",conn.getOutputStream().toString());
-            OutputStream os = conn.getOutputStream();
-            Log.d("outputstream",os.toString());
-            Log.d("multipost","beforereqEntity");
-            //int respCode = conn.getResponseCode();
-            //Log.d("multipost","afterConnect,respCode="+Integer.toString(respCode));
-            //conn.disconnect();
-
-            reqEntity.writeTo(os);
-            Log.d("multipost","afterReqEntity");
-            //os.close();
-            //Log.d("multipost","afterClose");
-            int respCode = conn.getResponseCode();
-            Log.d("multipost","afterConnect,respCode="+Integer.toString(respCode));
-            conn.disconnect();
-
-            if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                Log.d("in","IF");
-                conn.disconnect();
-                Log.d("after","disconnect");
-                return readStream(conn.getInputStream());
-            }
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(TAG, "multipart post error " + e + "(" + urlString + ")");
         }
-        return null;
-    }
-
-    private static String readStream(InputStream in) {
-        Log.d("in","readStream");
-        BufferedReader reader = null;
-        StringBuilder builder = new StringBuilder();
-        try {
-            reader = new BufferedReader(new InputStreamReader(in));
-            String line = "";
-            while ((line = reader.readLine()) != null) {
-                builder.append(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return builder.toString();
     }
 
 
