@@ -200,13 +200,18 @@ public class Database {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void postHealthInfo(HealthInfo healthInfo) {
-        DatabaseReference HealthInfo = this.mealRecordReference.push();
-        HealthInfo.child("age").setValue(healthInfo.getAge());
-        HealthInfo.child("dailyActivityLevel").setValue(healthInfo.getDailyActivityLevel());
-        HealthInfo.child("gender").setValue(healthInfo.getGender());
-        HealthInfo.child("goalWeight").setValue(healthInfo.getGoalWeight());
-        HealthInfo.child("height").setValue(healthInfo.getHeight());
-        HealthInfo.child("weight").setValue(healthInfo.getWeight());
+        userReference.push().setValue("age");
+        userReference.child("age").setValue(healthInfo.getAge());
+        userReference.push().setValue("dailyActivityLevel");
+        userReference.child("dailyActivityLevel").setValue(healthInfo.getDailyActivityLevel());
+        userReference.push().setValue("gender");
+        userReference.child("gender").setValue(healthInfo.getGender());
+        userReference.push().setValue("goalWeight");
+        userReference.child("goalWeight").setValue(healthInfo.getGoalWeight());
+        userReference.push().setValue("height";
+        userReference.child("height").setValue(healthInfo.getHeight());
+        userReference.push().setValue("age");
+        userReference.child("weight").setValue(healthInfo.getWeight());
     }
 
 
@@ -217,13 +222,12 @@ public class Database {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void updateHealthInfo(HealthInfo healthInfo) {
-        DatabaseReference healthInoReference = this.userReference.child("HealthInfo");
-        healthInoReference.child("age").setValue(healthInfo.getAge());
-        healthInoReference.child("dailyActivityLevel").setValue(healthInfo.getDailyActivityLevel());
-        healthInoReference.child("gender").setValue(healthInfo.getGender());
-        healthInoReference.child("goalWeight").setValue(healthInfo.getGoalWeight());
-        healthInoReference.child("height").setValue(healthInfo.getHeight());
-        healthInoReference.child("weight").setValue(healthInfo.getWeight());
+        userReference.child("age").setValue(healthInfo.getAge());
+        userReference.child("dailyActivityLevel").setValue(healthInfo.getDailyActivityLevel());
+        userReference.child("gender").setValue(healthInfo.getGender());
+        userReference.child("goalWeight").setValue(healthInfo.getGoalWeight());
+        userReference.child("height").setValue(healthInfo.getHeight());
+        userReference.child("weight").setValue(healthInfo.getWeight());
     }
 
     /**
