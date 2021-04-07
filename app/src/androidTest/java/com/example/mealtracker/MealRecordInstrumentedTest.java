@@ -2,18 +2,13 @@ package com.example.mealtracker;
 
 import androidx.test.runner.AndroidJUnit4;
 
-import com.example.mealtracker.Exceptions.EmptyInputException;
-import com.example.mealtracker.Exceptions.EmptyResultException;
-import com.example.mealtracker.Exceptions.RecordNotInServerException;
-import com.example.mealtracker.Exceptions.ValueCannotBeNonPositiveException;
+import com.example.mealtracker.DAO.MealRecord;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 
 /**

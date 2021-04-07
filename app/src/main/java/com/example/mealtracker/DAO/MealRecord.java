@@ -3,14 +3,17 @@
   @Author: Tang Yuting
  */
 
-package com.example.mealtracker;
+package com.example.mealtracker.DAO;
 
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.mealtracker.Database;
 import com.example.mealtracker.Exceptions.RecordNotInServerException;
 import com.example.mealtracker.Exceptions.ValueCannotBeNonPositiveException;
+import com.example.mealtracker.Food;
+import com.example.mealtracker.Nutrient;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

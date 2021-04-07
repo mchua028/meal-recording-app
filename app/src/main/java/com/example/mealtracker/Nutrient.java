@@ -13,7 +13,6 @@ public class Nutrient {
     private double calcium;
     private double vitaminC;
     private double iron;
-    private double cobalamin;
     private double magnesium;
 
     public Nutrient() {
@@ -61,10 +60,6 @@ public class Nutrient {
 
     public void setIron(double iron) {
         this.iron = iron;
-    }
-
-    public void setCobalamin(double cobalamin) {
-        this.cobalamin = cobalamin;
     }
 
     public void setMagnesium(double magnesium) {
@@ -115,10 +110,6 @@ public class Nutrient {
         return iron;
     }
 
-    public double getCobalamin() {
-        return cobalamin;
-    }
-
     public double getMagnesium() {
         return magnesium;
     }
@@ -137,7 +128,6 @@ public class Nutrient {
                 ", calcium=" + calcium +
                 ", vitaminC=" + vitaminC +
                 ", iron=" + iron +
-                ", cobalamin=" + cobalamin +
                 ", magnesium=" + magnesium +
                 '}';
     }

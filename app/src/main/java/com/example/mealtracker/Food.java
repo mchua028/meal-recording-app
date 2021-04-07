@@ -6,7 +6,6 @@
 
 package com.example.mealtracker;
 
-
 import com.example.mealtracker.Exceptions.EmptyInputException;
 import com.example.mealtracker.Exceptions.EmptyResultException;
 
@@ -26,14 +25,18 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 
+/**
+ * DAO class for food
+ */
 public class Food {
     private String name;
     private Nutrient nutrients;
     private double actualIntake = 0;
     private int suggestedIntake = 0;
 
-    public Food() {
+    private final String FOOD_RECOGNITION_API_KEY = "a8ae74fcdb6117e38d02047eed9b0f4a75d8ace0"
 
+    public Food() {
     }
 
     public String getName() {
@@ -69,6 +72,7 @@ public class Food {
      * @param name, String of the food name.
      * @return Food, the searched food
      * @throws EmptyInputException when name is empty string
+     * @throws EmptyResultException when no result is returned by query
      * FIXME:
      *  - the name of the food
      */
@@ -76,6 +80,7 @@ public class Food {
         Food returnFood = new Food();
         returnFood.name = name;
         if (name.isEmpty()) throw new EmptyInputException();
+
         name = name.replace(" ", "%"); // Due to syntax error in url
         String url_string = String.format("https://api.nal.usda.gov/fdc/v1/foods/search?api_key=DEMO_KEY&query=%s", name);
         URL api_url = null;
@@ -85,6 +90,7 @@ public class Food {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+
         // make request
         try {
             HttpURLConnection con = (HttpURLConnection) api_url.openConnection();
@@ -145,14 +151,6 @@ public class Food {
         return nutrient;
     }
 
-    /**
-     *
-     * @param name
-     */
-    private static Food[] searchFromAPI(String name) {
-        // TODO - implement com.example.healthtracker.data_access_layer.Food.searchFromAPI
-        throw new UnsupportedOperationException();
-    }
 
     /**
      *
@@ -168,12 +166,12 @@ public class Food {
         throw new UnsupportedOperationException();
     }
 
+//
+//    public static Food[] searchFoodsFromImg(Image img) {
+//        // TODO - implement com.example.healthtracker.data_access_layer.Food.searchFoods
+//        throw new UnsupportedOperationException();
+//    }
 
-    /*public static Food[] searchFoods(Image img) {
-        // TODO - implement com.example.healthtracker.data_access_layer.Food.searchFoods
-        throw new UnsupportedOperationException();
-    }
-*/
     public Nutrient getNutrients() {
         return this.nutrients;
     }
