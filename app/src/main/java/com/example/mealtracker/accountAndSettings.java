@@ -116,6 +116,11 @@ public class accountAndSettings extends Fragment {
             }
         });
 
+        editHeight = v.findViewById(R.id.accountEditHeight);
+        editWeight = v.findViewById(R.id.accountEditWeight);
+        editAge = v.findViewById(R.id.accountEditAge);
+        editGoalWeight = v.findViewById(R.id.accountEditGoalWeight);
+
         // Submit button
         Button submitBtn = (Button) v.findViewById(R.id.submit_btn);
         submitBtn.setOnClickListener(new View.OnClickListener() {
@@ -128,16 +133,11 @@ public class accountAndSettings extends Fragment {
                 textInputAge = v.findViewById(R.id.age_txt);
                 textInputGoalWeight = v.findViewById(R.id.goal_weight_txt);
 
-                editHeight = v.findViewById(R.id.editHeight);
-                editWeight = v.findViewById(R.id.editWeight);
-                editAge = v.findViewById(R.id.editAge);
-                editGoalWeight = v.findViewById(R.id.editGoalWeight);
-
                 //get string from input
-                String heightInput = textInputHeight.getEditText().getText().toString().trim();
-                String weightInput = textInputWeight.getEditText().getText().toString().trim();
-                String ageInput = textInputAge.getEditText().getText().toString().trim();
-                String goalWeightInput = textInputGoalWeight.getEditText().getText().toString().trim();
+                String heightInput = editHeight.getText().toString().trim();
+                String weightInput = editWeight.getText().toString().trim();
+                String ageInput = editAge.getText().toString().trim();
+                String goalWeightInput = editGoalWeight.getText().toString().trim();
 
                 HealthInfoManager healthInfoManager = new HealthInfoManager();
                 HashMap<String, String> info = new HashMap<String, String>();
@@ -149,6 +149,8 @@ public class accountAndSettings extends Fragment {
                 info.put("activity", activity);
 
                 healthInfoManager.setHealthInfo(info);
+
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new myCalories()).commit();
 
                 // if input correct, save data and show success message
                 Toast.makeText(getActivity().getApplicationContext(), "Edit successful", Toast.LENGTH_SHORT).show();
