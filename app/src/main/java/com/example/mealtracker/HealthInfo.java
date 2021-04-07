@@ -73,7 +73,6 @@ public class HealthInfo {
     }
 
     public void calculateCalorie() {
-        Log.d("healthinfo", "into healthinfo");
         double bmr = 0;
         double new_weight;
 
@@ -97,7 +96,6 @@ public class HealthInfo {
 
         bmr = bmr - getGoalWeight()/0.45 * 3500/30; //assume one month has 30 days, to lose 0.45kg, need to reduce 3500calories in total
         suggestCalorieIntake = bmr;
-        Log.d("healthinfo", "finish healthinfo");
     }
 
     public void addToServer(){
@@ -119,13 +117,32 @@ public class HealthInfo {
         setWeight(Double.parseDouble(newInfo.get("weight")));
         setAge(Integer.parseInt(newInfo.get("age")));
         setGoalWeight(Double.parseDouble(newInfo.get("goal weight")));
-        //Gender gender = new Gender():
-        setGender(gender.valueOf(newInfo.get("gender")));
+        //Gender gender = new Gender();
+        if (newInfo.get("gender") == "Female"){
+            setGender(Gender.FEMALE);
+        }
+        else if (newInfo.get("gender") == "Male"){
+            setGender(Gender.MALE);
+        }
         //Activity activity = new Activity();
-        setDailyActivityLevel(Activity.valueOf(newInfo.get("activity")));
+        if (newInfo.get("activity") == "None"){
+            setDailyActivityLevel(Activity.NONE);
+        }
+
+        else if (newInfo.get("activity") == "Little"){
+            setDailyActivityLevel(Activity.LITTLE);
+        }
+
+        else if (newInfo.get("activity") == "Moderate (Min 2 hours/day of activity)"){
+            setDailyActivityLevel(Activity.MODERATE);
+        }
+
+        else if (newInfo.get("activity") == "High (Min 4 hours/day of activity)"){
+            setDailyActivityLevel(Activity.HIGH);
+        }
+
         calculateCalorie();
-        // TODO - implement com.example.healthtracker.data_access_layer.HealthInfo.updateAttributes
-        throw new UnsupportedOperationException();
+
     }
 
 }
