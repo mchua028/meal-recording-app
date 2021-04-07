@@ -66,13 +66,16 @@
         android:layout_below="@id/myMealsMiniTxt"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
+        android:inputType="date"
+        app:iconifiedByDefault="false"
         android:background="@drawable/spinner_border"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/myMealsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/myMealsMiniTxt"
+        android:layout_below="@id/searchView"
+        android:layout_marginTop="10dp"
         android:padding="8dp"
         android:clipToPadding="false"
         android:scrollbars="vertical"
