@@ -60,10 +60,10 @@ public class MyMealInformation extends AppCompatActivity {
                 // TODO: logic for adding to calories
                 MealRecordManager mealRecordManager = MealRecordManager.getSingleton();
                 mealRecordManager.getMealRecord().addToServer();
-                double calorieConsumedToday = mealRecordManager.calculateCalorieConsumedToday();
+                double calorieConsumedToday = mealRecordManager.getCalorieConsumedToday();
                 Toast.makeText(MyMealInformation.this,"calorieConsumedToday: "+Double.toString(calorieConsumedToday),
                         Toast.LENGTH_SHORT).show();
-                double calorieQuotaRemaining = mealRecordManager.calculateCalorieQuotaRemainingToday();
+                double calorieQuotaRemaining = mealRecordManager.getCalorieRemaining();
                 Toast.makeText(MyMealInformation.this,"calorieQuotaRemainingToday: "+Double.toString(calorieQuotaRemaining),
                         Toast.LENGTH_SHORT).show();
                 // TODO: add food to mealrecord (added)

@@ -102,7 +102,12 @@ public class HealthInfo {
         }
 
         bmr = bmr - getGoalWeight()/0.45 * 3500/30; //assume one month has 30 days, to lose 0.45kg, need to reduce 3500calories in total
-        suggestCalorieIntake = bmr;
+        if (bmr < 1200)
+            bmr = 1200; //minimum calories required per day for any type of people
+
+        setSuggestCalorieIntake(bmr);
+        Log.d("calorie", Double.toString(suggestCalorieIntake));
+        Log.d("calorie", Double.toString(getSuggestCalorieIntake()));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

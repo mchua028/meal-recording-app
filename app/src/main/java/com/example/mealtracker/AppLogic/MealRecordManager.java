@@ -31,13 +31,15 @@ public class MealRecordManager {
         return singleton;
     }
 
-    /*
+    private double calorieConsumedToday = 0;
+    private double calorieRemaining = 0;
+
     public void setCalorieConsumedToday(double calorieConsumedToday) {
         this.calorieConsumedToday = calorieConsumedToday;
     }
 
     public double getCalorieConsumedToday() {
-        return calorieConsumedToday;
+            return calorieConsumedToday;
     }
 
     public void setCalorieRemaining(double calorieRemaining) {
@@ -47,7 +49,6 @@ public class MealRecordManager {
     public double getCalorieRemaining() {
         return calorieRemaining;
     }
-    */
 
     public MealRecordManager(){}
 
@@ -165,7 +166,7 @@ public class MealRecordManager {
     //}
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public double calculateCalorieConsumedToday(){
+    public void calculateCalorieConsumedToday(){
         MealRecord[] mealRecordsForToday = MealRecord.queryByDate(LocalDate.now(),LocalDate.now());
         double calorieConsumed = 0;
         for (int i=0; i<mealRecordsForToday.length; i++){
@@ -173,15 +174,14 @@ public class MealRecordManager {
                 calorieConsumed += mealRecordsForToday[i].getNutrient().getCaloriePer100g() * mealRecordsForToday[i].getFoods().get(j).getActualIntake();
             }
         }
-        return calorieConsumed;
+        calorieConsumedToday = calorieConsumed;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public double calculateCalorieQuotaRemainingToday() {
-        double calorieConsumed = calculateCalorieConsumedToday();
+    public void calculateCalorieQuotaRemainingToday() {
         HealthInfo healthInfo = new HealthInfo();
         double calorieSuggested = healthInfo.getSuggestCalorieIntake();
-        return calorieSuggested - calorieConsumed;
+        calorieRemaining = calorieSuggested - calorieConsumedToday;
         // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.calculateCalorieQuotaRemainingToday
     }
 

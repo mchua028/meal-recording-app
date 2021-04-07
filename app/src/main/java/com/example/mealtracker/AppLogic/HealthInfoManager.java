@@ -29,18 +29,20 @@ public class HealthInfoManager {
         healthInfo.getDailyActivityLevel();
         healthInfo.getSuggestCalorieIntake();
         return healthInfo;
-        // TODO - implement com.example.mealtracker.business_layer.HealthInfoManager.getHealthInfo
 
     }
 
     public static HealthInfoManager getSingleton() {
+        if (singleton == null) {
+            singleton = new HealthInfoManager();
+        }
         return singleton;
     }
 
 
     /**
-     *
-     * @param info
+     * Parses the input as HashMap format and sends to the server
+     * @param info, HashMap\<String, String\>
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void setHealthInfo(HashMap<String, String> info) {
