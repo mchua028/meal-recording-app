@@ -142,4 +142,9 @@ public class MealRecord {
         foods.add(food);
     }
 
+    public void delFood(Food food) {
+        foods.remove(food);
+    }
+
+
 }

@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.squareup.picasso.Picasso;
+//import com.squareup.picasso.Picasso;
 
 
 public class GalleryFragment extends Fragment {
@@ -74,7 +74,7 @@ public class GalleryFragment extends Fragment {
                 && data != null && data.getData() != null) {
             mImageUri = data.getData();
 
-        Picasso.with(getActivity()).load(mImageUri).into(mImageView);
+        //Picasso.with(getActivity()).load(mImageUri).into(mImageView);
         }
     }
 }

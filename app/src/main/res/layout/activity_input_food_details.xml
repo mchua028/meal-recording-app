@@ -49,6 +49,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentBottom="true"
                 android:background="@color/button_grey"
+                android:onClick="onInsertFoodBtnClick"
                 android:text="insert"
                 android:textColor="@color/white"/>
 
@@ -61,6 +62,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 android:background="@color/button_grey"
+                android:onClick="onDeleteFoodBtnClick"
                 android:text="remove"
                 android:textColor="@color/white"/>
 
