@@ -129,7 +129,6 @@ public class MealRecord {
             nutrientConsumedInOneMeal.setCalcium(nutrientConsumedInOneMeal.getCalcium()+nutrientConsumedInOneMeal.getCalcium());
             nutrientConsumedInOneMeal.setVitaminC(nutrientConsumedInOneMeal.getVitaminC()+nutrientConsumedInOneMeal.getVitaminC());
             nutrientConsumedInOneMeal.setIron(nutrientConsumedInOneMeal.getIron()+nutrientConsumedInOneMeal.getIron());
-            nutrientConsumedInOneMeal.setCobalamin(nutrientConsumedInOneMeal.getCobalamin()+nutrientConsumedInOneMeal.getCobalamin());
             nutrientConsumedInOneMeal.setMagnesium(nutrientConsumedInOneMeal.getMagnesium()+nutrientConsumedInOneMeal.getMagnesium());
         }
         return nutrientConsumedInOneMeal;

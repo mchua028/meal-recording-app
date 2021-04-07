@@ -142,7 +142,6 @@ public class MealRecordManager {
             totalConsumed.setCalcium(totalConsumed.getCalcium()+mealRecord.get(i).getNutrient().getCalcium());
             totalConsumed.setVitaminC(totalConsumed.getVitaminC()+mealRecord.get(i).getNutrient().getVitaminC());
             totalConsumed.setIron(totalConsumed.getIron()+mealRecord.get(i).getNutrient().getIron());
-            totalConsumed.setCobalamin(totalConsumed.getCobalamin()+mealRecord.get(i).getNutrient().getCobalamin());
             totalConsumed.setMagnesium(totalConsumed.getMagnesium()+mealRecord.get(i).getNutrient().getMagnesium());
         }
         return totalConsumed;
