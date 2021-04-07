@@ -211,7 +211,7 @@ public class Database {
         userReference.child("goalWeight").setValue(healthInfo.getGoalWeight());
         userReference.push().setValue("height";
         userReference.child("height").setValue(healthInfo.getHeight());
-        userReference.push().setValue("age");
+        userReference.push().setValue("weight");
         userReference.child("weight").setValue(healthInfo.getWeight());
     }
 
