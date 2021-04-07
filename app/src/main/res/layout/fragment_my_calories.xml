@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/inputDetailsBtn"
             android:layout_marginTop="13dp"
-            android:layout_marginRight="48dp"
+            android:layout_marginRight="28dp"
             android:scaleX="1.2"
             android:scaleY="1.2"
             android:layout_alignParentRight="true"

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,7 @@ public class myMeals extends Fragment {
     private TextView mText1;
     private TextView mText2;
     private TextView mText3;
+    private SearchView mSearchView;
 
     @Nullable
     @Override
@@ -47,7 +49,39 @@ public class myMeals extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
 
         // TODO: get real data from database
+
+        mSearchView = v.findViewById(R.id.searchView);
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //Log.e("onQueryTextChange", "called");
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        addMoreCardviews();
         return v;
+    }
+
+    public void addMoreCardviews(){
+        int position = getExampleListSize();
+
+        // for each meal record in existence
+        for (int i=1; i<3; i++) {   // TODO: insert actual num of datasets instead of dummy number 3
+            //int position = Integer.parseInt(editTextInsert.getText().toString());
+            insertItem(position);
+        }
+    }
+
+    // insert card views
+    public void insertItem(int position) {
+        Log.d("insert item","position is" + position);
+        mExampleList.add(position, new MyMealsExampleItem(mText1, mText2, mText3));
+        mAdapter.notifyItemInserted(position);
     }
 
     // get mExampleList size

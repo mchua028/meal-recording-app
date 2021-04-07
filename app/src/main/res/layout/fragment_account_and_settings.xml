@@ -117,6 +117,7 @@
         android:layout_marginTop="5dp">
 
       <com.google.android.material.textfield.TextInputEditText
+          android:id="@+id/accountEditAge"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:hint="Age" />
@@ -131,6 +132,7 @@
         android:layout_marginTop="5dp">
 
       <com.google.android.material.textfield.TextInputEditText
+          android:id="@+id/accountEditHeight"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:hint="Height                                                            cm" />
@@ -145,6 +147,7 @@
         android:layout_marginTop="5dp">
 
       <com.google.android.material.textfield.TextInputEditText
+          android:id="@+id/accountEditWeight"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:hint="Weight                                                            kg" />
@@ -159,6 +162,7 @@
         android:layout_marginTop="5dp">
 
       <com.google.android.material.textfield.TextInputEditText
+          android:id="@+id/accountEditGoalWeight"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:hint="Goal Weight Loss Per Month                      kg" />

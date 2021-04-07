@@ -8,6 +8,8 @@ package com.example.mealtracker;
 
 import android.graphics.Bitmap;
 
+import android.media.Image;
+
 import com.example.mealtracker.Exceptions.EmptyInputException;
 import com.example.mealtracker.Exceptions.EmptyResultException;
 import com.example.mealtracker.Exceptions.HttpsErrorException;
@@ -214,7 +216,6 @@ public class Food {
             if (statusCode != 200) {
                 throw new HttpsErrorException();
             }
-
             // parse the result
             String json_string = EntityUtils.toString(responseBody.getEntity());
             JSONObject jsonObject = new JSONObject(json_string);

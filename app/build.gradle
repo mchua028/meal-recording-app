@@ -15,6 +15,8 @@ android {
         versionName "1.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+
     }
 
     buildTypes {
@@ -33,6 +35,17 @@ android {
             includeAndroidResources = true
         }
     }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+        exclude("META-INF/*.kotlin_module")
+    }
 
 }
 
@@ -45,6 +58,11 @@ configurations.all {
 }
 
 dependencies {
+    implementation "androidx.multidex:multidex:2.0.1"
+
+
+    implementation group: 'org.apache.httpcomponents', name: 'httpmime', version: '4.3.1'
+
     // parse-json file
     implementation 'com.googlecode.json-simple:json-simple:1.1'
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'

@@ -1,24 +1,29 @@
 package com.example.mealtracker;
 
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
 public class EditCaloriesExampleItem {
 
-    private String mText1;
-    private String mText2;
-    private int mCancel;
+    private TextView mText1;
+    private TextView mText2;
+    private ImageView mCancel;
 
-    public EditCaloriesExampleItem(String text1, String text2, int cancel) {
+    public EditCaloriesExampleItem(TextView text1, TextView text2, ImageView cancel) {
         mText1 = text1;
         mText2 = text2;
         mCancel = cancel;
     }
 
-    public String getText1() {
+    public TextView getText1() {
         return mText1;
     }
 
-    public String getText2() {
+    public TextView getText2() {
         return mText2;
     }
 
-    public int getCancel() { return mCancel; }
+    public ImageView getCancel() { return mCancel; }
 }
