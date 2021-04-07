@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -61,6 +62,8 @@ public class InputFoodDetails extends AppCompatActivity {
         insertBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
                 int position = getExampleListSize();
 
                 //int position = Integer.parseInt(editTextInsert.getText().toString());
@@ -82,21 +85,18 @@ public class InputFoodDetails extends AppCompatActivity {
                 Log.d("starting","queryFoodName");
                 //Log.d("newFood",newFood.getName()) ;
                 Log.d("foodName",foodName) ;
-                Food newFood = new Food();
-                newFood.setName(foodName);
-                Log.d("newFood.setName",newFood.getName());
+                Food food;
                 try {
-                    Food.searchFood(foodName);
+                    food = Food.searchFood(foodName);
+                    Log.d("complete","queryFoodName");
+                    mealRecord.addFood(food);
+                    Log.d("complete","addFood");
                 } catch (EmptyInputException e) {
                     e.printStackTrace();
                 } catch (EmptyResultException e) {
                     e.printStackTrace();
                 }
                 //newFood.setNutrients(nutrient);
-                Log.d("complete","queryFoodName");
-                mealRecord.addFood(newFood);
-                Log.d("complete","addFood");
-
             }
         });
 

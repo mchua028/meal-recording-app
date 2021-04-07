@@ -102,7 +102,7 @@ public class Food {
         name = name.replace(" ", "%"); // Due to syntax error in url
         Log.d("after set name",name);
 
-        String url_string = String.format("https://api.nal.usda.gov/fdc/v1/foods/search?api_key=DEMO_KEY&query=%s", name);
+        String url_string = String.format("https://api.nal.usda.gov/fdc/v1/foods/search?api_key=DEMO_KEY&query=%s&pageSize=5", name);
         Log.d("url_string",url_string);
         URL api_url = null;
 

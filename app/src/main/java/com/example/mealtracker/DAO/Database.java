@@ -66,6 +66,10 @@ public class Database {
         return firebaseAuth;
     }
 
+    public DatabaseReference getUserReference() {
+        return database.getReference(firebaseAuth.getCurrentUser().getUid());
+    }
+
     /**
      * Post meal record to the server.
      *
@@ -206,19 +210,14 @@ public class Database {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void postHealthInfo(HealthInfo healthInfo) {
-        DatabaseReference userReference = this.userReference;
-        userReference.push().setValue("age");
+        DatabaseReference userReference = getUserReference();
         userReference.child("age").setValue(healthInfo.getAge());
-        userReference.push().setValue("dailyActivityLevel");
         userReference.child("dailyActivityLevel").setValue(healthInfo.getDailyActivityLevel());
-        userReference.push().setValue("gender");
         userReference.child("gender").setValue(healthInfo.getGender());
-        userReference.push().setValue("goalWeight");
         userReference.child("goalWeight").setValue(healthInfo.getGoalWeight());
-        userReference.push().setValue("height");
         userReference.child("height").setValue(healthInfo.getHeight());
-        userReference.push().setValue("weight");
         userReference.child("weight").setValue(healthInfo.getWeight());
+        userReference.child("suggestCalorieIntake").setValue(healthInfo.getSuggestCalorieIntake());
     }
 
 
@@ -229,13 +228,14 @@ public class Database {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void updateHealthInfo(HealthInfo healthInfo) {
-        DatabaseReference userReference = this.userReference;
+        DatabaseReference userReference = getUserReference();
         userReference.child("age").setValue(healthInfo.getAge());
         userReference.child("dailyActivityLevel").setValue(healthInfo.getDailyActivityLevel());
         userReference.child("gender").setValue(healthInfo.getGender());
         userReference.child("goalWeight").setValue(healthInfo.getGoalWeight());
         userReference.child("height").setValue(healthInfo.getHeight());
         userReference.child("weight").setValue(healthInfo.getWeight());
+        userReference.child("suggestCalorieIntake").setValue(healthInfo.getSuggestCalorieIntake());
     }
 
     /**

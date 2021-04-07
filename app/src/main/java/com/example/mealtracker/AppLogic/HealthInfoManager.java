@@ -75,7 +75,6 @@ public class HealthInfoManager {
 
         healthInfo.calculateCalorie();  // update to healthInfo
         healthInfo.addToServer();
-
     }
 
 }
