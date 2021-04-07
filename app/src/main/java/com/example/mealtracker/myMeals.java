@@ -63,8 +63,25 @@ public class myMeals extends Fragment {
                 return false;
             }
         });
-
+        addMoreCardviews();
         return v;
+    }
+
+    public void addMoreCardviews(){
+        int position = getExampleListSize();
+
+        // for each meal record in existence
+        for (int i=1; i<3; i++) {   // TODO: insert actual num of datasets instead of dummy number 3
+            //int position = Integer.parseInt(editTextInsert.getText().toString());
+            insertItem(position);
+        }
+    }
+
+    // insert card views
+    public void insertItem(int position) {
+        Log.d("insert item","position is" + position);
+        mExampleList.add(position, new MyMealsExampleItem(mText1, mText2, mText3));
+        mAdapter.notifyItemInserted(position);
     }
 
     // get mExampleList size
