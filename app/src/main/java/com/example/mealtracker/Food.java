@@ -7,6 +7,8 @@
 package com.example.mealtracker;
 
 
+import android.media.Image;
+
 import com.example.mealtracker.Exceptions.EmptyInputException;
 import com.example.mealtracker.Exceptions.EmptyResultException;
 
@@ -24,6 +26,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+
 
 
 public class Food {
@@ -169,11 +172,21 @@ public class Food {
     }
 
 
-    /*public static Food[] searchFoods(Image img) {
+    public static Food[] searchFoods(Image img) throws EmptyInputException, EmptyResultException, IOException {
+        URL url = new URL("https://api.logmeal.es/v2/recognition/complete");
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("GET");
+
+        //img = <'replace-with-path-to-image'>
+        //String api_user_token = "replace-with-your-api-user-token";
+        //String headers = {"Authorization": "Bearer" + api_user_token};
+
+        //resp = requests.post(url,files={'image': open(img, 'r')}, headers=headers);
+        //print(resp.json()["recognition_results"]);
         // TODO - implement com.example.healthtracker.data_access_layer.Food.searchFoods
         throw new UnsupportedOperationException();
     }
-*/
+
     public Nutrient getNutrients() {
         return this.nutrients;
     }

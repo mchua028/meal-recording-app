@@ -9,12 +9,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -27,6 +29,7 @@ import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class accountAndSettings extends Fragment {
@@ -43,6 +46,9 @@ public class accountAndSettings extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
+    private TextInputLayout textInputHeight, textInputWeight, textInputAge, textInputGoalWeight;
+    private EditText editHeight, editWeight, editAge, editGoalWeight;
+    private String activity, gender;
 
     @Nullable
     @Override
@@ -71,6 +77,7 @@ public class accountAndSettings extends Fragment {
                 if (parent.getItemAtPosition(position).equals("Select a gender ")) {
                 } else {
                     String item = parent.getItemAtPosition(position).toString();
+                    gender = item;
                     Toast.makeText(parent.getContext(), "Selected gender: " + item, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -99,6 +106,7 @@ public class accountAndSettings extends Fragment {
                 if (parent.getItemAtPosition(position).equals("Select an activity ")) {
                 } else {
                     String item = parent.getItemAtPosition(position).toString();
+                    activity = item;
                     Toast.makeText(parent.getContext(), "Selected activity: " + item, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -114,7 +122,33 @@ public class accountAndSettings extends Fragment {
             @Override
             public void onClick(View v) {
                 // TODO: go to control logic - check input
-                // TODO: save to database or change database data
+                // TODO: save to database or change database datas
+                textInputHeight = v.findViewById(R.id.height_txt);
+                textInputWeight = v.findViewById(R.id.weight_txt);
+                textInputAge = v.findViewById(R.id.age_txt);
+                textInputGoalWeight = v.findViewById(R.id.goal_weight_txt);
+
+                editHeight = v.findViewById(R.id.editHeight);
+                editWeight = v.findViewById(R.id.editWeight);
+                editAge = v.findViewById(R.id.editAge);
+                editGoalWeight = v.findViewById(R.id.editGoalWeight);
+
+                //get string from input
+                String heightInput = textInputHeight.getEditText().getText().toString().trim();
+                String weightInput = textInputWeight.getEditText().getText().toString().trim();
+                String ageInput = textInputAge.getEditText().getText().toString().trim();
+                String goalWeightInput = textInputGoalWeight.getEditText().getText().toString().trim();
+
+                HealthInfoManager healthInfoManager = new HealthInfoManager();
+                HashMap<String, String> info = new HashMap<String, String>();
+                info.put("height", heightInput);
+                info.put("weight", weightInput);
+                info.put("age", ageInput);
+                info.put("goal weight", goalWeightInput);
+                info.put("gender", gender);
+                info.put("activity", activity);
+
+                healthInfoManager.setHealthInfo(info);
 
                 // if input correct, save data and show success message
                 Toast.makeText(getActivity().getApplicationContext(), "Edit successful", Toast.LENGTH_SHORT).show();
