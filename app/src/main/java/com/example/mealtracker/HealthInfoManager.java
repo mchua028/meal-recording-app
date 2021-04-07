@@ -42,13 +42,11 @@ public class HealthInfoManager {
      * @param info
      */
     public void setHealthInfo(HashMap<String, String> info) {
-        Log.d("manager", "went into sethealthinfo");
         HealthInfo healthInfo = new HealthInfo();
         healthInfo.setHeight(Double.parseDouble(info.get("height")));
         healthInfo.setWeight(Double.parseDouble(info.get("weight")));
         healthInfo.setAge(Integer.parseInt(info.get("age")));
-        healthInfo.setGoalWeight(Double.parseDouble(info.get("goal weight")));
-        Log.d("manager", "sethealthinfo1");
+        healthInfo.setGoalWeight(Double.parseDouble(info.get("goal weight")));;
         //Gender gender = new Gender();
         if (info.get("gender") == "Female"){
             healthInfo.setGender(Gender.FEMALE);
@@ -56,7 +54,6 @@ public class HealthInfoManager {
         else if (info.get("gender") == "Male"){
             healthInfo.setGender(Gender.MALE);
         }
-        Log.d("manager", "sethealthinfo2");
         //Activity activity = new Activity();
         if (info.get("activity") == "None"){
             healthInfo.setDailyActivityLevel(Activity.NONE);
@@ -73,11 +70,9 @@ public class HealthInfoManager {
         else if (info.get("activity") == "High (Min 4 hours/day of activity)"){
             healthInfo.setDailyActivityLevel(Activity.HIGH);
         }
-        Log.d("manager", "sethealthinfo3");
 
         healthInfo.calculateCalorie();
 
-        Log.d("manager", "finish sethealthinfo");
 
         // TODO - implement com.example.healthtracker.business_layer.HealthInfoManager.setHealthInfo
         //throw new UnsupportedOperationException();
