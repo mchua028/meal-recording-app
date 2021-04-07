@@ -9,6 +9,7 @@ package com.example.mealtracker;
 import android.graphics.Bitmap;
 
 import android.media.Image;
+import android.util.Log;
 
 import com.example.mealtracker.Exceptions.EmptyInputException;
 import com.example.mealtracker.Exceptions.EmptyResultException;
@@ -103,31 +104,47 @@ public class Food {
      *  - the name of the food
      */
     public static Food searchFood(String name) throws EmptyInputException, EmptyResultException {
+        Log.d("into","food.searchfood");
         Food returnFood = new Food();
+        Log.d("before","setname");
         returnFood.name = name;
         if (name.isEmpty()) throw new EmptyInputException();
-
         name = name.replace(" ", "%"); // Due to syntax error in url
+        Log.d("after set name",name);
+
         String url_string = String.format("https://api.nal.usda.gov/fdc/v1/foods/search?api_key=DEMO_KEY&query=%s", name);
+        Log.d("url_string",url_string);
         URL api_url = null;
 
         try {
             api_url = new URL(url_string);
+            Log.d("makeurl","done");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
 
         // make request
         try {
+            Log.d("before","connection");
             HttpURLConnection con = (HttpURLConnection) api_url.openConnection();
+            Log.d("after","connection");
+
             con.setRequestMethod("GET");
+            Log.d("set","connectionGET");
+
             InputStream inputStream = con.getInputStream();
+            Log.d("afeer","inputStream");
 
             JSONParser jsonParser = new JSONParser();
             String jsonString = jsonParser.parse(new InputStreamReader(inputStream, StandardCharsets.UTF_8)).toString();
+            Log.d("after","jsonPaarser");
 
             JSONObject jsonObject = new JSONObject(jsonString);
+            Log.d("before","actualquery");
+
             returnFood.nutrients = parseSearchFoodQuery(jsonObject);
+            Log.d("after","actualquery");
+
         } catch (IOException | ParseException | JSONException ignored) {
         }
         return returnFood;
@@ -205,19 +222,31 @@ public class Food {
         Food result = null;
         try {
             // upload the image file
+            Log.d("before","upload image");
             MultipartEntity reqEntity = new MultipartEntity();
             reqEntity.addPart("image", new InputStreamBody(img, "data_recognition.jpeg"));
+            Log.d("middle","upload image");
+
             httppost.setEntity(reqEntity);
+            Log.d("after","upload image");
+
             // add the line below, otherwise the error is happening
             httpclient.getConnectionManager().getSchemeRegistry().register( new Scheme("https", SSLSocketFactory.getSocketFactory(), 443) );
-            HttpResponse responseBody = httpclient.execute(httppost);
+            Log.d("after","socket");
 
-            int statusCode = responseBody.getStatusLine().getStatusCode();
+            int statusCode = httpclient.execute(httppost).getStatusLine().getStatusCode();
+            Log.d("statusCode",Integer.toString(statusCode));
+            //HttpResponse responseBody = httpclient.execute(httppost);
+            Log.d("after","response body");
+
+            //int statusCode = responseBody.getStatusLine().getStatusCode();
             if (statusCode != 200) {
                 throw new HttpsErrorException();
             }
             // parse the result
-            String json_string = EntityUtils.toString(responseBody.getEntity());
+            Log.d("going to get result","result");
+
+            String json_string = EntityUtils.toString(httpclient.execute(httppost).getEntity());
             JSONObject jsonObject = new JSONObject(json_string);
             JSONArray results = jsonObject.getJSONArray("recognition_results");
             JSONObject food = results.getJSONObject(0);  // get the 1st confident result
