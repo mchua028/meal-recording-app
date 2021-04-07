@@ -4,28 +4,20 @@
  */
 
 
-package com.example.mealtracker;
-
-import android.graphics.Bitmap;
-
-import android.media.Image;
+package com.example.mealtracker.DAO;
 
 import com.example.mealtracker.Exceptions.EmptyInputException;
 import com.example.mealtracker.Exceptions.EmptyResultException;
 import com.example.mealtracker.Exceptions.HttpsErrorException;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.InputStreamBody;
-import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
@@ -34,17 +26,11 @@ import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;

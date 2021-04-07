@@ -2,7 +2,6 @@
 *.bak_003d
 documentations/
 *.iml
-.gradle
 /local.properties
 /.idea/caches
 /.idea/libraries
@@ -18,3 +17,4 @@ documentations/
 local.properties
 app/src/test/java/com/example/mealtracker/sushi.jpg
 .idea/dictionaries/chris.xml
+.gradle/

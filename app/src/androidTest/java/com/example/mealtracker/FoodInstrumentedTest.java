@@ -1,22 +1,15 @@
 package com.example.mealtracker;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
-import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.runner.AndroidJUnit4;
-import com.example.mealtracker.DAO.MealRecord;
+
+import com.example.mealtracker.DAO.Food;
 import com.example.mealtracker.Exceptions.EmptyResultException;
 import com.example.mealtracker.Exceptions.HttpsErrorException;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 
 @RunWith(AndroidJUnit4.class)

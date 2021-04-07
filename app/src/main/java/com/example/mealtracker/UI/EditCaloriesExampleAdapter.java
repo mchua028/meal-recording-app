@@ -1,16 +1,16 @@
-package com.example.mealtracker;
+package com.example.mealtracker.UI;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.textfield.TextInputLayout;
+import com.example.mealtracker.EditCaloriesExampleItem;
+import com.example.mealtracker.R;
 
 import java.util.ArrayList;
 

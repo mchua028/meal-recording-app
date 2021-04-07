@@ -1,4 +1,4 @@
-package com.example.mealtracker;
+package com.example.mealtracker.UI;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mealtracker.EditCaloriesExampleItem;
+import com.example.mealtracker.R;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;

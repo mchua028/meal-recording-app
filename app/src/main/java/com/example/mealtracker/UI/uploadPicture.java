@@ -1,4 +1,4 @@
-package com.example.mealtracker;
+package com.example.mealtracker.UI;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +15,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.mealtracker.CameraFragment;
+import com.example.mealtracker.GalleryFragment;
+import com.example.mealtracker.Permissions;
+import com.example.mealtracker.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class uploadPicture extends AppCompatActivity {

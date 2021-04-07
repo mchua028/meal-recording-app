@@ -1,8 +1,6 @@
-package com.example.mealtracker;
+package com.example.mealtracker.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,10 +10,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.mealtracker.MyMealInformationExampleAdapter;
+import com.example.mealtracker.MyMealInformationExampleItem;
+import com.example.mealtracker.R;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 

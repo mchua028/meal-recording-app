@@ -1,11 +1,12 @@
-package com.example.mealtracker;
+package com.example.mealtracker.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+
+import com.example.mealtracker.R;
 
 public class LoginOrRegister extends AppCompatActivity {
 

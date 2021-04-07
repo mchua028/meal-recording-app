@@ -2,7 +2,6 @@ package com.example.mealtracker;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.ParseException;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,14 +20,12 @@ import androidx.fragment.app.Fragment;
 
 //import com.squareup.picasso.Picasso;
 
+import com.example.mealtracker.UI.uploadPicture;
+
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.ByteArrayBody;
 import org.apache.http.entity.mime.content.ContentBody;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -37,10 +34,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 
 
 public class CameraFragment extends Fragment {

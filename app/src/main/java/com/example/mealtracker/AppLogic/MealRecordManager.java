@@ -1,6 +1,9 @@
-package com.example.mealtracker;
+package com.example.mealtracker.AppLogic;
 
+import com.example.mealtracker.DAO.Food;
+import com.example.mealtracker.DAO.HealthInfo;
 import com.example.mealtracker.DAO.MealRecord;
+import com.example.mealtracker.DAO.Nutrient;
 import com.example.mealtracker.Exceptions.EmptyInputException;
 import com.example.mealtracker.Exceptions.EmptyResultException;
 import com.example.mealtracker.Exceptions.RecordNotInServerException;

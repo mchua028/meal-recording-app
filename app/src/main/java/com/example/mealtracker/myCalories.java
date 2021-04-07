@@ -7,17 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.navigation.NavigationView;
+import com.example.mealtracker.UI.editCalories;
+import com.example.mealtracker.UI.uploadPicture;
 
 public class myCalories extends Fragment {
 

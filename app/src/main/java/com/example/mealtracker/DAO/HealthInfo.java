@@ -1,6 +1,12 @@
-package com.example.mealtracker;
+package com.example.mealtracker.DAO;
 
+import android.os.Build;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
+
+import com.example.mealtracker.Activity;
+import com.example.mealtracker.Gender;
 
 import java.util.HashMap;
 
@@ -72,6 +78,7 @@ public class HealthInfo {
         this.suggestCalorieIntake = suggestCalorieIntake;
     }
 
+
     public void calculateCalorie() {
         double bmr = 0;
         double new_weight;
@@ -98,9 +105,9 @@ public class HealthInfo {
         suggestCalorieIntake = bmr;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void addToServer(){
-        // TODO - implement com.example.healthtracker.data_access_layer.HealthInfo.addToServer
-        throw new UnsupportedOperationException();
+        Database.getSingleton().postHealthInfo(this);
     }
 
     public void updateToServer() {

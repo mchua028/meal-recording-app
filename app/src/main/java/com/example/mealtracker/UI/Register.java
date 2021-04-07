@@ -1,4 +1,4 @@
-package com.example.mealtracker;
+package com.example.mealtracker.UI;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -11,12 +11,12 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mealtracker.AppLogic.AccountManager;
+import com.example.mealtracker.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,6 +33,7 @@ public class Register extends AppCompatActivity {
 
     private TextInputLayout textInputUsername, textInputFirstName, textInputLastName, textInputEmail, textInputPassword, textInputConfirmPassword;
     private EditText editUsername, editFirstName, editLastName, editEmail, editPassword, editConfirmPassword;
+
 
     public void onCreateAcctBtnClick(View view) {
         Intent goToSetupHealthInfo = new Intent(getApplicationContext(), setupHealthInfo.class);
@@ -100,7 +101,6 @@ public class Register extends AppCompatActivity {
             return;
         }
 
-        AccountManager accountManager = new AccountManager();
         HashMap<String,String> registerInfo  = new HashMap<String,String>();
         registerInfo.put("username",usernameInput);
         registerInfo.put("firstName",firstNameInput);
@@ -108,7 +108,7 @@ public class Register extends AppCompatActivity {
         registerInfo.put("email",emailInput);
         registerInfo.put("password",passwordInput);
         registerInfo.put("confirmPassword",confirmPasswordInput);
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseAuth firebaseAuth = AccountManager.getSingleton().getFirebaseAuth();
         firebaseAuth.createUserWithEmailAndPassword(emailInput,passwordInput).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override

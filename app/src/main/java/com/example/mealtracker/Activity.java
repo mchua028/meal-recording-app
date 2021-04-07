@@ -1,6 +1,6 @@
 package com.example.mealtracker;
 
-enum Activity {
+public enum Activity {
     NONE,
     LITTLE,
     MODERATE,

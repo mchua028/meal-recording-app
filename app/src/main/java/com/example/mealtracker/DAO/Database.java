@@ -2,14 +2,14 @@
  * Database helper to access Firebase Realtime Database/
  * @Author: Tang Yuting
  */
-package com.example.mealtracker;
+package com.example.mealtracker.DAO;
 
 import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
-import com.example.mealtracker.DAO.MealRecord;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,20 +29,22 @@ import java.util.ArrayList;
 public class Database {
     static private Database singleton;
     private FirebaseDatabase database;
+    private FirebaseAuth mAuth;
+
     // Database Reference: like the table in relational database
     private DatabaseReference userReference;
     private DatabaseReference mealRecordReference;
     // for testing purpose
-    private final String DATABASE_URL = "https://healthtracker-cz2006-default-rtdb.firebaseio.com/";
-    private final String username = "christang";
+    private final String DATABASE_URL = "https://mealtracker-dc280-default-rtdb.firebaseio.com/";
 
     /**
      * Constructor,
      */
     private Database() {
         database = FirebaseDatabase.getInstance(DATABASE_URL);
-        userReference = database.getReference("User").child(username);
-        mealRecordReference = userReference.child("MealRecords");
+//        userReference = database.getReference("User").child(username);
+//        mealRecordReference = userReference.child("MealRecords");
+        mAuth = FirebaseAuth.getInstance();
     }
 
     static public Database getSingleton() {
@@ -50,6 +52,14 @@ public class Database {
             singleton = new Database();
         }
         return singleton;
+    }
+
+    public DatabaseReference getUserReference() {
+        return database.getReference(mAuth.getCurrentUser().getUid());
+    }
+
+    public FirebaseAuth getmAuth() {
+        return mAuth;
     }
 
     /**
@@ -171,6 +181,76 @@ public class Database {
             }
         }
         return mealRecords.toArray(new MealRecord[0]);
+    }
+
+    /**
+     * Post health information to the server.
+     * @param healthInfo HealthInfo
+     * Author : Wang Binli
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void postHealthInfo(HealthInfo healthInfo) {
+        DatabaseReference userReference = getUserReference();
+        userReference.child("age").setValue(healthInfo.getAge());
+        userReference.child("dailyActivityLevel").setValue(healthInfo.getDailyActivityLevel());
+        userReference.child("gender").setValue(healthInfo.getGender());
+        userReference.child("goalWeight").setValue(healthInfo.getGoalWeight());
+        userReference.child("height").setValue(healthInfo.getHeight());
+        userReference.child("weight").setValue(healthInfo.getWeight());
+        userReference.child("suggestCalorieIntake").setValue(healthInfo.getSuggestCalorieIntake());
+    }
+
+
+    /**
+     * Update health information to the server.
+     * @param healthInfo HealthInfo
+     * Author : Wang Binli
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void updateHealthInfo(HealthInfo healthInfo) {
+        DatabaseReference userReference = getUserReference();
+        userReference.child("age").setValue(healthInfo.getAge());
+        userReference.child("dailyActivityLevel").setValue(healthInfo.getDailyActivityLevel());
+        userReference.child("gender").setValue(healthInfo.getGender());
+        userReference.child("goalWeight").setValue(healthInfo.getGoalWeight());
+        userReference.child("height").setValue(healthInfo.getHeight());
+        userReference.child("weight").setValue(healthInfo.getWeight());
+    }
+
+    /**
+     * Post account to the server.
+     * @param account Account
+     * Author : Wang Binili
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void postNewAccount(Account account) {
+        DatabaseReference newUserAccount = this.userReference.push();
+//        newUserAccount.setValue(account.getUid);
+        newUserAccount.push().setValue("username");
+        newUserAccount.child("username").setValue(account.getUsername());
+        newUserAccount.push().setValue("firstName");
+        newUserAccount.child("firstName").setValue(account.getFirstName());
+        newUserAccount.push().setValue("lastName");
+        newUserAccount.child("lastName").setValue(account.getLastName());
+        newUserAccount.push().setValue("email");
+        newUserAccount.child("email").setValue(account.getEmail());
+        newUserAccount.push().setValue("password");
+        newUserAccount.child("password").setValue(account.getPassword());
+    }
+
+    /**
+     * Update account information to the server.
+     * @param account Account
+     * Author : Wang Binli
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void updateHealthInfo(Account account) {
+        DatabaseReference userRef = this.userReference;
+        userRef.setValue(account.getUsername());
+        userRef.child("firstName").setValue(account.getFirstName());
+        userRef.child("lastName").setValue(account.getLastName());
+        userRef.child("email").setValue(account.getEmail());
+        userRef.child("password").setValue(account.getPassword());
     }
 }
 

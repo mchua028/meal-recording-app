@@ -1,11 +1,11 @@
 package com.example.mealtracker;
 
 
+import com.example.mealtracker.DAO.Food;
 import com.example.mealtracker.Exceptions.EmptyInputException;
 import com.example.mealtracker.Exceptions.EmptyResultException;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 
 public class FoodUnitTest {

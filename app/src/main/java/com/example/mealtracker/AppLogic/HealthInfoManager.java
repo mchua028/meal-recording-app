@@ -1,9 +1,14 @@
-package com.example.mealtracker;
+package com.example.mealtracker.AppLogic;
 
 //import com.example.healthtracker.data_access_layer.HealthInfo;
 
-import android.util.Log;
+import android.os.Build;
 
+import androidx.annotation.RequiresApi;
+
+import com.example.mealtracker.Activity;
+import com.example.mealtracker.Gender;
+import com.example.mealtracker.DAO.HealthInfo;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.HashMap;
@@ -32,15 +37,12 @@ public class HealthInfoManager {
         return singleton;
     }
 
-    private HealthInfoManager HealthInfoManager() {
-        // TODO - implement com.example.healthtracker.business_layer.HealthInfoManager.com.example.healthtracker.business_layer.HealthInfoManager
-        throw new UnsupportedOperationException();
-    }
 
     /**
      *
      * @param info
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void setHealthInfo(HashMap<String, String> info) {
         HealthInfo healthInfo = new HealthInfo();
         healthInfo.setHeight(Double.parseDouble(info.get("height")));
@@ -71,11 +73,9 @@ public class HealthInfoManager {
             healthInfo.setDailyActivityLevel(Activity.HIGH);
         }
 
-        healthInfo.calculateCalorie();
+        healthInfo.calculateCalorie();  // update to healthInfo
+        healthInfo.addToServer();
 
-
-        // TODO - implement com.example.healthtracker.business_layer.HealthInfoManager.setHealthInfo
-        //throw new UnsupportedOperationException();
     }
 
 }

@@ -2,6 +2,8 @@ package com.example.mealtracker;
 
 import androidx.test.runner.AndroidJUnit4;
 
+import com.example.mealtracker.DAO.Database;
+import com.example.mealtracker.DAO.Food;
 import com.example.mealtracker.DAO.MealRecord;
 import com.example.mealtracker.Exceptions.EmptyInputException;
 import com.example.mealtracker.Exceptions.EmptyResultException;
@@ -10,7 +12,6 @@ import com.example.mealtracker.Exceptions.ValueCannotBeNonPositiveException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 

@@ -1,6 +1,9 @@
-package com.example.mealtracker;
+package com.example.mealtracker.AppLogic;
 
-import java.lang.reflect.Array;
+import com.example.mealtracker.DAO.Food;
+import com.example.mealtracker.DAO.HealthInfo;
+import com.example.mealtracker.Gender;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -31,7 +34,7 @@ public class Recommender {
         double vitaminb1 = 0.9/1000;
         double vitaminb2 = 1.2/1000;
         double iron;
-        if(info.getGender()==Gender.FEMALE)
+        if(info.getGender()== Gender.FEMALE)
             iron = 18/1000;
         else iron = 8/1000;
         double magnesium = 310/1000;
@@ -99,7 +102,7 @@ public class Recommender {
 
     public void setRecommendedFoods(){
         for(String nutrient:lackedNutrients){
-            recommendedFoods.put(nutrient,Food.searchFoodsRichInNutrient(nutrient,10));
+            recommendedFoods.put(nutrient, Food.searchFoodsRichInNutrient(nutrient,10));
         }
     }
 

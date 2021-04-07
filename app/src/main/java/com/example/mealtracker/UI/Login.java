@@ -1,9 +1,8 @@
-package com.example.mealtracker;
+package com.example.mealtracker.UI;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.accounts.Account;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,12 +12,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mealtracker.AppLogic.AccountManager;
+import com.example.mealtracker.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.HashMap;
 
 public class Login extends AppCompatActivity {
 
@@ -52,7 +51,7 @@ public class Login extends AppCompatActivity {
         //AccountManager accountManager = new AccountManager();
         //if(accountManager.logInAccount(email,password)) {
 
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseAuth firebaseAuth = AccountManager.getSingleton().getFirebaseAuth();
         firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -71,7 +70,6 @@ public class Login extends AppCompatActivity {
     }
 
     public void onLoginViaGoogleButtonClick (View view) {
-
         startActivity(new Intent(view.getContext(), GoogleLogin.class));
     }
 //FB Login
