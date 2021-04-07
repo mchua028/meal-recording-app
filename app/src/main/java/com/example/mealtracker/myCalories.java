@@ -1,16 +1,20 @@
 package com.example.mealtracker;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -30,6 +34,7 @@ public class myCalories extends Fragment {
         setHasOptionsMenu(true);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -62,6 +67,14 @@ public class myCalories extends Fragment {
                 startActivity(new Intent(v.getContext(), editCalories.class));
             }
         });
+        HealthInfo healthInfo = new HealthInfo();
+        MealRecordManager mealRecordManager = new MealRecordManager();
+
+
+        TextView text = (TextView) v.findViewById(R.id.myCaloriesTodayMiniTxt);
+        text.setText("  Maximum Calories Today          " + Double.toString(healthInfo.getSuggestCalorieIntake()) +
+                     "\n  Calories Eaten                              " + Double.toString(mealRecordManager.calculateCalorieConsumedToday()) +
+                     "\n  Remaining Calories                     " + Double.toString(mealRecordManager.calculateCalorieQuotaRemainingToday()));
 
         return v;
     }

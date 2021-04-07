@@ -28,6 +28,23 @@ public class MealRecordManager {
         return singleton;
     }
 
+    /*
+    public void setCalorieConsumedToday(double calorieConsumedToday) {
+        this.calorieConsumedToday = calorieConsumedToday;
+    }
+
+    public double getCalorieConsumedToday() {
+        return calorieConsumedToday;
+    }
+
+    public void setCalorieRemaining(double calorieRemaining) {
+        this.calorieRemaining = calorieRemaining;
+    }
+
+    public double getCalorieRemaining() {
+        return calorieRemaining;
+    }
+    */
 
     public MealRecordManager(){}
 
