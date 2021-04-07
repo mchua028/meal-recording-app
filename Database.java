@@ -200,6 +200,7 @@ public class Database {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void postHealthInfo(HealthInfo healthInfo) {
+        DatabaseReference userReference = this.userReference;
         userReference.push().setValue("age");
         userReference.child("age").setValue(healthInfo.getAge());
         userReference.push().setValue("dailyActivityLevel");
@@ -222,6 +223,7 @@ public class Database {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void updateHealthInfo(HealthInfo healthInfo) {
+        DatabaseReference userReference = this.userReference;
         userReference.child("age").setValue(healthInfo.getAge());
         userReference.child("dailyActivityLevel").setValue(healthInfo.getDailyActivityLevel());
         userReference.child("gender").setValue(healthInfo.getGender());
@@ -237,7 +239,7 @@ public class Database {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void postNewAccount(Account account) {
-        DatabaseReference newUserAccount = userReference.push();
+        DatabaseReference newUserAccount = this.userReference.push();
         newUserAccount.setValue(account.getUsername());
         newUserAccount.child("firstName").setValue(account.getFirstName());
         newUserAccount.child("lastName").setValue(account.getLastName());
