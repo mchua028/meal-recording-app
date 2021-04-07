@@ -1,5 +1,6 @@
 package com.example.mealtracker;
 
+import com.example.mealtracker.DAO.MealRecord;
 import com.example.mealtracker.Exceptions.EmptyInputException;
 import com.example.mealtracker.Exceptions.EmptyResultException;
 import com.example.mealtracker.Exceptions.RecordNotInServerException;
@@ -141,7 +142,6 @@ public class MealRecordManager {
             totalConsumed.setCalcium(totalConsumed.getCalcium()+mealRecord.get(i).getNutrient().getCalcium());
             totalConsumed.setVitaminC(totalConsumed.getVitaminC()+mealRecord.get(i).getNutrient().getVitaminC());
             totalConsumed.setIron(totalConsumed.getIron()+mealRecord.get(i).getNutrient().getIron());
-            totalConsumed.setCobalamin(totalConsumed.getCobalamin()+mealRecord.get(i).getNutrient().getCobalamin());
             totalConsumed.setMagnesium(totalConsumed.getMagnesium()+mealRecord.get(i).getNutrient().getMagnesium());
         }
         return totalConsumed;

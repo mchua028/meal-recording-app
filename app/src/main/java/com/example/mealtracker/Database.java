@@ -1,14 +1,16 @@
 /**
  * Database helper to access Firebase Realtime Database/
- * @Author: Tang Yuting
+ * @Author: Tang Yuting, Wang Binli
  */
 package com.example.mealtracker;
 
 import android.os.Build;
+import android.provider.ContactsContract;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
+import com.example.mealtracker.DAO.MealRecord;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,6 +22,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.EventListener;
+import java.util.HashMap;
 
 
 /**
@@ -31,17 +35,21 @@ public class Database {
     // Database Reference: like the table in relational database
     private DatabaseReference userReference;
     private DatabaseReference mealRecordReference;
+
     // for testing purpose
     private final String DATABASE_URL = "https://healthtracker-cz2006-default-rtdb.firebaseio.com/";
-    private final String username = "christang";
+    //    private final String username = "christang";
+    private final String UID = "G3OWIhFlInZRgTkvU3tM83RUsDu2";
 
     /**
      * Constructor,
+     * Author: Tang Yuting
      */
     private Database() {
         database = FirebaseDatabase.getInstance(DATABASE_URL);
-        userReference = database.getReference("User").child(username);
+        userReference = database.getReference("User").child(UID);
         mealRecordReference = userReference.child("MealRecords");
+
     }
 
     static public Database getSingleton() {
@@ -53,7 +61,9 @@ public class Database {
 
     /**
      * Post meal record to the server.
+     *
      * @param mealRecord MealRecord
+     * Author : Tang Yuting
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void postNewMealRecord(MealRecord mealRecord) {
@@ -62,7 +72,7 @@ public class Database {
         newMealRecord.child("Datetime").setValue(mealRecord.getTimeString());
         DatabaseReference foodRecords = newMealRecord.child("FoodRecords");
 
-        for (Food food: mealRecord.getFoods()) {
+        for (Food food : mealRecord.getFoods()) {
             DatabaseReference foodRecord = foodRecords.push();
             foodRecord.child("name").setValue(food.getName());
             Nutrient nutrient = food.getNutrients();
@@ -78,14 +88,24 @@ public class Database {
         }
     }
 
-
+    /**
+     * Delete meal record from the server.
+     *
+     * @param mealRecord MealRecord
+     * Author : Tang Yuting
+     */
     public void deleteMealRecord(MealRecord mealRecord) {
         DatabaseReference mealRecordReference = this.mealRecordReference.child(mealRecord.getId());
         mealRecordReference.setValue(null);  // the deletion operation mentioned in Firebase api
     }
 
 
-//WANG1448
+    /**
+     * Update meal record to the server.
+     *
+     * @param mealRecord MealRecord
+     * Author : Wang Binli
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void updateMealRecord(MealRecord mealRecord) {
         DatabaseReference mealRecordReference = this.mealRecordReference.child(mealRecord.getId());
@@ -93,7 +113,7 @@ public class Database {
 
         mealRecordReference.child("Datetime").setValue(mealRecord.getTimeString());
         foodRecords.removeValue();
-        for (Food food: mealRecord.getFoods()) {
+        for (Food food : mealRecord.getFoods()) {
             DatabaseReference foodRecord = foodRecords.push();
             foodRecord.child("name").setValue(food.getName());
             Nutrient nutrient = food.getNutrients();
@@ -112,8 +132,9 @@ public class Database {
 
     /**
      * Search meal record from database within the dates (inclusive)
+     *
      * @param startDate, LocalDate including only
-     * @param endDate, LocalDate
+     * @param endDate,   LocalDate
      * @Author: Wang binli
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -141,15 +162,16 @@ public class Database {
         });
         // waiting for query result
         while (result[0] == null) {
-            ; }
+            ;
+        }
 
-        for (DataSnapshot mealRecord: result[0].getChildren()) {
+        for (DataSnapshot mealRecord : result[0].getChildren()) {
             MealRecord mealRecord1 = new MealRecord();
             mealRecord1.setId(mealRecord.getKey());
             LocalDateTime mealRecordDateTime = LocalDateTime.parse(mealRecord.child("Datetime").getValue(String.class));
             mealRecord1.setTime(mealRecordDateTime);
             // parse foods in meal record
-            for (DataSnapshot foodRecord: mealRecord.child("FoodRecords").getChildren()) {
+            for (DataSnapshot foodRecord : mealRecord.child("FoodRecords").getChildren()) {
                 Food food = new Food();
                 Nutrient nutrient = new Nutrient();
                 nutrient.setCaloriePer100g(foodRecord.child("Calorie").getValue(Double.class));
@@ -168,7 +190,84 @@ public class Database {
         }
         return mealRecords.toArray(new MealRecord[0]);
     }
+
+
+    /**
+     * Post health information to the server.
+     * @param healthInfo HealthInfo
+     * Author : Wang Binli
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void postHealthInfo(HealthInfo healthInfo) {
+        DatabaseReference userReference = this.userReference;
+        userReference.push().setValue("age");
+        userReference.child("age").setValue(healthInfo.getAge());
+        userReference.push().setValue("dailyActivityLevel");
+        userReference.child("dailyActivityLevel").setValue(healthInfo.getDailyActivityLevel());
+        userReference.push().setValue("gender");
+        userReference.child("gender").setValue(healthInfo.getGender());
+        userReference.push().setValue("goalWeight");
+        userReference.child("goalWeight").setValue(healthInfo.getGoalWeight());
+        userReference.push().setValue("height");
+        userReference.child("height").setValue(healthInfo.getHeight());
+        userReference.push().setValue("weight");
+        userReference.child("weight").setValue(healthInfo.getWeight());
+    }
+
+
+    /**
+     * Update health information to the server.
+     * @param healthInfo HealthInfo
+     * Author : Wang Binli
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void updateHealthInfo(HealthInfo healthInfo) {
+        DatabaseReference userReference = this.userReference;
+        userReference.child("age").setValue(healthInfo.getAge());
+        userReference.child("dailyActivityLevel").setValue(healthInfo.getDailyActivityLevel());
+        userReference.child("gender").setValue(healthInfo.getGender());
+        userReference.child("goalWeight").setValue(healthInfo.getGoalWeight());
+        userReference.child("height").setValue(healthInfo.getHeight());
+        userReference.child("weight").setValue(healthInfo.getWeight());
+    }
+
+    /**
+     * Post account to the server.
+     * @param account Account
+     * Author : Wang Binili
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void postNewAccount(Account account) {
+        DatabaseReference newUserAccount = this.userReference.push();
+//        newUserAccount.setValue(account.getUid);
+        newUserAccount.push().setValue("username");
+        newUserAccount.child("username").setValue(account.getUsername());
+        newUserAccount.push().setValue("firstName");
+        newUserAccount.child("firstName").setValue(account.getFirstName());
+        newUserAccount.push().setValue("lastName");
+        newUserAccount.child("lastName").setValue(account.getLastName());
+        newUserAccount.push().setValue("email");
+        newUserAccount.child("email").setValue(account.getEmail());
+        newUserAccount.push().setValue("password");
+        newUserAccount.child("password").setValue(account.getPassword());
+    }
+
+    /**
+     * Update account information to the server.
+     * @param account Account
+     * Author : Wang Binli
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void updateHealthInfo(Account account) {
+        DatabaseReference userRef = this.userReference;
+        userRef.setValue(account.getUsername());
+        userRef.child("firstName").setValue(account.getFirstName());
+        userRef.child("lastName").setValue(account.getLastName());
+        userRef.child("email").setValue(account.getEmail());
+        userRef.child("password").setValue(account.getPassword());
+    }
 }
+
 
 //    public void getUserRecord(String username) {
 //        DatabaseReference ref = database.getReference("message");
