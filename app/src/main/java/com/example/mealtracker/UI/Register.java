@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.mealtracker.AppLogic.AccountManager;
+import com.example.mealtracker.DAO.Database;
 import com.example.mealtracker.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -125,6 +126,7 @@ public class Register extends AppCompatActivity {
 
                     startActivity(goToVerifyRegisteredEmail);
                     Log.d("verifyemail","successful");
+                    Database.getSingleton().postNewAccount();
 
                     //startActivity(goToSetupHealthInfo);
                 }
@@ -133,7 +135,6 @@ public class Register extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     public void onAlrHaveAcctBtnClick (View view) {

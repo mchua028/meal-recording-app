@@ -1,6 +1,7 @@
 package com.example.mealtracker.UI;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mealtracker.AppLogic.HealthInfoManager;
@@ -90,6 +92,7 @@ public class setupHealthInfo extends AppCompatActivity {
     private TextInputLayout textInputHeight, textInputWeight, textInputAge, textInputGoalWeight;
     private EditText editHeight, editWeight, editAge, editGoalWeight;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void onSubmitBtnClick (View view) {
         Log.d("setting","submit healthinfo");
         // TODO: go to control logic - check input

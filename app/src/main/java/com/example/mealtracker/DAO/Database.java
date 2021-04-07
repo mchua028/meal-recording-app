@@ -42,9 +42,7 @@ public class Database {
     private FirebaseAuth firebaseAuth;
 
     // for testing purpose
-    private final String DATABASE_URL = "https://healthtracker-cz2006-default-rtdb.firebaseio.com/";
-    //    private final String username = "christang";
-    private final String UID = "G3OWIhFlInZRgTkvU3tM83RUsDu2";
+    private final String DATABASE_URL = "https://mealtracker-dc280-default-rtdb.firebaseio.com/";
 
     /**
      * Constructor,
@@ -67,7 +65,7 @@ public class Database {
     }
 
     public DatabaseReference getUserReference() {
-        return database.getReference(firebaseAuth.getCurrentUser().getUid());
+        return database.getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid());
     }
 
     /**
@@ -239,24 +237,17 @@ public class Database {
     }
 
     /**
-     * Post account to the server.
-     * @param account Account
-     * Author : Wang Binili
+     * Creates account dir under database "Users".
+     * Author : Wang Binili, Tang Yuting
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void postNewAccount(Account account) {
-        DatabaseReference newUserAccount = this.userReference.push();
-//        newUserAccount.setValue(account.getUid);
-        newUserAccount.push().setValue("username");
-        newUserAccount.child("username").setValue(account.getUsername());
-        newUserAccount.push().setValue("firstName");
-        newUserAccount.child("firstName").setValue(account.getFirstName());
-        newUserAccount.push().setValue("lastName");
-        newUserAccount.child("lastName").setValue(account.getLastName());
-        newUserAccount.push().setValue("email");
-        newUserAccount.child("email").setValue(account.getEmail());
-        newUserAccount.push().setValue("password");
-        newUserAccount.child("password").setValue(account.getPassword());
+    public void postNewAccount() {
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+        String userId = firebaseAuth.getCurrentUser().getUid();
+        HashMap<String, String> value = new HashMap<>();
+        // add value as a place-holder, otherwise creation will fail
+        value.put("registeredTime", LocalDateTime.now().format(formatter));
+        database.getReference().child("User").child(userId).setValue(value);
     }
 
     /**
