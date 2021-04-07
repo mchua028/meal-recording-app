@@ -2,6 +2,8 @@ package com.example.mealtracker;
 
 import android.os.Build;
 import android.provider.ContactsContract;
+import android.util.Log;
+
 import com.example.mealtracker.DAO.MealRecord;
 
 import androidx.annotation.RequiresApi;
@@ -46,10 +48,12 @@ public class MealRecordManager {
      * @param foodName
      */
     public Food query(String foodName) {
-        Food food = new Food();
+        //Food food = new Food();
         try {
-            return food.searchFood(foodName);
+            Log.d("entering searchfood","hi");
+            return Food.searchFood(foodName);
         } catch (EmptyInputException | EmptyResultException e) {
+            Log.d("emptyinputexception","e!!!");
             e.printStackTrace();
         }
         return new Food();

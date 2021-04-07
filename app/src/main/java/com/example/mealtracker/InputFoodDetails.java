@@ -73,9 +73,20 @@ public class InputFoodDetails extends AppCompatActivity {
                 //ArrayList<String> newFoodInfo = new ArrayList<String>();
                 //newFoodInfo.add(foodName);
 
-                Food newFood = new Food();
                 Log.d("starting","queryFoodName");
-                newFood = mealRecordMgr.query(foodName);
+                //Log.d("newFood",newFood.getName()) ;
+                Log.d("foodName",foodName) ;
+                Food newFood = new Food();
+                newFood.setName(foodName);
+                Log.d("newFood.setName",newFood.getName());
+                try {
+                    Food.searchFood(foodName);
+                } catch (EmptyInputException e) {
+                    e.printStackTrace();
+                } catch (EmptyResultException e) {
+                    e.printStackTrace();
+                }
+                //newFood.setNutrients(nutrient);
                 Log.d("complete","queryFoodName");
                 mealRecord.addFood(newFood);
                 Log.d("complete","addFood");
@@ -101,7 +112,13 @@ public class InputFoodDetails extends AppCompatActivity {
                 //newFoodInfo.add(foodName);
 
                 Food newFood = new Food();
-                newFood = mealRecordMgr.query(foodName);
+                try {
+                    newFood = Food.searchFood(foodName);
+                } catch (EmptyInputException e) {
+                    e.printStackTrace();
+                } catch (EmptyResultException e) {
+                    e.printStackTrace();
+                }
                 mealRecord.delFood(newFood);
 
                 removeItem(position);
