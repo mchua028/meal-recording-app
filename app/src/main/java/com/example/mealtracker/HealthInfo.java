@@ -124,7 +124,6 @@ public class HealthInfo {
         else if (newInfo.get("gender") == "Male"){
             setGender(Gender.MALE);
         }
-        Log.d("manager", "sethealthinfo2");
         //Activity activity = new Activity();
         if (newInfo.get("activity") == "None"){
             setDailyActivityLevel(Activity.NONE);
