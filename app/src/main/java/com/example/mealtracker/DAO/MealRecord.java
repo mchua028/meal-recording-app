@@ -81,7 +81,7 @@ public class MealRecord {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void addToServer() {
-        this.id = Database.getSingleton().postNewMealRecord(this);
+        Database.getSingleton().postNewMealRecord(this);
     }
 
     /**
