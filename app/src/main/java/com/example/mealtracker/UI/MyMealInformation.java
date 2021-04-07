@@ -1,10 +1,12 @@
 package com.example.mealtracker.UI;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -50,10 +52,19 @@ public class MyMealInformation extends AppCompatActivity {
 
         Button addToTodaysCaloriesBtn = (Button) findViewById(R.id.addToTodaysCaloriesBtn);
         addToTodaysCaloriesBtn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
                 // TODO: logic for adding to calories
-                // TODO: add food to mealrecord
+                MealRecordManager mealRecordManager = MealRecordManager.getSingleton();
+                mealRecordManager.getMealRecord().addToServer();
+                double calorieConsumedToday = mealRecordManager.calculateCalorieConsumedToday();
+                Toast.makeText(MyMealInformation.this,"calorieConsumedToday: "+Double.toString(calorieConsumedToday),
+                        Toast.LENGTH_SHORT).show();
+                double calorieQuotaRemaining = mealRecordManager.calculateCalorieQuotaRemainingToday();
+                Toast.makeText(MyMealInformation.this,"calorieQuotaRemainingToday: "+Double.toString(calorieQuotaRemaining),
+                        Toast.LENGTH_SHORT).show();
+                // TODO: add food to mealrecord (added)
 
                 Intent intent = new Intent(MyMealInformation.this, MainActivity.class);
                 startActivity(intent);

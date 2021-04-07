@@ -78,7 +78,7 @@ public class MealRecord {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void addToServer() {
-        this.id = Database.getSingleton().postNewMealRecord(this);
+        Database.getSingleton().postNewMealRecord(this);
     }
 
     /**
@@ -138,5 +138,10 @@ public class MealRecord {
     public void addFood(Food food) {
         foods.add(food);
     }
+
+    public void delFood(Food food) {
+        foods.remove(food);
+    }
+
 
 }

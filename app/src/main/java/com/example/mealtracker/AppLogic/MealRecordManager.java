@@ -1,9 +1,13 @@
-package com.example.mealtracker.AppLogic;
+package com.example.mealtracker;
 
-import com.example.mealtracker.DAO.Food;
-import com.example.mealtracker.DAO.HealthInfo;
+import android.os.Build;
+import android.provider.ContactsContract;
+import android.util.Log;
+
 import com.example.mealtracker.DAO.MealRecord;
-import com.example.mealtracker.DAO.Nutrient;
+
+import androidx.annotation.RequiresApi;
+
 import com.example.mealtracker.Exceptions.EmptyInputException;
 import com.example.mealtracker.Exceptions.EmptyResultException;
 import com.example.mealtracker.Exceptions.RecordNotInServerException;
@@ -11,42 +15,56 @@ import com.example.mealtracker.Exceptions.RecordNotInServerException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 public class MealRecordManager {
+    Database database = Database.getSingleton();
 
     private static MealRecordManager singleton;
 
-    public MealRecordManager getSingleton() {
-        return this.singleton;
+    private MealRecord mealRecord;
+
+    public static MealRecordManager getSingleton() {
+        return singleton;
     }
 
-    private ArrayList<MealRecord> mealRecord = new ArrayList<MealRecord>();
+
+    public MealRecordManager(){}
+
+    public void setMealRecord(MealRecord mealRecord){
+        this.mealRecord = mealRecord;
+    }
+
+    public MealRecord getMealRecord(){
+        return mealRecord;
+    }
+
+    private ArrayList<MealRecord> mealRecords = new ArrayList<MealRecord>();
 
     /**
      *
      * @param foodName
      */
     public Food query(String foodName) {
-        Food food = new Food();
+        //Food food = new Food();
         try {
-            return food.searchFood(foodName);
+            Log.d("entering searchfood","hi");
+            return Food.searchFood(foodName);
         } catch (EmptyInputException | EmptyResultException e) {
+            Log.d("emptyinputexception","e!!!");
             e.printStackTrace();
         }
         return new Food();
     }
 
-    /**
-     *
-     * @param foods
-     */
-    public void addMealRecord(Food foods) {
-//        MealRecord mealRecord = new MealRecord();
-//        mealRecord.getFoods().add(foods);
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void addMealRecordToDB(MealRecord mealRecord) {
+        mealRecord.addToServer();
 
         // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.addMealRecord
-        throw new UnsupportedOperationException();
     }
 
     /**
@@ -71,23 +89,35 @@ public class MealRecordManager {
         ArrayList<Food> foodImage = new ArrayList<Food>();
         return foodImage.searchFoods(img);
         // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.queryFoodInImage
-        throw new UnsupportedOperationException();
     }
 */
     /**
      *
      * @param foodInfo
      */
-    public void addFood(HashMap<String, String> foodInfo) {
+    public void addFood(ArrayList<String> foodInfo) {
         Food newFood = new Food();
-        newFood.setName(foodInfo.get("name"));
+        newFood.setName(foodInfo.get(0));
         Nutrient newFoodNutrients = new Nutrient();
+
+        newFoodNutrients.setCaloriePer100g(Integer.parseInt(foodInfo.get(1)));
+        newFoodNutrients.setFat(Integer.parseInt(foodInfo.get(2)));
+        newFoodNutrients.setCholesterol(Integer.parseInt(foodInfo.get(3)));
+        newFoodNutrients.setSodium(Integer.parseInt(foodInfo.get(4)));
+        newFoodNutrients.setPotassium(Integer.parseInt(foodInfo.get(5)));
+        newFoodNutrients.setSugar(Integer.parseInt(foodInfo.get(6)));
+        newFoodNutrients.setDietaryFibre(Integer.parseInt(foodInfo.get(7)));
+        newFoodNutrients.setProtein(Integer.parseInt(foodInfo.get(8)));
+        newFoodNutrients.setCalcium(Integer.parseInt(foodInfo.get(9)));
+        newFoodNutrients.setVitaminC(Integer.parseInt(foodInfo.get(10)));
+        newFoodNutrients.setIron(Integer.parseInt(foodInfo.get(11)));
+        newFoodNutrients.setMagnesium(Integer.parseInt(foodInfo.get(12)));
+
         newFood.setNutrients(newFoodNutrients);
 
         //food.setNutrients(foodInfo.get("nutrients"));
         //food.addFoodToServer();
         // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.addFood
-        throw new UnsupportedOperationException();
     }
 
     /**
@@ -97,9 +127,9 @@ public class MealRecordManager {
      */
     public ArrayList<MealRecord> query(Date startDate, Date endDate) {
         ArrayList<MealRecord> mealRecord = new ArrayList<MealRecord>();
+        return mealRecord;
         //return mealRecord.queryByDate(startDate, endDate);
         // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.query
-        throw new UnsupportedOperationException();
     }
 
     /**
@@ -110,42 +140,51 @@ public class MealRecordManager {
     public void editMealRecord(double idInList, Food[] newInfo) {
 
         // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.editMealRecord
-        throw new UnsupportedOperationException();
     }
 
-    private MealRecordManager MealRecordManager() {
-        // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.com.example.healthtracker.business_layer.MealRecordManager
-        throw new UnsupportedOperationException();
-    }
+    //private MealRecordManager MealRecordManager() {
+    //    // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.com.example.healthtracker.business_layer.MealRecordManager
+    //}
 
-    public double calculateCalorieQuotaRemainingToday() {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public double calculateCalorieConsumedToday(){
+        MealRecord[] mealRecordsForToday = MealRecord.queryByDate(LocalDate.now(),LocalDate.now());
         double calorieConsumed = 0;
-        for (int i=0; i<mealRecord.size(); i++){ //TODO - iterate through the meal records in that day
-            for (int j=0; j<mealRecord.get(i).getFoods().size(); j++) {
-                calorieConsumed += mealRecord.get(i).getNutrient().getCaloriePer100g() * mealRecord.get(i).getFoods().get(j).getActualIntake();
+        for (int i=0; i<mealRecordsForToday.length; i++){
+            for (int j=0; j<mealRecordsForToday[i].getFoods().size(); j++) {
+                calorieConsumed += mealRecordsForToday[i].getNutrient().getCaloriePer100g() * mealRecordsForToday[i].getFoods().get(j).getActualIntake();
             }
         }
+        return calorieConsumed;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public double calculateCalorieQuotaRemainingToday() {
+        double calorieConsumed = calculateCalorieConsumedToday();
         HealthInfo healthInfo = new HealthInfo();
         double calorieSuggested = healthInfo.getSuggestCalorieIntake();
         return calorieSuggested - calorieConsumed;
         // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.calculateCalorieQuotaRemainingToday
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public Nutrient calculateTotalNutrient(){
         Nutrient totalConsumed = new Nutrient();
+        MealRecord[] mealRecordsForToday = MealRecord.queryByDate(LocalDate.now(),LocalDate.now());
 
-        for (int i=0; i<mealRecord.size(); i++){
-            totalConsumed.setFat(totalConsumed.getFat()+mealRecord.get(i).getNutrient().getFat());
-            totalConsumed.setCholesterol(totalConsumed.getCholesterol()+mealRecord.get(i).getNutrient().getCholesterol());
-            totalConsumed.setSodium(totalConsumed.getSodium()+mealRecord.get(i).getNutrient().getSodium());
-            totalConsumed.setPotassium(totalConsumed.getPotassium()+mealRecord.get(i).getNutrient().getPotassium());
-            totalConsumed.setSugar(totalConsumed.getSugar()+mealRecord.get(i).getNutrient().getSugar());
-            totalConsumed.setDietaryFibre(totalConsumed.getDietaryFibre()+mealRecord.get(i).getNutrient().getDietaryFibre());
-            totalConsumed.setProtein(totalConsumed.getProtein()+mealRecord.get(i).getNutrient().getProtein());
-            totalConsumed.setCalcium(totalConsumed.getCalcium()+mealRecord.get(i).getNutrient().getCalcium());
-            totalConsumed.setVitaminC(totalConsumed.getVitaminC()+mealRecord.get(i).getNutrient().getVitaminC());
-            totalConsumed.setIron(totalConsumed.getIron()+mealRecord.get(i).getNutrient().getIron());
-            totalConsumed.setMagnesium(totalConsumed.getMagnesium()+mealRecord.get(i).getNutrient().getMagnesium());
+
+        for (int i=0; i<mealRecordsForToday.length; i++){
+            totalConsumed.setFat(totalConsumed.getFat()+mealRecordsForToday[i].getNutrient().getFat());
+            totalConsumed.setCholesterol(totalConsumed.getCholesterol()+mealRecordsForToday[i].getNutrient().getCholesterol());
+            totalConsumed.setSodium(totalConsumed.getSodium()+mealRecordsForToday[i].getNutrient().getSodium());
+            totalConsumed.setPotassium(totalConsumed.getPotassium()+mealRecordsForToday[i].getNutrient().getPotassium());
+            totalConsumed.setSugar(totalConsumed.getSugar()+mealRecordsForToday[i].getNutrient().getSugar());
+            totalConsumed.setDietaryFibre(totalConsumed.getDietaryFibre()+mealRecordsForToday[i].getNutrient().getDietaryFibre());
+            totalConsumed.setProtein(totalConsumed.getProtein()+mealRecordsForToday[i].getNutrient().getProtein());
+            totalConsumed.setCalcium(totalConsumed.getCalcium()+mealRecordsForToday[i].getNutrient().getCalcium());
+            totalConsumed.setVitaminC(totalConsumed.getVitaminC()+mealRecordsForToday[i].getNutrient().getVitaminC());
+            totalConsumed.setIron(totalConsumed.getIron()+mealRecordsForToday[i].getNutrient().getIron());
+            totalConsumed.setMagnesium(totalConsumed.getMagnesium()+mealRecordsForToday[i].getNutrient().getMagnesium());
         }
         return totalConsumed;
     }

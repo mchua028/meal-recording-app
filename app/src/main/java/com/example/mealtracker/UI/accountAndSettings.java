@@ -146,10 +146,9 @@ public class accountAndSettings extends Fragment {
 
                 healthInfoManager.setHealthInfo(info);
 
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new myCalories()).commit();
-
                 // if input correct, save data and show success message
                 Toast.makeText(getActivity().getApplicationContext(), "Edit successful", Toast.LENGTH_SHORT).show();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new myCalories()).commit();
             }
 
         });

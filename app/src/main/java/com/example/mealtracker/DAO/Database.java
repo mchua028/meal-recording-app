@@ -1,15 +1,20 @@
 /**
  * Database helper to access Firebase Realtime Database/
- * @Author: Tang Yuting
+ * @Author: Tang Yuting, Wang Binli
  */
 package com.example.mealtracker.DAO;
 
 import android.os.Build;
+import android.provider.ContactsContract;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.mealtracker.DAO.Account;
+import com.example.mealtracker.DAO.Food;
+import com.example.mealtracker.DAO.HealthInfo;
+import com.example.mealtracker.DAO.MealRecord;
+import com.example.mealtracker.DAO.Nutrient;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,7 +26,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-
+import java.util.EventListener;
+import java.util.HashMap;
 
 /**
  * Singleton.
@@ -29,22 +35,24 @@ import java.util.ArrayList;
 public class Database {
     static private Database singleton;
     private FirebaseDatabase database;
-    private FirebaseAuth mAuth;
-
     // Database Reference: like the table in relational database
     private DatabaseReference userReference;
     private DatabaseReference mealRecordReference;
+
     // for testing purpose
-    private final String DATABASE_URL = "https://mealtracker-dc280-default-rtdb.firebaseio.com/";
+    private final String DATABASE_URL = "https://healthtracker-cz2006-default-rtdb.firebaseio.com/";
+    //    private final String username = "christang";
+    private final String UID = "G3OWIhFlInZRgTkvU3tM83RUsDu2";
 
     /**
      * Constructor,
+     * Author: Tang Yuting
      */
     private Database() {
         database = FirebaseDatabase.getInstance(DATABASE_URL);
-//        userReference = database.getReference("User").child(username);
-//        mealRecordReference = userReference.child("MealRecords");
-        mAuth = FirebaseAuth.getInstance();
+        userReference = database.getReference("User").child(UID);
+        mealRecordReference = userReference.child("MealRecords");
+
     }
 
     static public Database getSingleton() {
@@ -54,28 +62,20 @@ public class Database {
         return singleton;
     }
 
-    public DatabaseReference getUserReference() {
-        return database.getReference(mAuth.getCurrentUser().getUid());
-    }
-
-    public FirebaseAuth getmAuth() {
-        return mAuth;
-    }
-
     /**
      * Post meal record to the server.
+     *
      * @param mealRecord MealRecord
-     * @return the key(id) of the newly added meal record
+     * Author : Tang Yuting
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public String postNewMealRecord(MealRecord mealRecord) {
+    public void postNewMealRecord(MealRecord mealRecord) {
         DatabaseReference newMealRecord = mealRecordReference.push();
-        String newMealRecordKey = newMealRecord.getKey();
         mealRecord.setId(newMealRecord.getKey());
         newMealRecord.child("Datetime").setValue(mealRecord.getTimeString());
         DatabaseReference foodRecords = newMealRecord.child("FoodRecords");
 
-        for (Food food: mealRecord.getFoods()) {
+        for (Food food : mealRecord.getFoods()) {
             DatabaseReference foodRecord = foodRecords.push();
             foodRecord.child("name").setValue(food.getName());
             Nutrient nutrient = food.getNutrients();
@@ -89,17 +89,26 @@ public class Database {
             foodRecord.child("VitaminC").setValue(nutrient.getVitaminC());
             foodRecord.child("weight").setValue(food.getActualIntake());
         }
-
-        return newMealRecordKey;
     }
 
-
+    /**
+     * Delete meal record from the server.
+     *
+     * @param mealRecord MealRecord
+     * Author : Tang Yuting
+     */
     public void deleteMealRecord(MealRecord mealRecord) {
         DatabaseReference mealRecordReference = this.mealRecordReference.child(mealRecord.getId());
         mealRecordReference.setValue(null);  // the deletion operation mentioned in Firebase api
     }
 
 
+    /**
+     * Update meal record to the server.
+     *
+     * @param mealRecord MealRecord
+     * Author : Wang Binli
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void updateMealRecord(MealRecord mealRecord) {
         DatabaseReference mealRecordReference = this.mealRecordReference.child(mealRecord.getId());
@@ -107,7 +116,7 @@ public class Database {
 
         mealRecordReference.child("Datetime").setValue(mealRecord.getTimeString());
         foodRecords.removeValue();
-        for (Food food: mealRecord.getFoods()) {
+        for (Food food : mealRecord.getFoods()) {
             DatabaseReference foodRecord = foodRecords.push();
             foodRecord.child("name").setValue(food.getName());
             Nutrient nutrient = food.getNutrients();
@@ -126,8 +135,9 @@ public class Database {
 
     /**
      * Search meal record from database within the dates (inclusive)
+     *
      * @param startDate, LocalDate including only
-     * @param endDate, LocalDate
+     * @param endDate,   LocalDate
      * @Author: Wang binli
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -155,15 +165,16 @@ public class Database {
         });
         // waiting for query result
         while (result[0] == null) {
-            ; }
+            ;
+        }
 
-        for (DataSnapshot mealRecord: result[0].getChildren()) {
+        for (DataSnapshot mealRecord : result[0].getChildren()) {
             MealRecord mealRecord1 = new MealRecord();
             mealRecord1.setId(mealRecord.getKey());
             LocalDateTime mealRecordDateTime = LocalDateTime.parse(mealRecord.child("Datetime").getValue(String.class));
             mealRecord1.setTime(mealRecordDateTime);
             // parse foods in meal record
-            for (DataSnapshot foodRecord: mealRecord.child("FoodRecords").getChildren()) {
+            for (DataSnapshot foodRecord : mealRecord.child("FoodRecords").getChildren()) {
                 Food food = new Food();
                 Nutrient nutrient = new Nutrient();
                 nutrient.setCaloriePer100g(foodRecord.child("Calorie").getValue(Double.class));
@@ -183,6 +194,7 @@ public class Database {
         return mealRecords.toArray(new MealRecord[0]);
     }
 
+
     /**
      * Post health information to the server.
      * @param healthInfo HealthInfo
@@ -190,14 +202,19 @@ public class Database {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void postHealthInfo(HealthInfo healthInfo) {
-        DatabaseReference userReference = getUserReference();
+        DatabaseReference userReference = this.userReference;
+        userReference.push().setValue("age");
         userReference.child("age").setValue(healthInfo.getAge());
+        userReference.push().setValue("dailyActivityLevel");
         userReference.child("dailyActivityLevel").setValue(healthInfo.getDailyActivityLevel());
+        userReference.push().setValue("gender");
         userReference.child("gender").setValue(healthInfo.getGender());
+        userReference.push().setValue("goalWeight");
         userReference.child("goalWeight").setValue(healthInfo.getGoalWeight());
+        userReference.push().setValue("height");
         userReference.child("height").setValue(healthInfo.getHeight());
+        userReference.push().setValue("weight");
         userReference.child("weight").setValue(healthInfo.getWeight());
-        userReference.child("suggestCalorieIntake").setValue(healthInfo.getSuggestCalorieIntake());
     }
 
 
@@ -208,7 +225,7 @@ public class Database {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void updateHealthInfo(HealthInfo healthInfo) {
-        DatabaseReference userReference = getUserReference();
+        DatabaseReference userReference = this.userReference;
         userReference.child("age").setValue(healthInfo.getAge());
         userReference.child("dailyActivityLevel").setValue(healthInfo.getDailyActivityLevel());
         userReference.child("gender").setValue(healthInfo.getGender());
@@ -253,6 +270,7 @@ public class Database {
         userRef.child("password").setValue(account.getPassword());
     }
 }
+
 
 //    public void getUserRecord(String username) {
 //        DatabaseReference ref = database.getReference("message");
