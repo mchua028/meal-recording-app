@@ -117,7 +117,7 @@ public class HealthInfo {
         setWeight(Double.parseDouble(newInfo.get("weight")));
         setAge(Integer.parseInt(newInfo.get("age")));
         setGoalWeight(Double.parseDouble(newInfo.get("goal weight")));
-        //Gender gender = new Gender();
+
         if (newInfo.get("gender") == "Female"){
             setGender(Gender.FEMALE);
         }
