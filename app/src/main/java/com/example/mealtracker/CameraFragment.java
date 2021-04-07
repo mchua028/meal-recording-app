@@ -23,8 +23,10 @@ import androidx.fragment.app.Fragment;
 
 //import com.squareup.picasso.Picasso;
 
+import com.example.mealtracker.DAO.Food;
 import com.example.mealtracker.Exceptions.EmptyResultException;
 import com.example.mealtracker.Exceptions.HttpsErrorException;
+import com.example.mealtracker.UI.uploadPicture;
 
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;

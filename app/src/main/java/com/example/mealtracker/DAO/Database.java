@@ -15,6 +15,7 @@ import com.example.mealtracker.DAO.Food;
 import com.example.mealtracker.DAO.HealthInfo;
 import com.example.mealtracker.DAO.MealRecord;
 import com.example.mealtracker.DAO.Nutrient;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,6 +39,7 @@ public class Database {
     // Database Reference: like the table in relational database
     private DatabaseReference userReference;
     private DatabaseReference mealRecordReference;
+    private FirebaseAuth firebaseAuth;
 
     // for testing purpose
     private final String DATABASE_URL = "https://healthtracker-cz2006-default-rtdb.firebaseio.com/";
@@ -50,9 +52,7 @@ public class Database {
      */
     private Database() {
         database = FirebaseDatabase.getInstance(DATABASE_URL);
-        userReference = database.getReference("User").child(UID);
-        mealRecordReference = userReference.child("MealRecords");
-
+        firebaseAuth = FirebaseAuth.getInstance();
     }
 
     static public Database getSingleton() {
@@ -60,6 +60,10 @@ public class Database {
             singleton = new Database();
         }
         return singleton;
+    }
+
+    public FirebaseAuth getmAuth() {
+        return firebaseAuth;
     }
 
     /**

@@ -14,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.example.mealtracker.UI.InputFoodDetails;
 import com.example.mealtracker.UI.editCalories;
 import com.example.mealtracker.UI.uploadPicture;
 

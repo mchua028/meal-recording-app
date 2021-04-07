@@ -21,7 +21,7 @@
         <activity android:name=".UI.ForgotPassword" />
         <activity android:name=".UI.VerifyRegisteredEmail" />
         <activity android:name=".UI.editCalories" />
-        <activity android:name=".InputFoodDetails" />
+        <activity android:name=".UI.InputFoodDetails" />
         <activity android:name=".UI.Login" />
         <activity android:name=".UI.MainActivity" />
         <activity android:name=".UI.Register" />

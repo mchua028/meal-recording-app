@@ -1,13 +1,16 @@
-package com.example.mealtracker;
+package com.example.mealtracker.AppLogic;
 
 import android.os.Build;
 import android.provider.ContactsContract;
 import android.util.Log;
 
+import com.example.mealtracker.DAO.Food;
+import com.example.mealtracker.DAO.HealthInfo;
 import com.example.mealtracker.DAO.MealRecord;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.mealtracker.DAO.Nutrient;
 import com.example.mealtracker.Exceptions.EmptyInputException;
 import com.example.mealtracker.Exceptions.EmptyResultException;
 import com.example.mealtracker.Exceptions.RecordNotInServerException;
@@ -20,8 +23,6 @@ import java.time.LocalDateTime;
 
 
 public class MealRecordManager {
-    Database database = Database.getSingleton();
-
     private static MealRecordManager singleton;
 
     private MealRecord mealRecord;

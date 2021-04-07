@@ -1,4 +1,4 @@
-package com.example.mealtracker;
+package com.example.mealtracker.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,9 +13,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mealtracker.AppLogic.MealRecordManager;
+import com.example.mealtracker.DAO.Food;
 import com.example.mealtracker.DAO.MealRecord;
 import com.example.mealtracker.Exceptions.EmptyInputException;
 import com.example.mealtracker.Exceptions.EmptyResultException;
+import com.example.mealtracker.InputFoodDetailsExampleAdapter;
+import com.example.mealtracker.InputFoodDetailsExampleItem;
+import com.example.mealtracker.R;
+import com.example.mealtracker.UI.MyMealInformation;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;

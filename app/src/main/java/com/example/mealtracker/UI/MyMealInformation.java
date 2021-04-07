@@ -12,7 +12,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.mealtracker.AppLogic.MealRecordManager;
 import com.example.mealtracker.MyMealInformationExampleAdapter;
 import com.example.mealtracker.MyMealInformationExampleItem;
 import com.example.mealtracker.R;
