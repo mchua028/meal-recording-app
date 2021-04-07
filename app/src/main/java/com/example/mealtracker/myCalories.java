@@ -77,7 +77,7 @@ public class myCalories extends Fragment {
         HealthInfo healthInfo = new HealthInfo();
         MealRecordManager mealRecordManager = new MealRecordManager();
 
-
+        Log.d("uiedittext", Double.toString(healthInfo.getSuggestCalorieIntake()));
         TextView text = (TextView) v.findViewById(R.id.myCaloriesTodayMiniTxt);
         text.setText("  Maximum Calories Today           " + Double.toString(healthInfo.getSuggestCalorieIntake()) +
                      "\n  Calories Eaten                              " + Double.toString(mealRecordManager.getCalorieConsumedToday()) +
