@@ -2,12 +2,12 @@ package com.example.mealtracker;
 
 import com.google.android.material.textfield.TextInputLayout;
 
-public class FoodDetailsExampleItem {
+public class InputFoodDetailsExampleItem {
 
     private TextInputLayout mText1;
     private TextInputLayout mText2;
 
-    public FoodDetailsExampleItem(TextInputLayout text1, TextInputLayout text2) {
+    public InputFoodDetailsExampleItem(TextInputLayout text1, TextInputLayout text2) {
         mText1 = text1;
         mText2 = text2;
     }
