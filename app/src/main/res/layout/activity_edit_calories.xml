@@ -15,36 +15,87 @@
         android:theme="?attr/actionBarTheme" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/overallLabel"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
-        android:background="@drawable/spinner_border"
-        android:text="  Edit My Calories \n \n \n \n \n"
+        android:text="Edit My Calories"
         android:textSize="30dp"
         android:textStyle="bold"/>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/maxCaloriesLabel"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textView"
-        android:layout_marginTop="-160dp"
+        android:layout_below="@id/overallLabel"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
-        android:text="  Click     to remove food item and     to undo an action"
-        android:textSize="15sp" />
+        android:text="Maximum Calories Today"
+        android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textViewMaxCalories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/overallLabel"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="45dp"
+        android:text="XXXX kcal"
+        android:textSize="15sp"/>
+
+    <TextView
+        android:id="@+id/remainingCaloriesLabel"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textView"
-        android:layout_marginTop="-130dp"
+        android:layout_marginTop="0dp"
         android:layout_marginLeft="10dp"
-        android:text="  Maximum Calories Today \n  Calories Eaten \n \n \n  Remaining Calories"
+        android:layout_below="@id/maxCaloriesLabel"
+        android:text="Remaining Calories"
         android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/textViewRemainingCalories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewMaxCalories"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="45dp"
+        android:text="XXXX kcal"
+        android:textSize="15sp"/>
+
+    <TextView
+        android:id="@+id/caloriesEatenLabel"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/remainingCaloriesLabel"
+        android:layout_marginTop="0dp"
+        android:layout_marginLeft="10dp"
+        android:text="Calories Eaten"
+        android:textSize="20sp" />
+
+    <RelativeLayout
+        android:id="@+id/relLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/caloriesEatenLabel">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:clipToPadding="false"
+            android:scrollbars="vertical"
+            android:background="@color/real_grey"
+            android:layout_marginBottom="70dp"/>
+
+    </RelativeLayout>
+
     <Button
         android:id="@+id/saveBtn"
         android:layout_width="170dp"
