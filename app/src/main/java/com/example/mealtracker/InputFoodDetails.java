@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mealtracker.DAO.MealRecord;
 import com.example.mealtracker.Exceptions.EmptyInputException;
 import com.example.mealtracker.Exceptions.EmptyResultException;
 import com.google.android.material.textfield.TextInputLayout;
@@ -20,7 +21,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 
 public class InputFoodDetails extends AppCompatActivity {
-    private ArrayList<FoodDetailsExampleItem> mExampleList;
+    private ArrayList<InputFoodDetailsExampleItem> mExampleList;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -133,7 +134,7 @@ public class InputFoodDetails extends AppCompatActivity {
     // for recycle view
     public void createExampleList() {
         mExampleList = new ArrayList<>();
-        mExampleList.add(new FoodDetailsExampleItem(textInputFoodName, textInputFoodWeight));
+        mExampleList.add(new InputFoodDetailsExampleItem(textInputFoodName, textInputFoodWeight));
     }
 
     // for recycle view
@@ -141,7 +142,7 @@ public class InputFoodDetails extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new FoodDetailsExampleAdapter(mExampleList);
+        mAdapter = new InputFoodDetailsExampleAdapter(mExampleList);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
@@ -150,7 +151,7 @@ public class InputFoodDetails extends AppCompatActivity {
     // insert card views
     public void insertItem(int position) {
         Log.d("insert item","position is" + position);
-        mExampleList.add(position, new FoodDetailsExampleItem(textInputFoodName, textInputFoodWeight));
+        mExampleList.add(position, new InputFoodDetailsExampleItem(textInputFoodName, textInputFoodWeight));
         mAdapter.notifyItemInserted(position);
     }
 
