@@ -28,6 +28,10 @@ public class editCalories extends AppCompatActivity {
 
     private EditCaloriesExampleAdapter.OnItemClickListener mListener;
 
+    private TextView mText1;
+    private TextView mText2;
+    private ImageView mCancel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +58,26 @@ public class editCalories extends AppCompatActivity {
                 finish();
             }
         });
+
+        addMoreCardviews();
+
+    }
+
+    public void addMoreCardviews(){
+        int position = getExampleListSize();
+
+        // for each type of food in Today's meals
+        for (int i=1; i<3; i++) {   // TODO: insert actual num of datasets instead of dummy number 3
+            //int position = Integer.parseInt(editTextInsert.getText().toString());
+            insertItem(position);
+        }
+    }
+
+    // insert card views
+    public void insertItem(int position) {
+        Log.d("insert item","position is" + position);
+        mExampleList.add(position, new EditCaloriesExampleItem(mText1, mText2, mCancel));
+        mAdapter.notifyItemInserted(position);
     }
 
     public void removeItem(int position) {
@@ -64,8 +88,8 @@ public class editCalories extends AppCompatActivity {
 
     public void createExampleList() {
         mExampleList = new ArrayList<>();
-        mExampleList.add(new EditCaloriesExampleItem("Food 1", "XXX kcal", R.drawable.baseline_clear_black_18dp));
-        mExampleList.add(new EditCaloriesExampleItem("Food 2", "XXX kcal", R.drawable.baseline_clear_black_18dp));
+        mExampleList.add(new EditCaloriesExampleItem(mText1, mText2, mCancel));
+        mExampleList.add(new EditCaloriesExampleItem(mText1, mText2, mCancel));
     }
 
     public void buildRecyclerView() {

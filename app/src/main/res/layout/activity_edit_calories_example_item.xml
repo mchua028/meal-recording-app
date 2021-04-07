@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:gravity="right"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="-50dp"
+            android:layout_marginLeft="-25dp"
             android:text="XXXX kcal"
             android:textSize="20sp"/>
 

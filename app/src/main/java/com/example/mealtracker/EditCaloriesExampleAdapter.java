@@ -67,8 +67,8 @@ public class EditCaloriesExampleAdapter extends RecyclerView.Adapter<EditCalorie
     public void onBindViewHolder(@NonNull ExampleViewHolder holder, int position) {
         EditCaloriesExampleItem currentItem = mExampleList.get(position);
 
-        holder.mTextView1.setText(currentItem.getText1());
-        holder.mTextView2.setText(currentItem.getText2());
+        //holder.mTextView1.setText(currentItem.getText1());
+        //holder.mTextView2.setText(currentItem.getText2());
         //holder.mCancel.setImageResource(currentItem.getImageResource());
     }
 

@@ -6,37 +6,63 @@
 
 package com.example.mealtracker;
 
+import android.graphics.Bitmap;
 
 import android.media.Image;
 
 import com.example.mealtracker.Exceptions.EmptyInputException;
 import com.example.mealtracker.Exceptions.EmptyResultException;
+import com.example.mealtracker.Exceptions.HttpsErrorException;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.InputStreamBody;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 
-
+/**
+ * DAO class for food
+ */
 public class Food {
     private String name;
     private Nutrient nutrients;
     private double actualIntake = 0;
     private int suggestedIntake = 0;
 
-    public Food() {
+    private final static String FOOD_RECOGNITION_URL = "https://api.logmeal.es/v2/recognition/complete";
+    private final static String USER_TOKEN = "0aabb46949de93de6ef729331af1d0a36fb202f0";
 
+    public Food() {
     }
 
     public String getName() {
@@ -72,6 +98,7 @@ public class Food {
      * @param name, String of the food name.
      * @return Food, the searched food
      * @throws EmptyInputException when name is empty string
+     * @throws EmptyResultException when no result is returned by query
      * FIXME:
      *  - the name of the food
      */
@@ -79,6 +106,7 @@ public class Food {
         Food returnFood = new Food();
         returnFood.name = name;
         if (name.isEmpty()) throw new EmptyInputException();
+
         name = name.replace(" ", "%"); // Due to syntax error in url
         String url_string = String.format("https://api.nal.usda.gov/fdc/v1/foods/search?api_key=DEMO_KEY&query=%s", name);
         URL api_url = null;
@@ -88,6 +116,7 @@ public class Food {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+
         // make request
         try {
             HttpURLConnection con = (HttpURLConnection) api_url.openConnection();
@@ -148,43 +177,66 @@ public class Food {
         return nutrient;
     }
 
+
+//    /**
+//     *
+//     * @param name
+//     */
+//    private Food[] searchFromCustomDatabase(String name) {
+//    }
+//
+//    public void addFoodToServer() {
+//        // TODO - implement com.example.healthtracker.data_access_layer.Food.addFoodToServer
+//        throw new UnsupportedOperationException();
+//    }
+
+
     /**
-     *
-     * @param name
+     * Recognizes the food in the img
+     * @param img InputStream, the image to recognize
+     * @return Food
+     * @throws HttpsErrorException when the result cannot be retrived from API
+     * @throws EmptyResultException when no food is found
      */
-    private static Food[] searchFromAPI(String name) {
-        // TODO - implement com.example.healthtracker.data_access_layer.Food.searchFromAPI
-        throw new UnsupportedOperationException();
-    }
+    public static Food searchFoodsFromImg(InputStream img) throws HttpsErrorException, EmptyResultException {
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpPost httppost = new HttpPost(FOOD_RECOGNITION_URL);
+        httppost.setHeader("Authorization", "Bearer " + USER_TOKEN);  // add user token
+        Food result = null;
+        try {
+            // upload the image file
+            MultipartEntity reqEntity = new MultipartEntity();
+            reqEntity.addPart("image", new InputStreamBody(img, "data_recognition.jpeg"));
+            httppost.setEntity(reqEntity);
+            // add the line below, otherwise the error is happening
+            httpclient.getConnectionManager().getSchemeRegistry().register( new Scheme("https", SSLSocketFactory.getSocketFactory(), 443) );
+            HttpResponse responseBody = httpclient.execute(httppost);
 
-    /**
-     *
-     * @param name
-     */
-    private Food[] searchFromCustomDatabase(String name) {
-        // TODO - implement com.example.healthtracker.data_access_layer.Food.searchFromCustomDatabase
-        throw new UnsupportedOperationException();
-    }
-
-    public void addFoodToServer() {
-        // TODO - implement com.example.healthtracker.data_access_layer.Food.addFoodToServer
-        throw new UnsupportedOperationException();
-    }
-
-
-    public static Food[] searchFoods(Image img) throws EmptyInputException, EmptyResultException, IOException {
-        URL url = new URL("https://api.logmeal.es/v2/recognition/complete");
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("GET");
-
-        //img = <'replace-with-path-to-image'>
-        //String api_user_token = "replace-with-your-api-user-token";
-        //String headers = {"Authorization": "Bearer" + api_user_token};
-
-        //resp = requests.post(url,files={'image': open(img, 'r')}, headers=headers);
-        //print(resp.json()["recognition_results"]);
-        // TODO - implement com.example.healthtracker.data_access_layer.Food.searchFoods
-        throw new UnsupportedOperationException();
+            int statusCode = responseBody.getStatusLine().getStatusCode();
+            if (statusCode != 200) {
+                throw new HttpsErrorException();
+            }
+            // parse the result
+            String json_string = EntityUtils.toString(responseBody.getEntity());
+            JSONObject jsonObject = new JSONObject(json_string);
+            JSONArray results = jsonObject.getJSONArray("recognition_results");
+            JSONObject food = results.getJSONObject(0);  // get the 1st confident result
+            String foodName = food.getString("name");
+            result = Food.searchFood(foodName);
+        } catch (ClientProtocolException e) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (EmptyInputException e) {
+            e.printStackTrace();
+        } finally {
+            httpclient.getConnectionManager().shutdown();
+        }
+        if (result == null) {
+            throw new EmptyResultException();
+        }
+        return result;
     }
 
     public Nutrient getNutrients() {

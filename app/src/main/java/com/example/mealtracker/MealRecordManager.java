@@ -2,6 +2,7 @@ package com.example.mealtracker;
 
 import android.os.Build;
 import android.provider.ContactsContract;
+import com.example.mealtracker.DAO.MealRecord;
 
 import androidx.annotation.RequiresApi;
 

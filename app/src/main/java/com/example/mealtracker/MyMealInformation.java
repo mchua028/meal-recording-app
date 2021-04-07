@@ -79,7 +79,24 @@ public class MyMealInformation extends AppCompatActivity {
                 finish();
             }
         });
+        addMoreCardviews();
+    }
 
+    public void addMoreCardviews(){
+        int position = getExampleListSize();
+
+        // for each food entered in previous page (input food details)
+        for (int i=1; i<3; i++) {   // TODO: insert actual num of datasets instead of dummy number 3
+            //int position = Integer.parseInt(editTextInsert.getText().toString());
+            insertItem(position);
+        }
+    }
+
+    // insert card views
+    public void insertItem(int position) {
+        Log.d("insert item","position is" + position);
+        mExampleList.add(position, new MyMealInformationExampleItem(mText1, mText2, mText3, mText4));
+        mAdapter.notifyItemInserted(position);
     }
 
     // get mExampleList size

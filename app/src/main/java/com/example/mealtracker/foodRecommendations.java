@@ -1,6 +1,7 @@
 package com.example.mealtracker;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +53,26 @@ public class foodRecommendations extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
 
         // TODO: get real data from database
+
+        addMoreCardviews();
         return v;
+    }
+
+    public void addMoreCardviews(){
+        int position = getExampleListSize();
+
+        // for each type of nutrient i'm lacking in
+        for (int i=1; i<3; i++) {   // TODO: insert actual num of datasets instead of dummy number 3
+            //int position = Integer.parseInt(editTextInsert.getText().toString());
+            insertItem(position);
+        }
+    }
+
+    // insert card views
+    public void insertItem(int position) {
+        Log.d("insert item","position is" + position);
+        mExampleList.add(position, new FoodRecommendationsExampleItem(mText1, mText2));
+        mAdapter.notifyItemInserted(position);
     }
 
     // get mExampleList size
