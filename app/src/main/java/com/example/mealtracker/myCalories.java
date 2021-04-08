@@ -84,14 +84,14 @@ public class myCalories extends Fragment {
         });
         HealthInfo healthInfo = HealthInfo.getSingleton();
         MealRecordManager mealRecordManager = MealRecordManager.getSingleton();
-        MealRecord[] mealRecords = null;
-        //mealRecords = MealRecord.queryAll(); - app crash at this
+        //MealRecord[] mealRecords = null;
+        //mealRecords = MealRecord.queryAll(); //- app crash at this
         //if (mealRecords.length == 0) {
         //   Toast.makeText(getActivity(), "You haven't added any meal records", Toast.LENGTH_SHORT).show();
         //}
 
 
-        Log.d("uiedittext", Double.toString(healthInfo.getSuggestCalorieIntake()));
+        Log.d("uiedittext", Double.toString(mealRecordManager.getCalorieConsumedToday()));
         TextView text = (TextView) v.findViewById(R.id.myCaloriesTodayMiniTxt);
         text.setText("  Maximum Calories Today           " + Double.toString(healthInfo.getSuggestCalorieIntake()) +
                 "\n  Calories Eaten                              " + Double.toString(mealRecordManager.getCalorieConsumedToday()) +
