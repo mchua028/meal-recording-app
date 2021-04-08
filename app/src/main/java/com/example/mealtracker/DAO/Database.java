@@ -265,9 +265,11 @@ public class Database {
 
 
     public HealthInfo queryHealthInfo() {
-        DatabaseReference userReference = getUserReference();
+        Log.d("went in", "query");
+        //DatabaseReference userReference = getUserReference();
         Query queryRef = getUserReference().orderByKey();
         final DataSnapshot[] result = {null};
+        Log.d("went in", "query2");
         queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -280,10 +282,10 @@ public class Database {
             }
         });
         // wait for the returned result
-        while (result[0] == null) {
+        //while (result[0] == null) {
 
-        }
-
+        //}
+        Log.d("went in", "before healthingo");
         HealthInfo healthInfo = HealthInfo.getSingleton();
         HashMap<String, String> parsedValue = new HashMap<>();
         for (DataSnapshot attribute: result[0].getChildren()) {
@@ -323,14 +325,18 @@ public class Database {
                     healthInfo.setHeight(height);
                     break;
                 case "suggestCalorieIntake":
+                    Log.d("went into", "suggest");
                     double suggestCalorie = attribute.getValue(Double.class);
+                    Log.d("went into", "suggest2");
                     healthInfo.setSuggestCalorieIntake(suggestCalorie);
+                    Log.d("finish", "suggest2");
                     break;
                 case "weight":
                     double weight = attribute.getValue(Double.class);
                     healthInfo.setWeight(weight);
             }
         }
+        Log.d("went into", "before return");
         return healthInfo;
     }
 
@@ -352,8 +358,8 @@ public class Database {
         userReference.child("suggestCalorieIntake").setValue(healthInfo.getSuggestCalorieIntake());
     }
 
-    public double retrieveHealthInfo(HealthInfo healthInfo) {
-
+    public double retrieveHealthInfo() {
+        HealthInfo healthInfo = HealthInfo.getSingleton();
         Log.d("retrieve", "went in");
         DatabaseReference userReference = getUserReference();
         //final HealthInfo[] changeInfo = {null};
@@ -369,6 +375,7 @@ public class Database {
                     Log.e("firebase", "Error getting data", task.getException());
                 } else {
                     Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                    System.out.println(String.valueOf(task.getResult().getValue()));
                     if (String.valueOf(task.getResult().getValue()) == "null") {
                         healthInfo.setSuggestCalorieIntake(1200);
 
@@ -384,6 +391,8 @@ public class Database {
             //Log.d("waiting", "wait");
             suggestCalorie = healthInfo.getSuggestCalorieIntake();
         }*/
+        double suggestion = healthInfo.getSuggestCalorieIntake();
+        System.out.println(suggestion);
         Log.d("before getcalorie", Double.toString(healthInfo.getSuggestCalorieIntake()));
         return healthInfo.getSuggestCalorieIntake();
 

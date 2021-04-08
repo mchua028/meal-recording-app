@@ -19,7 +19,7 @@ public class HealthInfo {
     private double goalWeight;
     private Gender gender;
     private Activity dailyActivityLevel;
-    private double suggestCalorieIntake;
+    private double suggestCalorieIntake = 1200;
 
     private HealthInfo(){};
 
@@ -170,7 +170,9 @@ public class HealthInfo {
     }
 
     public double getSuggestedCalorie() {
-        return Database.getSingleton().queryHealthInfo().suggestCalorieIntake;
+        //Log.d("print", Double.toString(Database.getSingleton().queryHealthInfo().suggestCalorieIntake));
+        //return Database.getSingleton().queryHealthInfo().suggestCalorieIntake;
+        return Database.getSingleton().retrieveHealthInfo();
     }
 }
 
