@@ -101,11 +101,22 @@ public class MealRecordInstrumentedTest {
 //        mealRecord.updateToServer();
 //    }
 
-    @Test
-    public void getMealRecordsByUser() {
-        d.userId = "lvOInQbGwdMcWFnfeag6CMP2flw2";
-        MealRecord[] mealRecords = MealRecordManager.getSingleton().getMealRecordsFromDB();
-        System.out.println(mealRecords);
+//    @Test
+//    public void getMealRecordsByUser() {
+//        d.userId = "lvOInQbGwdMcWFnfeag6CMP2flw2";
+//        MealRecord[] mealRecords = MealRecordManager.getSingleton().getMealRecordsFromDB();
+//        for (MealRecord mealRecord: mealRecords) {
+//            System.out.print(mealRecord.toString());
+//        }
+//    }
 
+    @Test
+    public void getCalorieRecordPastWeek() {
+        d.userId = "lvOInQbGwdMcWFnfeag6CMP2flw2";
+        ArrayList<Double> record = MealRecordManager.getSingleton().getCalorieIntakeInWeek();
+        for (Double r: record) {
+            System.out.println(r);
+        }
+        return;
     }
 }

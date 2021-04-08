@@ -39,7 +39,7 @@ public class HealthInfoTest {
     @Test
     public void getHealthInfo() {
         Database.getSingleton().userId = "lvOInQbGwdMcWFnfeag6CMP2flw2";
-        
+
         double suggestion = HealthInfoManager.getSingleton().getSuggestedCalorie();
         System.out.print(suggestion);
     }
