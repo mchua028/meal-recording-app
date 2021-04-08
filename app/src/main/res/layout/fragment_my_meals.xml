@@ -60,7 +60,7 @@
     <!-- TODO: Make the search accept input -->
 
     <SearchView
-        android:id="@+id/searchView"
+        android:id="@+id/searchDate"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/myMealsMiniTxt"
@@ -74,7 +74,7 @@
         android:id="@+id/myMealsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/searchView"
+        android:layout_below="@id/searchDate"
         android:layout_marginTop="10dp"
         android:padding="8dp"
         android:clipToPadding="false"

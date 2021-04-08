@@ -30,6 +30,8 @@ public class MealRecordManager {
 
     private MealRecord mealRecord;
 
+    private MealRecord[] mealRecords;
+
     static public MealRecordManager getSingleton() {
         if (singleton == null) {
             singleton = new MealRecordManager();
@@ -64,6 +66,15 @@ public class MealRecordManager {
 
     public MealRecord getMealRecord(){
         return mealRecord;
+    }
+
+    public void setMealRecords(MealRecord[] mealRecords){
+        Log.d("entering","mealreocrdmgr");
+        this.mealRecords = mealRecords;
+    }
+
+    public MealRecord[] getMealRecords(){
+        return mealRecords;
     }
 
     /**
