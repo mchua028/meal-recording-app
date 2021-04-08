@@ -31,12 +31,12 @@ import com.example.mealtracker.UI.InputFoodDetails;
 import com.example.mealtracker.UI.MyMealInformation;
 import com.example.mealtracker.UI.editCalories;
 import com.example.mealtracker.UI.uploadPicture;
-import com.github.mikephil.charting.charts.BarChart;
+/*import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;*/
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -48,7 +48,7 @@ public class myCalories extends Fragment {
 
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
-    BarChart mpBarChart;
+    //BarChart mpBarChart;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -94,20 +94,23 @@ public class myCalories extends Fragment {
         MealRecord[] mealRecords = null;
         //mealRecords = MealRecord.queryAll(); - app crash at this
         //if (mealRecords.length == 0) {
-         //   Toast.makeText(getActivity(), "You haven't added any meal records", Toast.LENGTH_SHORT).show();
+        //   Toast.makeText(getActivity(), "You haven't added any meal records", Toast.LENGTH_SHORT).show();
         //}
 
 
         Log.d("uiedittext", Double.toString(healthInfo.getSuggestCalorieIntake()));
         TextView text = (TextView) v.findViewById(R.id.myCaloriesTodayMiniTxt);
         text.setText("  Maximum Calories Today           " + Double.toString(healthInfo.getSuggestCalorieIntake()) +
-                     "\n  Calories Eaten                              " + Double.toString(mealRecordManager.getCalorieConsumedToday()) +
-                     "\n  Remaining Calories                      " + Double.toString(mealRecordManager.getCalorieRemaining()));
+                "\n  Calories Eaten                              " + Double.toString(mealRecordManager.getCalorieConsumedToday()) +
+                "\n  Remaining Calories                      " + Double.toString(mealRecordManager.getCalorieRemaining()));
+        return v;
+    }
+}
 
         /**
          * Create bar graph for weekly calories
          */
-        mpBarChart = v.findViewById(R.id.myCaloriesBarChart);
+        /*mpBarChart = v.findViewById(R.id.myCaloriesBarChart);
         BarDataSet barDataSet1 = new BarDataSet(dataValues1(), "Data Set 1");
         ArrayList<IBarDataSet> datasets = new ArrayList<>();
         datasets.add(barDataSet1);
@@ -135,6 +138,6 @@ public class myCalories extends Fragment {
         dataVals1.add(new BarEntry(5,6));
         dataVals1.add(new BarEntry(6,7));
         return dataVals1;
-    }
+    }*/
 
-}
+

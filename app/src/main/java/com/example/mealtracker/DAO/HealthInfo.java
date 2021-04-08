@@ -19,7 +19,7 @@ public class HealthInfo {
     private double goalWeight;
     private Gender gender;
     private Activity dailyActivityLevel;
-    private double suggestCalorieIntake;
+    private double suggestCalorieIntake = 1200;
 
     private HealthInfo(){};
 
