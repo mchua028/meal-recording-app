@@ -143,6 +143,18 @@ public class accountAndSettings extends Fragment {
         editGoalWeight.setText(Double.toString(HealthInfo.getSingleton().getGoalWeight()));
 
         // TODO: display old information from Gender spinner and Activity spinner
+        /*
+        int genderPosition = gender_adapter.getPosition(HealthInfo.getSingleton().getGender().name());
+        gender_spinner.setSelection(genderPosition);
+        int activityPosition = activity_adapter.getPosition(HealthInfo.getSingleton().getDailyActivityLevel().name());
+        activity_spinner.setSelection(activityPosition);
+
+
+        String compareValue = HealthInfo.getSingleton().getGender().name();
+        if (compareValue != null) {
+            int spinnerPosition = gender_adapter.getPosition(compareValue);
+            gender_spinner.setSelection(spinnerPosition);
+        }*/
 
         /**
          * Submit button:
