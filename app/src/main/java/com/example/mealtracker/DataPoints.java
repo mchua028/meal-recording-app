@@ -9,7 +9,7 @@ public class DataPoints implements Serializable {
     public static float xValue;
     public static float yValue;
 
-    public DataPoints() {
+    public DataPoints(int j, Double aDouble) {
 
     }
 

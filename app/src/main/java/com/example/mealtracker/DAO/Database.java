@@ -6,6 +6,7 @@ package com.example.mealtracker.DAO;
 
 import android.content.Intent;
 import android.os.Build;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -39,8 +40,10 @@ public class Database {
     private DatabaseReference userReference;
     private DatabaseReference mealRecordReference;
     private FirebaseAuth firebaseAuth;
+    private final DataSnapshot[] dataSnapshot = {null};
+    private HealthInfo healthInfo;
 
-    public  String userId = null;
+    public  String userId = "lvOInQbGwdMcWFnfeag6CMP2flw2";
 
     // for testing purpose
     private final String DATABASE_URL = "https://mealtracker-dc280-default-rtdb.firebaseio.com/";
@@ -52,6 +55,19 @@ public class Database {
     private Database() {
         database = FirebaseDatabase.getInstance(DATABASE_URL);
         firebaseAuth = FirebaseAuth.getInstance();
+        userReference = database.getReference("Users").child(userId);
+        userReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                dataSnapshot[0] = snapshot;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
     }
 
     static public Database getSingleton() {
@@ -187,26 +203,7 @@ public class Database {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public MealRecord[] queryAllMealRecords() throws EmptyResultException {
-        Query queryRef;
-        queryRef = getUserReference().child("MealRecords").orderByChild("Datetime");
-        final DataSnapshot[] result = {null};
-        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                result[0] = snapshot;
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        // waiting for query result
-        while (result[0] == null) {
-            ;
-        }
-
-        ArrayList<MealRecord> mealRecords = parseMealRecords(result[0]);
+        ArrayList<MealRecord> mealRecords = parseMealRecords(dataSnapshot[0].child("MealRecords"));
         return mealRecords.toArray(new MealRecord[0]);
     }
 
@@ -263,32 +260,13 @@ public class Database {
         userReference.child("suggestCalorieIntake").setValue(healthInfo.getSuggestCalorieIntake());
     }
 
-
+    /**
+     * Queries the user information
+     * @return
+     */
     public HealthInfo queryHealthInfo() {
-        Log.d("went in", "query");
-        //DatabaseReference userReference = getUserReference();
-        Query queryRef = getUserReference().orderByKey();
-        final DataSnapshot[] result = {null};
-        Log.d("went in", "query2");
-        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                result[0] = snapshot;
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        // wait for the returned result
-        //while (result[0] == null) {
-
-        //}
-        Log.d("went in", "before healthingo");
-        HealthInfo healthInfo = HealthInfo.getSingleton();
-        HashMap<String, String> parsedValue = new HashMap<>();
-        for (DataSnapshot attribute: result[0].getChildren()) {
+        HealthInfo healthInfo = new HealthInfo();
+        for (DataSnapshot attribute: dataSnapshot[0].getChildren()) {
             String key = attribute.getKey();
             switch (key) {
                 case "age":
@@ -336,7 +314,6 @@ public class Database {
                     healthInfo.setWeight(weight);
             }
         }
-        Log.d("went into", "before return");
         return healthInfo;
     }
 
@@ -357,48 +334,6 @@ public class Database {
         healthInfo.calculateCalorie();
         userReference.child("suggestCalorieIntake").setValue(healthInfo.getSuggestCalorieIntake());
     }
-
-    public double retrieveHealthInfo() {
-        HealthInfo healthInfo = HealthInfo.getSingleton();
-        Log.d("retrieve", "went in");
-        DatabaseReference userReference = getUserReference();
-        //final HealthInfo[] changeInfo = {null};
-        Log.d("retrieve", "healthinfo");
-
-        userReference.child("suggestCalorieIntake").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-
-            //double calorieSuggest = 1200;
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-
-                if (!task.isSuccessful()) {
-                    Log.e("firebase", "Error getting data", task.getException());
-                } else {
-                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
-                    System.out.println(String.valueOf(task.getResult().getValue()));
-                    if (String.valueOf(task.getResult().getValue()) == "null") {
-                        healthInfo.setSuggestCalorieIntake(1200);
-
-
-                    } else {
-                        healthInfo.setSuggestCalorieIntake(Double.parseDouble(String.valueOf(task.getResult().getValue())));
-                    }
-                }
-            }
-        });
-        /*double suggestCalorie = 0;
-        while (suggestCalorie == 0){
-            //Log.d("waiting", "wait");
-            suggestCalorie = healthInfo.getSuggestCalorieIntake();
-        }*/
-        double suggestion = healthInfo.getSuggestCalorieIntake();
-        System.out.println(suggestion);
-        Log.d("before getcalorie", Double.toString(healthInfo.getSuggestCalorieIntake()));
-        return healthInfo.getSuggestCalorieIntake();
-
-    }
-
-
 
     /**
      * Creates account dir under database "Users".

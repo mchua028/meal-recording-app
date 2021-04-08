@@ -18,6 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.example.mealtracker.AppLogic.HealthInfoManager;
 import com.example.mealtracker.AppLogic.MealRecordManager;
 import com.example.mealtracker.DAO.Database;
 import com.example.mealtracker.DAO.HealthInfo;
@@ -103,8 +104,8 @@ public class myCalories extends Fragment {
         });
         HealthInfo healthInfo = HealthInfo.getSingleton();
         Log.d("suggestcalore", "printcalorie");
-        double suggestedCalorie = healthInfo.getSuggestedCalorie();
-        if (suggestedCalorie == 0) suggestedCalorie = 1200;
+        double suggestedCalorie;
+        suggestedCalorie = HealthInfoManager.getSingleton().getSuggestedCalorie();
         //String strSuggested = Double.toString(suggestedCalorie);
         MealRecordManager mealRecordManager = MealRecordManager.getSingleton();
         //MealRecord[] mealRecords = null;
@@ -152,21 +153,10 @@ public class myCalories extends Fragment {
         yAxisLeft.setAxisMinimum(0);
         yAxisRight.setAxisMinimum(0);
 
-        // not dummy graph
-        Log.d("b4", "firebase db");
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Users");
-        String id = databaseReference.push().getKey();
-        //String id = Database.getSingleton().getUserReference().getKey();
-        //String id = firebaseDatabase.getReference().child("MealRecords").getKey();
-        Log.d("id", id);
-
         ArrayList<BarEntry> dataVals = new ArrayList<BarEntry>();
-        float calories= 0;
+        float calories= 15;
         Log.d("b4", "for loop");
         for (int i=0; i<7; i++) {       // for each bar
-            calories=i;
             //error line
             //calories = MealRecordManager.getSingleton().getCalorieIntakeInWeek().get(i).floatValue();
             Log.d("caloriesInWeek", String.valueOf(calories));
@@ -191,49 +181,9 @@ public class myCalories extends Fragment {
         //databaseReference.child(id).setValue(dataPoints);
 
         Log.d("b4", "retrieve data");
-        retrieveData();
-
         return v;
     }
 
-    // when data is changed
-    private void retrieveData() {
-        (firebaseDatabase.getReference().child("MealRecords")).addValueEventListener(new ValueEventListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<BarEntry> dataVals = new ArrayList<BarEntry>();
-                if (snapshot.hasChildren()) {
-                    for (DataSnapshot myDataSnapshot : snapshot.getChildren()) {
-                        float calories= 0;
-
-                        Log.d("b4", "for loop");
-                        for (int i=0; i<7; i++) {       // for each bar
-                            calories=i;
-                            // error line
-                            //calories = MealRecordManager.getSingleton().getCalorieIntakeInWeek().get(i).floatValue();
-                            Log.d("caloriesInWeek", String.valueOf(calories));
-                            dataVals.add(new BarEntry(i, calories));
-                        }
-                        Log.d("aft", "for loop");
-
-                        DataPoints dataPoints = (DataPoints) myDataSnapshot.getValue(DataPoints.class);
-                        Log.d("aft", "datapoints");
-                    }
-                    showChart(dataVals);
-                    Log.d("aft","showchart");
-                }
-                else {
-                    mpBarChart.invalidate();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
 
     private void showChart(ArrayList<BarEntry> dataVals) {
         BarDataSet barDataSet = null;

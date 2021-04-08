@@ -1,10 +1,13 @@
 package com.example.mealtracker;
 
+import android.provider.ContactsContract;
+
 import androidx.test.runner.AndroidJUnit4;
 
 import com.example.mealtracker.AppLogic.HealthInfoManager;
 import com.example.mealtracker.DAO.Database;
 import com.example.mealtracker.DAO.Food;
+import com.example.mealtracker.DAO.HealthInfo;
 import com.example.mealtracker.Exceptions.EmptyResultException;
 import com.example.mealtracker.Exceptions.HttpsErrorException;
 
@@ -38,9 +41,7 @@ public class HealthInfoTest {
 
     @Test
     public void getHealthInfo() {
-        Database.getSingleton().userId = "lvOInQbGwdMcWFnfeag6CMP2flw2";
-
-        double suggestion = HealthInfoManager.getSingleton().getSuggestedCalorie();
-        System.out.print(suggestion);
+        HealthInfo h = Database.getSingleton().queryHealthInfo();
+        return;
     }
 }
