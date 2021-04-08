@@ -152,17 +152,6 @@ public class myCalories extends Fragment {
         yAxisLeft.setAxisMinimum(0);
         yAxisRight.setAxisMinimum(0);
 
-        // to show dummy data
-        BarDataSet barDataSet1 = new BarDataSet(dataValues1(), "Calories");
-
-        ArrayList<IBarDataSet> datasets = new ArrayList<>();
-        datasets.add(barDataSet1);
-
-        BarData barData = new BarData(datasets);
-        mpBarChart.setData(barData);
-        mpBarChart.invalidate();
-
-        /*
         // not dummy graph
         Log.d("b4", "firebase db");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -177,21 +166,32 @@ public class myCalories extends Fragment {
         float calories= 0;
         Log.d("b4", "for loop");
         for (int i=0; i<7; i++) {       // for each bar
-            // error line
+            calories=i;
+            //error line
             //calories = MealRecordManager.getSingleton().getCalorieIntakeInWeek().get(i).floatValue();
             Log.d("caloriesInWeek", String.valueOf(calories));
             dataVals.add(new BarEntry(i, calories));
         }
         Log.d("aft", "for loop");
 
-        DataPoints dataPoints = new DataPoints(dayId, calories);
+        for (int j=0; j<7; j++) {
+            DataPoints dataPoints = new DataPoints(j, calories);
+        }
+
+        BarDataSet barDataSet1 = new BarDataSet(dataVals, "Calories");
+
+        ArrayList<IBarDataSet> datasets = new ArrayList<>();
+        datasets.add(barDataSet1);
+
+        BarData barData = new BarData(datasets);
+        mpBarChart.setData(barData);
+
         Log.d("b4", "setValue(dataPoints)");
         //comment out bc it keeps setting values in db
-        databaseReference.child(id).setValue(dataPoints);
+        //databaseReference.child(id).setValue(dataPoints);
 
         Log.d("b4", "retrieve data");
-        retrieveData();*/
-
+        retrieveData();
 
         return v;
     }
@@ -203,13 +203,13 @@ public class myCalories extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<BarEntry> dataVals = new ArrayList<BarEntry>();
-
                 if (snapshot.hasChildren()) {
                     for (DataSnapshot myDataSnapshot : snapshot.getChildren()) {
                         float calories= 0;
 
                         Log.d("b4", "for loop");
                         for (int i=0; i<7; i++) {       // for each bar
+                            calories=i;
                             // error line
                             //calories = MealRecordManager.getSingleton().getCalorieIntakeInWeek().get(i).floatValue();
                             Log.d("caloriesInWeek", String.valueOf(calories));
@@ -224,7 +224,6 @@ public class myCalories extends Fragment {
                     Log.d("aft","showchart");
                 }
                 else {
-                    mpBarChart.clear();
                     mpBarChart.invalidate();
                 }
             }
@@ -247,23 +246,6 @@ public class myCalories extends Fragment {
         mpBarChart.clear();
         mpBarChart.setData(barData);
         mpBarChart.invalidate();
-    }
-
-    // dummy values
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private ArrayList<BarEntry> dataValues1() {
-        ArrayList<BarEntry> dataVals1 = new ArrayList<BarEntry>();
-        float calories= 0;
-
-        Log.d("b4", "for loop");
-        for (int i=0; i<7; i++) {       // for each bar
-            //calories = MealRecordManager.getSingleton().getCalorieIntakeInWeek().get(i).floatValue();
-            calories = i;               // dummy calories
-            Log.d("caloriesInWeek", String.valueOf(calories));
-            dataVals1.add(new BarEntry(i, calories));
-        }
-        Log.d("aft", "for loop");
-        return dataVals1;
     }
 
 }
