@@ -175,16 +175,16 @@ public class Database {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public MealRecord[] queryByDate(LocalDate startDate, LocalDate endDate) throws EmptyResultException {
         MealRecord[] mealRecords = queryAllMealRecords();
-        ArrayList<MealRecord> results = new ArrayList<>();
-//        for (MealRecord mealRecord : mealRecords) {
-//            LocalDate date = mealRecord.getTime().toLocalDate();
-//            if (date.minusDays(7).isAfter(startDate) || date.plusDays(7).isBefore(endDate)) {
-//                results.add(mealRecord);
-//            }
-//        }
-        MealRecord[] returnVals = new MealRecord[results.size()];
-        returnVals = results.toArray(returnVals);
-        return returnVals;
+//        ArrayList<MealRecord> results = new ArrayList<>();
+////        for (MealRecord mealRecord : mealRecords) {
+////            LocalDate date = mealRecord.getTime().toLocalDate();
+////            if (date.minusDays(7).isAfter(startDate) || date.plusDays(7).isBefore(endDate)) {
+////                results.add(mealRecord);
+////            }
+////        }
+//        MealRecord[] returnVals = new MealRecord[results.size()];
+//        returnVals = results.toArray(returnVals);
+        return mealRecords;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
