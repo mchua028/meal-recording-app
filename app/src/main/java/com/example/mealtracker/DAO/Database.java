@@ -82,8 +82,10 @@ public class Database {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void postNewMealRecord(MealRecord mealRecord) {
-        DatabaseReference newMealRecord = mealRecordReference.push();
+        // create new meal record with generated id
+        DatabaseReference newMealRecord = getUserReference().child("MealRecords").push();
         mealRecord.setId(newMealRecord.getKey());
+
         newMealRecord.child("Datetime").setValue(mealRecord.getTimeString());
         DatabaseReference foodRecords = newMealRecord.child("FoodRecords");
 

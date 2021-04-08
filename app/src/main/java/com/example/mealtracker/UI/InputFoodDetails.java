@@ -1,10 +1,12 @@
 package com.example.mealtracker.UI;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -63,6 +65,9 @@ public class InputFoodDetails extends AppCompatActivity {
         removeBtn = findViewById(R.id.removeBtn);
         countCaloriesBtn = findViewById(R.id.inputDetailsCountCaloriesBtn);
 
+        /**
+         * Adds new food information
+         */
         insertBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,6 +170,22 @@ public class InputFoodDetails extends AppCompatActivity {
             }
         });
 
+        /**
+         * Submits the MealRecord Added.
+         */
+        countCaloriesBtn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View v) {
+                if (mealRecord.getFoods().isEmpty()) {
+                    Toast.makeText(InputFoodDetails.this, "Empty Meal Record " +
+                            "cannot be uploaded", Toast.LENGTH_SHORT).show();
+                }
+                MealRecordManager.getSingleton().addMealRecordToDB(mealRecord);
+                startActivity(new Intent(v.getContext(), MyMealInformation.class));
+            }
+        });
+
     }
 
     public void goToMyMealInformation(View view) {
@@ -172,13 +193,6 @@ public class InputFoodDetails extends AppCompatActivity {
         Intent intent = new Intent(this, MyMealInformation.class);
         startActivity(intent);
     }
-    /*countCaloriesBtn.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            startActivity(new Intent(v.getContext(), MyMealInformation.class));
-        }
-    });*/
-
 
     // for recycle view
     public void createExampleList() {
