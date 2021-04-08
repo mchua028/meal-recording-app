@@ -33,6 +33,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -131,19 +132,27 @@ public class myCalories extends Fragment {
         mpBarChart = v.findViewById(R.id.myCaloriesBarChart);
         mpBarChart.setDescription(null);
 
-        //String[] days = new String[]{"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
         XAxis xAxis = mpBarChart.getXAxis();
+        xAxis.setDrawLabels(true);
         xAxis.setLabelCount(7);
-        //xAxis.setValueFormatter(new IndexAxisValueFormatter(days));
+        String[] labels = new String[7];        // xAxis labels
+        LocalDate endDate = LocalDate.now().plusDays(1);
+        LocalDate startDate = endDate.minusDays(7);
+        for (int i=0; i<7; i++) {
+            String dayId = startDate.plus(i, ChronoUnit.DAYS).format(DateTimeFormatter.ofPattern("dd-MM"));
+            labels[i] = dayId;
+            Log.d("added dayId", dayId);
+        }
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setGranularity(1);
         xAxis.setGranularityEnabled(true);
         YAxis yAxisLeft = mpBarChart.getAxisLeft();
         YAxis yAxisRight = mpBarChart.getAxisRight();
-        Log.d("aft", "barchart axis");
+        yAxisLeft.setAxisMinimum(0);
+        yAxisRight.setAxisMinimum(0);
 
         // to show dummy data
-
         BarDataSet barDataSet1 = new BarDataSet(dataValues1(), "Calories");
 
         ArrayList<IBarDataSet> datasets = new ArrayList<>();
@@ -153,8 +162,8 @@ public class myCalories extends Fragment {
         mpBarChart.setData(barData);
         mpBarChart.invalidate();
 
-
         /*
+        // not dummy graph
         Log.d("b4", "firebase db");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -165,23 +174,19 @@ public class myCalories extends Fragment {
         Log.d("id", id);
 
         ArrayList<BarEntry> dataVals = new ArrayList<BarEntry>();
-        LocalDate endDate = LocalDate.now().plusDays(1);
-        LocalDate startDate = endDate.minusDays(7);
-        float dayId = Integer.parseInt(startDate.format(DateTimeFormatter.ofPattern("ddMM")));
         float calories= 0;
         Log.d("b4", "for loop");
-        for (int i=0; i<6; i++) {       // for each bar
-            dayId = Integer.parseInt(startDate.plus(i, ChronoUnit.DAYS).format(DateTimeFormatter.ofPattern("ddMM")));
-            Log.d("dayId", String.valueOf(dayId));
+        for (int i=0; i<7; i++) {       // for each bar
+            // error line
             //calories = MealRecordManager.getSingleton().getCalorieIntakeInWeek().get(i).floatValue();
             Log.d("caloriesInWeek", String.valueOf(calories));
-            dataVals.add(new BarEntry(dayId, calories));
+            dataVals.add(new BarEntry(i, calories));
         }
         Log.d("aft", "for loop");
 
         DataPoints dataPoints = new DataPoints(dayId, calories);
         Log.d("b4", "setValue(dataPoints)");
-        //error line
+        //comment out bc it keeps setting values in db
         databaseReference.child(id).setValue(dataPoints);
 
         Log.d("b4", "retrieve data");
@@ -190,10 +195,6 @@ public class myCalories extends Fragment {
 
         return v;
     }
-    /*
-    public class xAxisValueFormatter implements XAxisValueFormatter {
-
-    }*/
 
     // when data is changed
     private void retrieveData() {
@@ -205,22 +206,17 @@ public class myCalories extends Fragment {
 
                 if (snapshot.hasChildren()) {
                     for (DataSnapshot myDataSnapshot : snapshot.getChildren()) {
-                        LocalDate endDate = LocalDate.now().plusDays(1);
-                        LocalDate startDate = endDate.minusDays(7);
-                        float dayId = Integer.parseInt(startDate.format(DateTimeFormatter.ofPattern("ddMM")));
                         float calories= 0;
 
                         Log.d("b4", "for loop");
-                        for (int i=0; i<6; i++) {       // for each bar
-                            dayId = Integer.parseInt(startDate.plus(i, ChronoUnit.DAYS).format(DateTimeFormatter.ofPattern("ddMM")));
-                            Log.d("dayId", String.valueOf(dayId));
+                        for (int i=0; i<7; i++) {       // for each bar
+                            // error line
                             //calories = MealRecordManager.getSingleton().getCalorieIntakeInWeek().get(i).floatValue();
                             Log.d("caloriesInWeek", String.valueOf(calories));
-                            dataVals.add(new BarEntry(dayId, calories));
+                            dataVals.add(new BarEntry(i, calories));
                         }
                         Log.d("aft", "for loop");
 
-                        //error line
                         DataPoints dataPoints = (DataPoints) myDataSnapshot.getValue(DataPoints.class);
                         Log.d("aft", "datapoints");
                     }
@@ -242,7 +238,8 @@ public class myCalories extends Fragment {
 
     private void showChart(ArrayList<BarEntry> dataVals) {
         BarDataSet barDataSet = null;
-        barDataSet.setValues(dataVals);
+        //comment out bc it keeps setting values in db
+        //barDataSet.setValues(dataVals);
         barDataSet.setLabel("DataSet 1");
         iBarDataSets.clear();
         iBarDataSets.add(barDataSet);
@@ -253,35 +250,17 @@ public class myCalories extends Fragment {
     }
 
     // dummy values
-    /*
-    private ArrayList<BarEntry> dataValues1() {
-        ArrayList<BarEntry> dataVals1 = new ArrayList<BarEntry>();
-        dataVals1.add(new BarEntry(0,1));
-        dataVals1.add(new BarEntry(1,2));
-        dataVals1.add(new BarEntry(2,3));
-        dataVals1.add(new BarEntry(3,4));
-        dataVals1.add(new BarEntry(4,5));
-        dataVals1.add(new BarEntry(5,6));
-        dataVals1.add(new BarEntry(6,7));
-        return dataVals1;
-    }
-    */
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     private ArrayList<BarEntry> dataValues1() {
         ArrayList<BarEntry> dataVals1 = new ArrayList<BarEntry>();
-        LocalDate endDate = LocalDate.now().plusDays(1);
-        LocalDate startDate = endDate.minusDays(7);
-        float dayId = Integer.parseInt(startDate.format(DateTimeFormatter.ofPattern("ddMM")));
         float calories= 0;
 
         Log.d("b4", "for loop");
-        for (int i=0; i<6; i++) {       // for each bar
-            dayId = Integer.parseInt(startDate.plus(i, ChronoUnit.DAYS).format(DateTimeFormatter.ofPattern("ddMM")));
-            Log.d("dayId", String.valueOf(dayId));
+        for (int i=0; i<7; i++) {       // for each bar
             //calories = MealRecordManager.getSingleton().getCalorieIntakeInWeek().get(i).floatValue();
+            calories = i;               // dummy calories
             Log.d("caloriesInWeek", String.valueOf(calories));
-            dataVals1.add(new BarEntry(dayId, calories));
+            dataVals1.add(new BarEntry(i, calories));
         }
         Log.d("aft", "for loop");
         return dataVals1;
