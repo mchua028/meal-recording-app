@@ -20,7 +20,7 @@ public class HealthInfoManager {
     private static HealthInfoManager singleton = null;
 
     public HealthInfo getHealthInfo() {
-        HealthInfo healthInfo = new HealthInfo();
+        HealthInfo healthInfo = HealthInfo.getSingleton();
         healthInfo.getHeight();
         healthInfo.getWeight();
         healthInfo.getAge();
@@ -46,7 +46,7 @@ public class HealthInfoManager {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void setHealthInfo(HashMap<String, String> info) {
-        HealthInfo healthInfo = new HealthInfo();
+        HealthInfo healthInfo = HealthInfo.getSingleton();
         healthInfo.setHeight(Double.parseDouble(info.get("height")));
         healthInfo.setWeight(Double.parseDouble(info.get("weight")));
         healthInfo.setAge(Integer.parseInt(info.get("age")));

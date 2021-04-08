@@ -74,8 +74,8 @@ public class myCalories extends Fragment {
                 startActivity(new Intent(v.getContext(), editCalories.class));
             }
         });
-        HealthInfo healthInfo = new HealthInfo();
-        MealRecordManager mealRecordManager = new MealRecordManager();
+        HealthInfo healthInfo = HealthInfo.getSingleton();
+        MealRecordManager mealRecordManager = MealRecordManager.getSingleton();
 
         Log.d("uiedittext", Double.toString(healthInfo.getSuggestCalorieIntake()));
         TextView text = (TextView) v.findViewById(R.id.myCaloriesTodayMiniTxt);

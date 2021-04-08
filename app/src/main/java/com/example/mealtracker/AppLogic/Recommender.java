@@ -24,7 +24,7 @@ public class Recommender {
     }
 
     public void setSuggestedNutrientAmt() {
-        HealthInfo info  = new HealthInfo();
+        HealthInfo info  = HealthInfo.getSingleton();
         //values in grams
         double carbohydrate = 12/100*info.getSuggestCalorieIntake();
         double protein = 0.9*info.getGoalWeight();
@@ -64,7 +64,7 @@ public class Recommender {
     }
 
     public void setActualNutrientAmt() {
-        MealRecordManager mrm = new MealRecordManager();
+        MealRecordManager mrm = MealRecordManager.getSingleton();
         //actualNutrientAmt = mrm.calculateTotalNutrient();
         //actualNutrientAmt=actualNutrientAmt;
     }

@@ -23,6 +23,7 @@ import com.example.mealtracker.Exceptions.EmptyResultException;
 import com.example.mealtracker.R;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -188,7 +189,11 @@ public class InputFoodDetails extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void goToMyMealInformation(View view) {
+        Log.d("mealReocrd",mealRecord.getFoods().get(0).getName());
+        mealRecord.setTime(LocalDateTime.now());
+        Log.d("mealRecord",mealRecord.getTimeString());
         mealRecordMgr.setMealRecord(mealRecord);
         Intent intent = new Intent(this, MyMealInformation.class);
         startActivity(intent);
