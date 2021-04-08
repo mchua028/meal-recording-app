@@ -16,6 +16,7 @@ import com.example.mealtracker.Exceptions.EmptyInputException;
 import com.example.mealtracker.Exceptions.EmptyResultException;
 import com.example.mealtracker.Exceptions.RecordNotInServerException;
 
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -92,7 +93,7 @@ public class MealRecordManager {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public MealRecord[] getMealRecordsFromDB() {
+    public MealRecord[] getMealRecordsFromDB() throws EmptyResultException {
         return MealRecord.queryAll();
     }
 
@@ -159,13 +160,15 @@ public class MealRecordManager {
         // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.editMealRecord
     }
 
-    //private MealRecordManager MealRecordManager() {
-    //    // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.com.example.healthtracker.business_layer.MealRecordManager
-    //}
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void calculateCalorieConsumedToday(){
-        MealRecord[] mealRecordsForToday = MealRecord.queryByDate(LocalDate.now(),LocalDate.now());
+        MealRecord[] mealRecordsForToday = new MealRecord[0];
+        try {
+            mealRecordsForToday = MealRecord.queryByDate(LocalDate.now(),LocalDate.now());
+        } catch (EmptyResultException e) {
+            calorieConsumedToday = 0;
+            return;
+        }
         double calorieConsumed = 0;
         for (int i=0; i<mealRecordsForToday.length; i++){
             for (int j=0; j<mealRecordsForToday[i].getFoods().size(); j++) {
@@ -177,13 +180,13 @@ public class MealRecordManager {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void calculateCalorieQuotaRemainingToday() {
-        HealthInfo healthInfo = HealthInfo.getSingleton();
+        HealthInfo healthInfo = HealthInfo.getSingleton(); //TODO: get from database instead
         double calorieSuggested = healthInfo.getSuggestCalorieIntake();
         calorieRemaining = calorieSuggested - calorieConsumedToday;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public Nutrient calculateTotalNutrient(){
+    public Nutrient calculateTotalNutrient() throws EmptyResultException {
         Nutrient totalConsumed = new Nutrient();
         MealRecord[] mealRecordsForToday = MealRecord.queryByDate(LocalDate.now(),LocalDate.now());
 
@@ -202,5 +205,33 @@ public class MealRecordManager {
             totalConsumed.setMagnesium(totalConsumed.getMagnesium()+mealRecordsForToday[i].getNutrient().getMagnesium());
         }
         return totalConsumed;
+    }
+
+    /**
+     * returns the actual calorie intake records within the past week (including today).
+     * @return meal records, in ArrayList Double, null if no records
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public ArrayList<Double> getCalorieIntakeInWeek() {
+        LocalDate endDate = LocalDate.now().plusDays(1);
+        LocalDate startDate = endDate.minusDays(7);
+
+        // init
+        ArrayList<Double> results = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+            results.add(0.0);
+        }
+
+        try {
+            MealRecord[] mealRecords = MealRecord.queryByDate(startDate, endDate);
+            for (MealRecord mealRecord: mealRecords) {
+                int index = Period.between(startDate, LocalDate.from(mealRecord.getTime())).getDays();
+                double element = results.get(index) + mealRecord.getTotalCalorie();
+                results.set(index, element);
+            }
+            return results;
+        } catch (EmptyResultException e) {
+            return null;
+        }
     }
 }

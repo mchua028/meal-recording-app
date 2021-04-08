@@ -1,7 +1,5 @@
 package com.example.mealtracker.AppLogic;
 
-//import com.example.healthtracker.data_access_layer.HealthInfo;
-
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
@@ -16,7 +14,6 @@ import java.util.HashMap;
 
 public class HealthInfoManager {
 
-    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     private static HealthInfoManager singleton = null;
 
@@ -48,10 +45,17 @@ public class HealthInfoManager {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void setHealthInfo(HashMap<String, String> info) {
         HealthInfo healthInfo = HealthInfo.getSingleton();
+        parseHealthInfo(info);
+        healthInfo.addToServer();
+    }
+
+    public static HealthInfo parseHealthInfo(HashMap<String, String> info) {
+        HealthInfo healthInfo = HealthInfo.getSingleton();
         healthInfo.setHeight(Double.parseDouble(info.get("height")));
         healthInfo.setWeight(Double.parseDouble(info.get("weight")));
         healthInfo.setAge(Integer.parseInt(info.get("age")));
-        healthInfo.setGoalWeight(Double.parseDouble(info.get("goal weight")));;
+        healthInfo.setGoalWeight(Double.parseDouble(info.get("goal weight")));
+        ;
         //Gender gender = new Gender();
         if (info.get("gender") == "Female"){
             healthInfo.setGender(Gender.FEMALE);
@@ -77,7 +81,13 @@ public class HealthInfoManager {
         }
 
         healthInfo.calculateCalorie();  // update to healthInfo
-        healthInfo.addToServer();
+        return healthInfo;
     }
 
+    /**
+     * @return the suggested Calorie intake of the user.
+     */
+    public double getSuggestedCalorie() {
+        return HealthInfo.getSingleton().getSuggestedCalorie();
+    }
 }
