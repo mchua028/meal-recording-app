@@ -1,6 +1,8 @@
 package com.example.mealtracker.UI;
 
 import android.content.Intent;
+import android.icu.number.IntegerWidth;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,15 +12,19 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.mealtracker.AppLogic.HealthInfoManager;
+import com.example.mealtracker.DAO.HealthInfo;
+import com.example.mealtracker.Gender;
 import com.example.mealtracker.R;
 import com.example.mealtracker.myCalories;
 import com.google.android.material.textfield.TextInputLayout;
@@ -35,8 +41,6 @@ public class accountAndSettings extends Fragment {
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
 
-    TextInputLayout txtInputUsername;
-
     @Override
      public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +56,6 @@ public class accountAndSettings extends Fragment {
         getActivity().setTitle("Account and Settings");
 
         View v = inflater.inflate(R.layout.fragment_account_and_settings, container, false);
-
-        txtInputUsername = (TextInputLayout) v.findViewById(R.id.username_txt);
 
         // Gender dropdown box
         Spinner gender_spinner = (Spinner) v.findViewById(R.id.gender_spinner);
@@ -112,14 +114,43 @@ public class accountAndSettings extends Fragment {
             }
         });
 
+        // display username as it should not be edited
+        EditText txtUsername = (EditText) v.findViewById(R.id.accountEditUsername);
+        if (firebaseAuth.getCurrentUser().getDisplayName().trim() != null
+                && !firebaseAuth.getCurrentUser().getDisplayName().trim().isEmpty()) {
+            String userDisplayName = firebaseAuth.getCurrentUser().getDisplayName().trim();
+            txtUsername.setText("Username: " + userDisplayName);
+        }
+        else if (firebaseAuth.getCurrentUser().isEmailVerified()
+                && firebaseAuth.getCurrentUser().getEmail().trim() != null
+                && !firebaseAuth.getCurrentUser().getEmail().trim().isEmpty()) {
+            String userEmail = firebaseAuth.getCurrentUser().getEmail().split("@")[0];
+            txtUsername.setText("Username: " + userEmail);
+        }
+        else {
+            txtUsername.setText("null");
+        }
+
         editHeight = v.findViewById(R.id.accountEditHeight);
         editWeight = v.findViewById(R.id.accountEditWeight);
         editAge = v.findViewById(R.id.accountEditAge);
         editGoalWeight = v.findViewById(R.id.accountEditGoalWeight);
 
-        // Submit button
+        // display old information from set up when create account
+        editAge.setText(Integer.toString(HealthInfo.getSingleton().getAge()));
+        editHeight.setText(Double.toString(HealthInfo.getSingleton().getHeight()));
+        editWeight.setText(Double.toString(HealthInfo.getSingleton().getWeight()));
+        editGoalWeight.setText(Double.toString(HealthInfo.getSingleton().getGoalWeight()));
+
+        // TODO: display old information from Gender spinner and Activity spinner
+
+        /**
+         * Submit button:
+         * onClick saves data to database and switches back to myCalories fragment
+         */
         Button submitBtn = (Button) v.findViewById(R.id.submit_btn);
         submitBtn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
                 // TODO: go to control logic - check input
