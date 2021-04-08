@@ -64,24 +64,27 @@
 
     <!-- TODO: Display real username -->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/username_txt"
+        android:id="@+id/accountUsername"
         android:layout_width="360dp"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:layout_below="@+id/edit_txt"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="0dp">
 
       <com.google.android.material.textfield.TextInputEditText
+          android:id="@+id/accountEditUsername"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:hint="Username" />
+          android:inputType="none"
+          android:hint="Username"
+          android:enabled="false"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/gender_spinner_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/username_txt"
+        android:layout_below="@+id/accountUsername"
         android:layout_marginLeft="13dp"
         android:layout_marginTop="5dp"
         android:text="Gender" />

@@ -28,13 +28,13 @@
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/foodNameTxt"
+            android:id="@+id/foodWeight"
             android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="-10dp"
-            android:text="Food Name"
+            android:text="Weight"
             android:textSize="20sp"
             android:textStyle="bold"/>
 
@@ -45,14 +45,15 @@
             android:layout_below="@id/foodLabel"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
-            android:text="Nutrient 1\nNutrient 2"
+            android:text="Calorie per 100g\nFat\nCholesterol\nSodium
+            \nPotassium\nSugar\nDietary fibre\nnProtein\nCalcium\nVitamin C\nIron\nMagnesium"
             android:textSize="20sp"/>
 
         <TextView
             android:id="@+id/nutrientWeight"
             android:layout_width="360dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/foodNameTxt"
+            android:layout_below="@id/foodWeight"
             android:gravity="right"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="-10dp"

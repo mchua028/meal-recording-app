@@ -1,34 +1,66 @@
 {
   "project_info": {
-    "project_number": "49040617846",
-    "firebase_url": "https://healthtracker-cz2006-default-rtdb.firebaseio.com",
-    "project_id": "healthtracker-cz2006",
-    "storage_bucket": "healthtracker-cz2006.appspot.com"
+    "project_number": "249093754452",
+    "firebase_url": "https://mealtracker-dc280-default-rtdb.firebaseio.com",
+    "project_id": "mealtracker-dc280",
+    "storage_bucket": "mealtracker-dc280.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:49040617846:android:252304deafb2f36a5f4a57",
+        "mobilesdk_app_id": "1:249093754452:android:771ef46117a470d314a7c1",
         "android_client_info": {
-          "package_name": "com.example.healthtracker"
+          "package_name": "com.example.mealtracker"
         }
       },
       "oauth_client": [
         {
-          "client_id": "49040617846-flt4fjg9miu6mtd4qqijthkhidlm8bvr.apps.googleusercontent.com",
+          "client_id": "249093754452-0r7gtf9k3hs3g4iuvf3k0s2bb7fe8vp8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mealtracker",
+            "certificate_hash": "12f7fa4920e0fedb6b863685dc972e9ab111bc35"
+          }
+        },
+        {
+          "client_id": "249093754452-4h4clhqf8kp8anm98tfuh0lqsnnn3i5b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mealtracker",
+            "certificate_hash": "8be5d53d0df02ae99f9087cfae774aca52f56e7e"
+          }
+        },
+        {
+          "client_id": "249093754452-bg141glvhoaff5k5eh36dk033150teno.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mealtracker",
+            "certificate_hash": "b1704b76e9eab5336eb7b1321f559a4eab00675a"
+          }
+        },
+        {
+          "client_id": "249093754452-k0hj9f45s7rs1lrpi369vl9h3kft4257.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mealtracker",
+            "certificate_hash": "9f0b0a6596d154fc46683cfcdd0458e2210f6b57"
+          }
+        },
+        {
+          "client_id": "249093754452-bpdgjm5t32frtngpbndpbk04ck3coign.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA_JDbQdD0qRtvaHw05Jpyp0z6UuDonXo4"
+          "current_key": "AIzaSyDT7Jck1zaWkJAQ90W0pN4a_UIoj1i8RUs"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "49040617846-flt4fjg9miu6mtd4qqijthkhidlm8bvr.apps.googleusercontent.com",
+              "client_id": "249093754452-bpdgjm5t32frtngpbndpbk04ck3coign.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

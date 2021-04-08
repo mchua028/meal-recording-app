@@ -43,6 +43,8 @@ public class InputFoodDetailsExampleAdapter extends RecyclerView.Adapter<InputFo
     public void onBindViewHolder(@NonNull ExampleViewHolder holder, int position) {
         InputFoodDetailsExampleItem currentItem = mExampleList.get(position);
 
+
+
         //holder.mTextView1.setText(currentItem.getText1());
         //holder.mTextView2.setText(currentItem.getText2());
     }
