@@ -26,7 +26,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.mealtracker.AppLogic.MealRecordManager;
 import com.example.mealtracker.DAO.HealthInfo;
+import com.example.mealtracker.DAO.MealRecord;
 import com.example.mealtracker.UI.InputFoodDetails;
+import com.example.mealtracker.UI.MyMealInformation;
 import com.example.mealtracker.UI.editCalories;
 import com.example.mealtracker.UI.uploadPicture;
 
@@ -76,6 +78,12 @@ public class myCalories extends Fragment {
         });
         HealthInfo healthInfo = HealthInfo.getSingleton();
         MealRecordManager mealRecordManager = MealRecordManager.getSingleton();
+        MealRecord[] mealRecords = null;
+        //mealRecords = MealRecord.queryAll(); - app crash at this
+        //if (mealRecords.length == 0) {
+         //   Toast.makeText(getActivity(), "You haven't added any meal records", Toast.LENGTH_SHORT).show();
+        //}
+
 
         Log.d("uiedittext", Double.toString(healthInfo.getSuggestCalorieIntake()));
         TextView text = (TextView) v.findViewById(R.id.myCaloriesTodayMiniTxt);
