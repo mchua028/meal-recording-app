@@ -66,11 +66,11 @@ public class Database {
     }
 
     public DatabaseReference getUserReference() {
-        if (userId == null) {
-            return database.getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid());
-        } else {
-            return database.getReference().child("Users").child(userId);
-        }
+//        if (userId == null) {
+//            return database.getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid());
+//        } else {
+//            return database.getReference().child("Users").child(userId);
+//        }
     }
 
     /**
@@ -263,31 +263,27 @@ public class Database {
         userReference.child("suggestCalorieIntake").setValue(healthInfo.getSuggestCalorieIntake());
     }
 
-
+    /**
+     * Queries the user information
+     * @return
+     */
     public HealthInfo queryHealthInfo() {
-        Log.d("went in", "query");
-        //DatabaseReference userReference = getUserReference();
-        Query queryRef = getUserReference().orderByKey();
+        DatabaseReference user = getUserReference();
         final DataSnapshot[] result = {null};
-        Log.d("went in", "query2");
-        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        user.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 result[0] = snapshot;
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-        // wait for the returned result
-        //while (result[0] == null) {
+        while (result[0] == null) {
 
-        //}
-        Log.d("went in", "before healthingo");
+        }
         HealthInfo healthInfo = HealthInfo.getSingleton();
-        HashMap<String, String> parsedValue = new HashMap<>();
         for (DataSnapshot attribute: result[0].getChildren()) {
             String key = attribute.getKey();
             switch (key) {
@@ -336,7 +332,6 @@ public class Database {
                     healthInfo.setWeight(weight);
             }
         }
-        Log.d("went into", "before return");
         return healthInfo;
     }
 
@@ -357,48 +352,6 @@ public class Database {
         healthInfo.calculateCalorie();
         userReference.child("suggestCalorieIntake").setValue(healthInfo.getSuggestCalorieIntake());
     }
-
-    public double retrieveHealthInfo() {
-        HealthInfo healthInfo = HealthInfo.getSingleton();
-        Log.d("retrieve", "went in");
-        DatabaseReference userReference = getUserReference();
-        //final HealthInfo[] changeInfo = {null};
-        Log.d("retrieve", "healthinfo");
-
-        userReference.child("suggestCalorieIntake").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-
-            //double calorieSuggest = 1200;
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-
-                if (!task.isSuccessful()) {
-                    Log.e("firebase", "Error getting data", task.getException());
-                } else {
-                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
-                    System.out.println(String.valueOf(task.getResult().getValue()));
-                    if (String.valueOf(task.getResult().getValue()) == "null") {
-                        healthInfo.setSuggestCalorieIntake(1200);
-
-
-                    } else {
-                        healthInfo.setSuggestCalorieIntake(Double.parseDouble(String.valueOf(task.getResult().getValue())));
-                    }
-                }
-            }
-        });
-        /*double suggestCalorie = 0;
-        while (suggestCalorie == 0){
-            //Log.d("waiting", "wait");
-            suggestCalorie = healthInfo.getSuggestCalorieIntake();
-        }*/
-        double suggestion = healthInfo.getSuggestCalorieIntake();
-        System.out.println(suggestion);
-        Log.d("before getcalorie", Double.toString(healthInfo.getSuggestCalorieIntake()));
-        return healthInfo.getSuggestCalorieIntake();
-
-    }
-
-
 
     /**
      * Creates account dir under database "Users".

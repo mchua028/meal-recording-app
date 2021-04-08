@@ -172,7 +172,7 @@ public class HealthInfo {
     public double getSuggestedCalorie() {
         //Log.d("print", Double.toString(Database.getSingleton().queryHealthInfo().suggestCalorieIntake));
         //return Database.getSingleton().queryHealthInfo().suggestCalorieIntake;
-        return Database.getSingleton().retrieveHealthInfo();
+        return Database.getSingleton().queryHealthInfo().getSuggestedCalorie();
     }
 }
 
