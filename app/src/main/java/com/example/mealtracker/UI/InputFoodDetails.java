@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mealtracker.AppLogic.MealRecordManager;
@@ -21,15 +20,21 @@ import com.example.mealtracker.DAO.Food;
 import com.example.mealtracker.DAO.MealRecord;
 import com.example.mealtracker.Exceptions.EmptyInputException;
 import com.example.mealtracker.Exceptions.EmptyResultException;
-import com.example.mealtracker.InputFoodDetailsExampleAdapter;
-import com.example.mealtracker.InputFoodDetailsExampleItem;
 import com.example.mealtracker.R;
-import com.example.mealtracker.UI.MyMealInformation;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+
+/**
+ * Interface where the user adds foods to meal record.
+ * FIXME:
+ *  - There is a new empty food detail field. How would you deal with it when you "click" remove which actually deletes the food?
+ *  After I delete, how do I have the empty field to add food again.
+ */
 public class InputFoodDetails extends AppCompatActivity {
     private ArrayList<InputFoodDetailsExampleItem> mExampleList;
 
@@ -49,7 +54,6 @@ public class InputFoodDetails extends AppCompatActivity {
     MealRecordManager mealRecordMgr = MealRecordManager.getSingleton(); //TODO: remove all mealRecords stored inside first?
     MealRecord mealRecord = new MealRecord();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,15 +66,17 @@ public class InputFoodDetails extends AppCompatActivity {
         removeBtn = findViewById(R.id.removeBtn);
         countCaloriesBtn = findViewById(R.id.inputDetailsCountCaloriesBtn);
 
+        /**
+         * Adds new food information
+         */
         insertBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // to call the networking thread synchronously
                 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
-                int position = getExampleListSize();
 
-                //int position = Integer.parseInt(editTextInsert.getText().toString());
-                insertItem(position);
+                int position = getExampleListSize();
 
                 textInputFoodName = findViewById(R.id.txtFood);
                 textInputFoodWeight = findViewById(R.id.txtFoodWeight);
@@ -79,7 +85,18 @@ public class InputFoodDetails extends AppCompatActivity {
                 editInputFoodWeight = findViewById(R.id.editFoodWeight); //TODO:multiply the weight to the nutrition obtained to get actual amount of nutrients
 
                 String foodName = textInputFoodName.getEditText().getText().toString().trim();
-                int foodWeight = Integer.parseInt(textInputFoodWeight.getEditText().getText().toString().trim());
+                if (!checkFoodNameCorrectness(foodName)) return;
+
+                String weightInputStr = textInputFoodWeight.getEditText().getText().toString().trim();
+                try {
+                    int foodWeight = Integer.parseInt(weightInputStr);
+                    if (!(foodWeight >= 1 & foodWeight <= 2000)) {
+                        throw new Exception();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(InputFoodDetails.this, "The weight is invalid.", Toast.LENGTH_SHORT).show();
+                }
+
                 Log.d("got foodinfo","foodinfo:"+foodName);
 
                 //ArrayList<String> newFoodInfo = new ArrayList<String>();
@@ -94,15 +111,38 @@ public class InputFoodDetails extends AppCompatActivity {
                     Log.d("complete","queryFoodName");
                     mealRecord.addFood(food);
                     Log.d("complete","addFood");
+                    Toast.makeText(InputFoodDetails.this, String.format("%s is added.", foodName), Toast.LENGTH_SHORT).show();
                 } catch (EmptyInputException e) {
                     e.printStackTrace();
                 } catch (EmptyResultException e) {
-                    e.printStackTrace();
+                    // when no result is found
+                    Toast.makeText(InputFoodDetails.this, String.format("%s is not found.", foodName), Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 //newFood.setNutrients(nutrient);
+                //int position = Integer.parseInt(editTextInsert.getText().toString());
+                insertItem(position);
+            }
+
+            private boolean checkFoodNameCorrectness(String foodName) {
+                if (foodName == null || foodName.isEmpty()) {
+                    Toast.makeText(InputFoodDetails.this, "Food name cannot be empty.", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+                Matcher m = p.matcher(foodName);
+                boolean b = m.find();
+                if (b) {
+                    Toast.makeText(InputFoodDetails.this, String.format("%s is invalid food name.", foodName), Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                return true;
             }
         });
 
+        /**
+         * Deletes the input field.
+         */
         removeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,24 +153,13 @@ public class InputFoodDetails extends AppCompatActivity {
 
                 editInputFoodName = findViewById(R.id.editFood);
                 editInputFoodWeight = findViewById(R.id.editFoodWeight); //TODO:multiply the weight to the nutrition obtained to get actual amount of nutrients
-
-                String foodName = textInputFoodName.getEditText().getText().toString().trim();
-                int foodWeight = Integer.parseInt(textInputFoodWeight.getEditText().getText().toString().trim());
-
-                //ArrayList<String> newFoodInfo = new ArrayList<String>();
-                //newFoodInfo.add(foodName);
-
-                Food newFood = new Food();
                 try {
-                    newFood = Food.searchFood(foodName);
-                } catch (EmptyInputException e) {
-                    e.printStackTrace();
-                } catch (EmptyResultException e) {
-                    e.printStackTrace();
+                    mealRecord.deleteLastFood();
+                    removeItem(position);
+                    Toast.makeText(InputFoodDetails.this, "Delete successfully.", Toast.LENGTH_SHORT).show();
+                } catch (IndexOutOfBoundsException e) {
+                    Toast.makeText(InputFoodDetails.this, "There is no food record to delete.", Toast.LENGTH_SHORT).show();
                 }
-                mealRecord.delFood(newFood);
-
-                removeItem(position);
             }
         });
 
@@ -139,6 +168,22 @@ public class InputFoodDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        /**
+         * Submits the MealRecord Added.
+         */
+        countCaloriesBtn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View v) {
+                if (mealRecord.getFoods().isEmpty()) {
+                    Toast.makeText(InputFoodDetails.this, "Empty Meal Record " +
+                            "cannot be uploaded", Toast.LENGTH_SHORT).show();
+                }
+                MealRecordManager.getSingleton().addMealRecordToDB(mealRecord);
+                startActivity(new Intent(v.getContext(), MyMealInformation.class));
             }
         });
 
@@ -153,13 +198,6 @@ public class InputFoodDetails extends AppCompatActivity {
         Intent intent = new Intent(this, MyMealInformation.class);
         startActivity(intent);
     }
-    /*countCaloriesBtn.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            startActivity(new Intent(v.getContext(), MyMealInformation.class));
-        }
-    });*/
-
 
     // for recycle view
     public void createExampleList() {

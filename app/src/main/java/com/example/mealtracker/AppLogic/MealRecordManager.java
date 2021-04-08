@@ -86,9 +86,8 @@ public class MealRecordManager {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void addMealRecordToDB(MealRecord mealRecord) {
+        mealRecord.setTime(LocalDateTime.now());
         mealRecord.addToServer();
-
-        // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.addMealRecord
     }
 
     /**

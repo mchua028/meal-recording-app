@@ -42,6 +42,8 @@ public class Database {
     private DatabaseReference mealRecordReference;
     private FirebaseAuth firebaseAuth;
 
+    public  String userId = null;
+
     // for testing purpose
     private final String DATABASE_URL = "https://mealtracker-dc280-default-rtdb.firebaseio.com/";
 
@@ -66,7 +68,11 @@ public class Database {
     }
 
     public DatabaseReference getUserReference() {
-        return database.getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid());
+        if (userId == null) {
+            return database.getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid());
+        } else {
+            return database.getReference().child("Users").child(userId);
+        }
     }
 
     /**
@@ -77,11 +83,11 @@ public class Database {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void postNewMealRecord(MealRecord mealRecord) {
+        // create new meal record with generated id
+        DatabaseReference newMealRecord = getUserReference().child("MealRecords").push();
         Log.d("into","postnewmealrecord");
-        DatabaseReference newMealRecord = mealRecordReference.push();
-        Log.d("into2","postnewmealrecord");
-
         mealRecord.setId(newMealRecord.getKey());
+
         newMealRecord.child("Datetime").setValue(mealRecord.getTimeString());
         DatabaseReference foodRecords = newMealRecord.child("FoodRecords");
 
@@ -209,7 +215,7 @@ public class Database {
     /**
      * Post health information to the server.
      * @param healthInfo HealthInfo
-     * Author : Wang Binli
+     * Author : Wang Binli, Tang Yuting
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void postHealthInfo(HealthInfo healthInfo) {

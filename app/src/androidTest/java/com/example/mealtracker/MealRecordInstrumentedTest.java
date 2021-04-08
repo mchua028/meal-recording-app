@@ -33,6 +33,7 @@ public class MealRecordInstrumentedTest {
         } catch (ValueCannotBeNonPositiveException e) {
             e.printStackTrace();
         }
+        d.userId = "lvOInQbGwdMcWFnfeag6CMP2flw2";
         d.postNewMealRecord(mealRecord);
    }
 
