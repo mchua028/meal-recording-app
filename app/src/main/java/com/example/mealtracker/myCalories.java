@@ -135,7 +135,7 @@ public class myCalories extends Fragment {
         /**
          * Create bar graph for weekly calories
          */
-        /*
+
         Log.d("creating", "barchart");
         mpBarChart = v.findViewById(R.id.myCaloriesBarChart);
         mpBarChart.setDescription(null);
@@ -283,7 +283,7 @@ public class myCalories extends Fragment {
     }
     */
 
-    /*@RequiresApi(api = Build.VERSION_CODES.O)
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private ArrayList<BarEntry> dataValues1() {
         ArrayList<BarEntry> dataVals1 = new ArrayList<BarEntry>();
         float calories= 0;
@@ -297,5 +297,5 @@ public class myCalories extends Fragment {
         Log.d("aft", "for loop");
         return dataVals1;
     }
-*/
+
 }
