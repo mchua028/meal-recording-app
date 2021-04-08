@@ -170,7 +170,7 @@ public class HealthInfo {
     }
 
     public double getSuggestedCalorie() {
-        return suggestCalorieIntake;
+        return Database.getSingleton().queryHealthInfo().suggestCalorieIntake;
     }
 }
 
