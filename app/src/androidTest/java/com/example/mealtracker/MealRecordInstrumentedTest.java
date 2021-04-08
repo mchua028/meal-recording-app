@@ -2,6 +2,7 @@ package com.example.mealtracker;
 
 import androidx.test.runner.AndroidJUnit4;
 
+import com.example.mealtracker.AppLogic.MealRecordManager;
 import com.example.mealtracker.DAO.Database;
 import com.example.mealtracker.DAO.Food;
 import com.example.mealtracker.DAO.MealRecord;
@@ -24,18 +25,19 @@ import java.util.ArrayList;
 public class MealRecordInstrumentedTest {
     private Database d = Database.getSingleton();
 
-    @Test
-    public void post_MealRecord() {
-        ArrayList<Food> foods = getFoods();
-        MealRecord mealRecord = null;
-        try {
-            mealRecord = new MealRecord(foods, LocalDateTime.now());
-        } catch (ValueCannotBeNonPositiveException e) {
-            e.printStackTrace();
-        }
-        d.userId = "lvOInQbGwdMcWFnfeag6CMP2flw2";
-        d.postNewMealRecord(mealRecord);
-   }
+//    @Test
+//    public void post_MealRecord() {
+//        d.userId = "lvOInQbGwdMcWFnfeag6CMP2flw2";
+//        ArrayList<Food> foods = getFoods();
+//        MealRecord mealRecord = null;
+//        try {
+//            mealRecord = new MealRecord(foods, LocalDateTime.now());
+//        } catch (ValueCannotBeNonPositiveException e) {
+//            e.printStackTrace();
+//        }
+//
+//        d.postNewMealRecord(mealRecord);
+//   }
 
     private ArrayList<Food> getFoods() {
         String[] foodNames = new String[3];
@@ -48,7 +50,6 @@ public class MealRecordInstrumentedTest {
             try {
                 Food newFood = Food.searchFood(foodNames[i]);
                 newFood.setActualIntake(15);
-                newFood.setActualIntake(10);
                 foods.add(newFood);
             } catch (EmptyResultException e) {
                 System.out.printf("%s is not found", foodNames[i]);
@@ -99,4 +100,12 @@ public class MealRecordInstrumentedTest {
 //        mealRecord.setTime(dt);
 //        mealRecord.updateToServer();
 //    }
+
+    @Test
+    public void getMealRecordsByUser() {
+        d.userId = "lvOInQbGwdMcWFnfeag6CMP2flw2";
+        MealRecord[] mealRecords = MealRecordManager.getSingleton().getMealRecordsFromDB();
+        System.out.println(mealRecords);
+
+    }
 }

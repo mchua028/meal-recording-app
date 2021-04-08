@@ -23,11 +23,14 @@ import java.time.LocalDateTime;
 
 
 public class MealRecordManager {
-    private static MealRecordManager singleton;
+    private static MealRecordManager singleton = null;
 
     private MealRecord mealRecord;
 
     public static MealRecordManager getSingleton() {
+        if (singleton == null) {
+            singleton = new MealRecordManager();
+        }
         return singleton;
     }
 
@@ -60,8 +63,6 @@ public class MealRecordManager {
         return mealRecord;
     }
 
-    private ArrayList<MealRecord> mealRecords = new ArrayList<MealRecord>();
-
     /**
      *
      * @param foodName
@@ -79,10 +80,19 @@ public class MealRecordManager {
     }
 
 
+    /**
+     * Adds the mealRecord with the current timestamp to server.
+     * @param mealRecord
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void addMealRecordToDB(MealRecord mealRecord) {
         mealRecord.setTime(LocalDateTime.now());
         mealRecord.addToServer();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public MealRecord[] getMealRecordsFromDB() {
+        return MealRecord.queryAll();
     }
 
     /**
@@ -100,7 +110,6 @@ public class MealRecordManager {
     }
 
     /**
-     *
      * @param img
      */
     /*public Food[] queryFoodInImage(Image img) {
@@ -138,17 +147,6 @@ public class MealRecordManager {
         // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.addFood
     }
 
-    /**
-     *
-     * @param startDate
-     * @param endDate
-     */
-    public ArrayList<MealRecord> query(Date startDate, Date endDate) {
-        ArrayList<MealRecord> mealRecord = new ArrayList<MealRecord>();
-        return mealRecord;
-        //return mealRecord.queryByDate(startDate, endDate);
-        // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.query
-    }
 
     /**
      *

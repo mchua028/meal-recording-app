@@ -2,18 +2,18 @@ package com.example.mealtracker.DAO;
 
 public class Nutrient {
 
-    private double caloriePer100g;
-    private double fat;
-    private double cholesterol;
-    private double sodium;
-    private double potassium;
-    private double sugar;
-    private double dietaryFibre;
-    private double protein;
-    private double calcium;
-    private double vitaminC;
-    private double iron;
-    private double magnesium;
+    private double caloriePer100g = 0;
+    private double fat = 0 ;
+    private double cholesterol = 0;
+    private double sodium = 0;
+    private double potassium = 0;
+    private double sugar = 0;
+    private double dietaryFibre = 0;
+    private double protein = 0;
+    private double calcium = 0;
+    private double vitaminC= 0;
+    private double iron = 0;
+    private double magnesium = 0;
 
     public Nutrient() {
     }

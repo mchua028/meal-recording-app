@@ -15,8 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mealtracker.AppLogic.MealRecordManager;
-import com.example.mealtracker.MyMealInformationExampleAdapter;
-import com.example.mealtracker.MyMealInformationExampleItem;
+import com.example.mealtracker.DAO.MealRecord;
 import com.example.mealtracker.R;
 import com.google.android.material.navigation.NavigationView;
 
@@ -36,13 +35,20 @@ public class MyMealInformation extends AppCompatActivity {
     private TextView mText3;
     private TextView mText4;
 
+    private MealRecord[] mealRecords;
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_my_meal_information);
 
-        mExampleList = new ArrayList<>();
-        mExampleList.add(new MyMealInformationExampleItem(mText1, mText2, mText3, mText4));
+        mealRecords = MealRecord.queryAll();
+        if (mealRecords.length == 0) {
+            Toast.makeText(MyMealInformation.this, "You haven't added any meal records", Toast.LENGTH_SHORT).show();
+        }
+
+        // todo: display them in the app
 
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);

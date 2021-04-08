@@ -262,6 +262,10 @@ public class Food {
         return this.nutrients;
     }
 
+    public double getTotalCalorie() {
+        return nutrients.getCaloriePer100g() * actualIntake / 100;
+    }
+
     /**
      *
      * @param nutrientName

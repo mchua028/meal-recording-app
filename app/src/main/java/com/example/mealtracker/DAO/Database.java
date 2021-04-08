@@ -160,10 +160,8 @@ public class Database {
         String formattedStartDate = startDate.format(formatter);
         String formattedEndDate = endDate.format(formatter);
 
-        ArrayList<MealRecord> mealRecords = new ArrayList<>();
-
         Query queryRef;
-        queryRef = mealRecordReference.orderByChild("Datetime").startAt(formattedStartDate).endAt(formattedEndDate);
+        queryRef = getUserReference().child("MealRecords").orderByChild("Datetime").startAt(formattedStartDate).endAt(formattedEndDate);
 
         final DataSnapshot[] result = {null};
         queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -182,7 +180,39 @@ public class Database {
             ;
         }
 
-        for (DataSnapshot mealRecord : result[0].getChildren()) {
+        ArrayList<MealRecord> mealRecords = parseMealRecords(result[0]);
+        return mealRecords.toArray(new MealRecord[0]);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public MealRecord[] queryAllMealRecords() {
+        Query queryRef;
+        queryRef = getUserReference().child("MealRecords").orderByChild("Datetime");
+        final DataSnapshot[] result = {null};
+        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                result[0] = snapshot;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        // waiting for query result
+        while (result[0] == null) {
+            ;
+        }
+
+        ArrayList<MealRecord> mealRecords = parseMealRecords(result[0]);
+        return mealRecords.toArray(new MealRecord[0]);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private static ArrayList<MealRecord> parseMealRecords(DataSnapshot dataSnapshot) {
+        ArrayList<MealRecord> mealRecords = new ArrayList<>();
+        for (DataSnapshot mealRecord : dataSnapshot.getChildren()) {
             MealRecord mealRecord1 = new MealRecord();
             mealRecord1.setId(mealRecord.getKey());
             LocalDateTime mealRecordDateTime = LocalDateTime.parse(mealRecord.child("Datetime").getValue(String.class));
@@ -205,7 +235,7 @@ public class Database {
                 mealRecords.add(mealRecord1);
             }
         }
-        return mealRecords.toArray(new MealRecord[0]);
+        return mealRecords;
     }
 
 

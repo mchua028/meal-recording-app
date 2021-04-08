@@ -9,6 +9,7 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.mealtracker.Exceptions.EmptyResultException;
 import com.example.mealtracker.Exceptions.RecordNotInServerException;
 import com.example.mealtracker.Exceptions.ValueCannotBeNonPositiveException;
 
@@ -110,6 +111,11 @@ public class MealRecord {
         return Database.getSingleton().queryByDate(startDate, endDate);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static MealRecord[] queryAll() {
+        return Database.getSingleton().queryAllMealRecords();
+    }
+
     /**
      * @return Nutrient that contains the amount of consumption of nutrients in the meal record
      */
@@ -150,5 +156,15 @@ public class MealRecord {
         foods.remove(foods.size() - 1);
     }
 
+    public double getTotalCalorie() throws EmptyResultException {
+        if (foods.isEmpty()) {
+            throw new EmptyResultException();
+        }
+        double result = 0;
+        for (Food f: foods) {
+            result += f.getTotalCalorie();
+        }
+        return result;
+    }
 
 }

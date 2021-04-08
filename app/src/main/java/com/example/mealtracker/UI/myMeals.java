@@ -1,5 +1,6 @@
-package com.example.mealtracker;
+package com.example.mealtracker.UI;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,17 +9,28 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mealtracker.AppLogic.MealRecordManager;
+import com.example.mealtracker.DAO.MealRecord;
+import com.example.mealtracker.MyMealsExampleAdapter;
+import com.example.mealtracker.MyMealsExampleItem;
+import com.example.mealtracker.R;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 
+
+/**
+ * Displays the meal records
+ */
 public class myMeals extends Fragment {
     private ArrayList<MyMealsExampleItem> mExampleList;
 
@@ -31,6 +43,7 @@ public class myMeals extends Fragment {
     private TextView mText3;
     private SearchView mSearchView;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -47,8 +60,6 @@ public class myMeals extends Fragment {
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
-
-        // TODO: get real data from database
 
         mSearchView = v.findViewById(R.id.searchView);
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

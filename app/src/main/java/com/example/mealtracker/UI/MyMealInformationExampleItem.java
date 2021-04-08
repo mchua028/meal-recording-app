@@ -1,4 +1,4 @@
-package com.example.mealtracker;
+package com.example.mealtracker.UI;
 
 import android.widget.TextView;
 
