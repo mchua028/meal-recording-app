@@ -1,4 +1,4 @@
-package com.example.mealtracker;
+package com.example.mealtracker.UI;
 
 import com.google.android.material.textfield.TextInputLayout;
 

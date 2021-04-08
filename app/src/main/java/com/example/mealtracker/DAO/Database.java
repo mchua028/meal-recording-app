@@ -41,6 +41,8 @@ public class Database {
     private DatabaseReference mealRecordReference;
     private FirebaseAuth firebaseAuth;
 
+    public  String userId = null;
+
     // for testing purpose
     private final String DATABASE_URL = "https://mealtracker-dc280-default-rtdb.firebaseio.com/";
 
@@ -65,7 +67,11 @@ public class Database {
     }
 
     public DatabaseReference getUserReference() {
-        return database.getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid());
+        if (userId == null) {
+            return database.getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid());
+        } else {
+            return database.getReference().child("Users").child(userId);
+        }
     }
 
     /**
@@ -204,7 +210,7 @@ public class Database {
     /**
      * Post health information to the server.
      * @param healthInfo HealthInfo
-     * Author : Wang Binli
+     * Author : Wang Binli, Tang Yuting
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void postHealthInfo(HealthInfo healthInfo) {
