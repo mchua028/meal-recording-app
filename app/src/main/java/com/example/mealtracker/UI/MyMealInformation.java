@@ -82,9 +82,11 @@ public class MyMealInformation extends AppCompatActivity {
                     MealRecordManager mealRecordManager = MealRecordManager.getSingleton();
                     Log.d("mealRecrodManager", mealRecordManager.getMealRecord().getFoods().get(0).getName());
                     //mealRecordManager.getMealRecord().addToServer();
+                    mealRecordManager.calculateCalorieConsumedToday();//error
                     double calorieConsumedToday = mealRecordManager.getCalorieConsumedToday();
                     Toast.makeText(MyMealInformation.this, "calorieConsumedToday: " + Double.toString(calorieConsumedToday),
                             Toast.LENGTH_SHORT).show();
+                    mealRecordManager.calculateCalorieQuotaRemainingToday();//error
                     double calorieQuotaRemaining = mealRecordManager.getCalorieRemaining();
                     Toast.makeText(MyMealInformation.this, "calorieQuotaRemainingToday: " + Double.toString(calorieQuotaRemaining),
                             Toast.LENGTH_SHORT).show();
