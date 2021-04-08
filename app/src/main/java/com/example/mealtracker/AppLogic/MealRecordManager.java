@@ -34,7 +34,7 @@ public class MealRecordManager {
         }
         return singleton;
     }
-    
+
     private double calorieConsumedToday = 0;
     private double calorieRemaining = 0;
 

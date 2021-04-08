@@ -117,7 +117,7 @@ public class CameraFragment extends Fragment {
 
             ByteArrayInputStream bs = new ByteArrayInputStream(byteArray);
 
-            Food food_img = new Food();
+            Food food_img;
             try {
                 food_img = Food.searchFoodsFromImg(bs);
                 Log.d("food", food_img.getName());
