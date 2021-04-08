@@ -154,18 +154,18 @@ public class myCalories extends Fragment {
         yAxisRight.setAxisMinimum(0);
 
         ArrayList<BarEntry> dataVals = new ArrayList<BarEntry>();
-        float calories= 15;
+        ArrayList<Double> records = MealRecordManager.getSingleton().getCalorieIntakeInWeek();
         Log.d("b4", "for loop");
         for (int i=0; i<7; i++) {       // for each bar
             //error line
             //calories = MealRecordManager.getSingleton().getCalorieIntakeInWeek().get(i).floatValue();
-            Log.d("caloriesInWeek", String.valueOf(calories));
-            dataVals.add(new BarEntry(i, calories));
+            Log.d("caloriesInWeek", String.valueOf(records.get(i)));
+            dataVals.add(new BarEntry(i, records.get(i).floatValue()));
         }
         Log.d("aft", "for loop");
 
         for (int j=0; j<7; j++) {
-            DataPoints dataPoints = new DataPoints(j, calories);
+            DataPoints dataPoints = new DataPoints(j, records.get(j).floatValue());
         }
 
         BarDataSet barDataSet1 = new BarDataSet(dataVals, "Calories");

@@ -28,6 +28,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -173,32 +174,17 @@ public class Database {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public MealRecord[] queryByDate(LocalDate startDate, LocalDate endDate) throws EmptyResultException {
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
-        String formattedStartDate = startDate.format(formatter);
-        String formattedEndDate = endDate.format(formatter);
-
-        Query queryRef;
-        queryRef = getUserReference().child("MealRecords").orderByChild("Datetime").startAt(formattedStartDate).endAt(formattedEndDate);
-
-        final DataSnapshot[] result = {null};
-        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                result[0] = snapshot;
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        // waiting for query result
-        while (result[0] == null) {
-            ;
-        }
-
-        ArrayList<MealRecord> mealRecords = parseMealRecords(result[0]);
-        return mealRecords.toArray(new MealRecord[0]);
+        MealRecord[] mealRecords = queryAllMealRecords();
+        ArrayList<MealRecord> results = new ArrayList<>();
+//        for (MealRecord mealRecord : mealRecords) {
+//            LocalDate date = mealRecord.getTime().toLocalDate();
+//            if (date.minusDays(7).isAfter(startDate) || date.plusDays(7).isBefore(endDate)) {
+//                results.add(mealRecord);
+//            }
+//        }
+        MealRecord[] returnVals = new MealRecord[results.size()];
+        returnVals = results.toArray(returnVals);
+        return returnVals;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
