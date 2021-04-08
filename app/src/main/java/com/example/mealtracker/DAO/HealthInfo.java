@@ -80,10 +80,13 @@ public class HealthInfo {
     }
 
     public double getSuggestCalorieIntake() {
+        //Database.getSingleton().retrieveHealthInfo(singleton);
+        //Log.d("gethealthinfo", Double.toString(this.suggestCalorieIntake));
         return this.suggestCalorieIntake;
     }
 
     public void setSuggestCalorieIntake(double suggestCalorieIntake) {
+        Log.d("sethealthinfo", Double.toString(suggestCalorieIntake));
         this.suggestCalorieIntake = suggestCalorieIntake;
     }
 
@@ -124,9 +127,9 @@ public class HealthInfo {
         Database.getSingleton().postHealthInfo(this);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void updateToServer() {
-        // TODO - implement com.example.healthtracker.data_access_layer.HealthInfo.updateToServer
-        throw new UnsupportedOperationException();
+        Database.getSingleton().updateHealthInfo(this);
     }
 
     /**

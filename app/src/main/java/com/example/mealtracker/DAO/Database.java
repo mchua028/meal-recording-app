@@ -4,21 +4,16 @@
  */
 package com.example.mealtracker.DAO;
 
+import android.content.Intent;
 import android.os.Build;
-import android.provider.ContactsContract;
 import android.util.Log;
-
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-
 import com.example.mealtracker.Activity;
-import com.example.mealtracker.AppLogic.HealthInfoManager;
-import com.example.mealtracker.DAO.Account;
-import com.example.mealtracker.DAO.Food;
-import com.example.mealtracker.DAO.HealthInfo;
-import com.example.mealtracker.DAO.MealRecord;
-import com.example.mealtracker.DAO.Nutrient;
 import com.example.mealtracker.Gender;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,7 +26,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.HashMap;
 
 /**
@@ -259,6 +253,7 @@ public class Database {
         userReference.child("goalWeight").setValue(healthInfo.getGoalWeight());
         userReference.child("height").setValue(healthInfo.getHeight());
         userReference.child("weight").setValue(healthInfo.getWeight());
+        healthInfo.calculateCalorie();
         userReference.child("suggestCalorieIntake").setValue(healthInfo.getSuggestCalorieIntake());
     }
 
@@ -347,8 +342,48 @@ public class Database {
         userReference.child("goalWeight").setValue(healthInfo.getGoalWeight());
         userReference.child("height").setValue(healthInfo.getHeight());
         userReference.child("weight").setValue(healthInfo.getWeight());
+        healthInfo.calculateCalorie();
         userReference.child("suggestCalorieIntake").setValue(healthInfo.getSuggestCalorieIntake());
     }
+
+    public double retrieveHealthInfo(HealthInfo healthInfo) {
+
+        Log.d("retrieve", "went in");
+        DatabaseReference userReference = getUserReference();
+        //final HealthInfo[] changeInfo = {null};
+        Log.d("retrieve", "healthinfo");
+
+        userReference.child("suggestCalorieIntake").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+
+            //double calorieSuggest = 1200;
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                } else {
+                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                    if (String.valueOf(task.getResult().getValue()) == "null") {
+                        healthInfo.setSuggestCalorieIntake(1200);
+
+
+                    } else {
+                        healthInfo.setSuggestCalorieIntake(Double.parseDouble(String.valueOf(task.getResult().getValue())));
+                    }
+                }
+            }
+        });
+        /*double suggestCalorie = 0;
+        while (suggestCalorie == 0){
+            //Log.d("waiting", "wait");
+            suggestCalorie = healthInfo.getSuggestCalorieIntake();
+        }*/
+        Log.d("before getcalorie", Double.toString(healthInfo.getSuggestCalorieIntake()));
+        return healthInfo.getSuggestCalorieIntake();
+
+    }
+
+
 
     /**
      * Creates account dir under database "Users".

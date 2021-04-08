@@ -87,16 +87,25 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/spinner_border"
-            android:text=" My Calories This Week \n \n \n \n \n \n \n \n \n"
+            android:text=" My Calories This Week \n \n \n \n \n \n \n \n \n \n"
             android:textSize="30sp"
             android:textStyle="bold" />
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/myCaloriesBarChart"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="28dp"
+            android:layout_below="@id/myCaloriesTodayTxt"
+            android:layout_marginTop="60dp"/>
 
         <TextView
             android:id="@+id/myCaloriesThisWeekMiniTxt"
             android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/myCaloriesThisWeekTxt"
-            android:layout_marginTop="-100dp"
+            android:layout_marginTop="-70dp"
             android:layout_marginLeft="10dp"
             android:text="  Average calories this week \n  Good Job! You have met..."
             android:textSize="20sp" />
