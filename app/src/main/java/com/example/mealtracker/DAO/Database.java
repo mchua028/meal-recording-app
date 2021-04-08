@@ -4,18 +4,16 @@
  */
 package com.example.mealtracker.DAO;
 
+import android.content.Intent;
 import android.os.Build;
-import android.provider.ContactsContract;
 import android.util.Log;
-
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-
-import com.example.mealtracker.DAO.Account;
-import com.example.mealtracker.DAO.Food;
-import com.example.mealtracker.DAO.HealthInfo;
-import com.example.mealtracker.DAO.MealRecord;
-import com.example.mealtracker.DAO.Nutrient;
+import com.example.mealtracker.Activity;
+import com.example.mealtracker.Gender;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,7 +26,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.HashMap;
 
 /**
@@ -256,9 +253,80 @@ public class Database {
         userReference.child("goalWeight").setValue(healthInfo.getGoalWeight());
         userReference.child("height").setValue(healthInfo.getHeight());
         userReference.child("weight").setValue(healthInfo.getWeight());
+        healthInfo.calculateCalorie();
         userReference.child("suggestCalorieIntake").setValue(healthInfo.getSuggestCalorieIntake());
     }
 
+
+    public HealthInfo queryHealthInfo() {
+        DatabaseReference userReference = getUserReference();
+        Query queryRef = getUserReference().orderByKey();
+        final DataSnapshot[] result = {null};
+        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                result[0] = snapshot;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        // wait for the returned result
+        while (result[0] == null) {
+
+        }
+
+        HealthInfo healthInfo = HealthInfo.getSingleton();
+        HashMap<String, String> parsedValue = new HashMap<>();
+        for (DataSnapshot attribute: result[0].getChildren()) {
+            String key = attribute.getKey();
+            switch (key) {
+                case "age":
+                    healthInfo.setAge(attribute.getValue(Integer.class));
+                    break;
+                case "dailyActivityLevel":
+                    String level = attribute.getValue(String.class);
+                    if (level.equals("NONE")) {
+                        healthInfo.setDailyActivityLevel(Activity.NONE);
+                    } else if (level.equals("LITTLE")) {
+                        healthInfo.setDailyActivityLevel(Activity.LITTLE);
+                    } else if (level.equals("MODERATE")) {
+                        healthInfo.setDailyActivityLevel(Activity.MODERATE);
+                    }  else if (level.equals("HIGH")) {
+                        healthInfo.setDailyActivityLevel(Activity.HIGH);
+                    }
+                    break;
+                case "gender":
+                    String gender = attribute.getValue(String.class);
+                    if (gender.equals("FEMALE")) {
+                        healthInfo.setGender(Gender.FEMALE);
+                    } else if (gender.equals("MALE")) {
+                        healthInfo.setGender(Gender.OTHERS);
+                    } else if (gender.equals("OTHERS")) {
+                        healthInfo.setGender(Gender.OTHERS);
+                    }
+                    break;
+                case "goalWeight":
+                    double goalWeight = attribute.getValue(Double.class);
+                    healthInfo.setGoalWeight(goalWeight);
+                    break;
+                case "height":
+                    double height = attribute.getValue(Double.class);
+                    healthInfo.setHeight(height);
+                    break;
+                case "suggestCalorieIntake":
+                    double suggestCalorie = attribute.getValue(Double.class);
+                    healthInfo.setSuggestCalorieIntake(suggestCalorie);
+                    break;
+                case "weight":
+                    double weight = attribute.getValue(Double.class);
+                    healthInfo.setWeight(weight);
+            }
+        }
+        return healthInfo;
+    }
 
     /**
      * Update health information to the server.
@@ -274,8 +342,48 @@ public class Database {
         userReference.child("goalWeight").setValue(healthInfo.getGoalWeight());
         userReference.child("height").setValue(healthInfo.getHeight());
         userReference.child("weight").setValue(healthInfo.getWeight());
+        healthInfo.calculateCalorie();
         userReference.child("suggestCalorieIntake").setValue(healthInfo.getSuggestCalorieIntake());
     }
+
+    public double retrieveHealthInfo(HealthInfo healthInfo) {
+
+        Log.d("retrieve", "went in");
+        DatabaseReference userReference = getUserReference();
+        //final HealthInfo[] changeInfo = {null};
+        Log.d("retrieve", "healthinfo");
+
+        userReference.child("suggestCalorieIntake").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+
+            //double calorieSuggest = 1200;
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                } else {
+                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                    if (String.valueOf(task.getResult().getValue()) == "null") {
+                        healthInfo.setSuggestCalorieIntake(1200);
+
+
+                    } else {
+                        healthInfo.setSuggestCalorieIntake(Double.parseDouble(String.valueOf(task.getResult().getValue())));
+                    }
+                }
+            }
+        });
+        /*double suggestCalorie = 0;
+        while (suggestCalorie == 0){
+            //Log.d("waiting", "wait");
+            suggestCalorie = healthInfo.getSuggestCalorieIntake();
+        }*/
+        Log.d("before getcalorie", Double.toString(healthInfo.getSuggestCalorieIntake()));
+        return healthInfo.getSuggestCalorieIntake();
+
+    }
+
+
 
     /**
      * Creates account dir under database "Users".

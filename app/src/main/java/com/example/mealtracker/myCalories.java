@@ -9,17 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -28,7 +22,6 @@ import com.example.mealtracker.AppLogic.MealRecordManager;
 import com.example.mealtracker.DAO.HealthInfo;
 import com.example.mealtracker.DAO.MealRecord;
 import com.example.mealtracker.UI.InputFoodDetails;
-import com.example.mealtracker.UI.MyMealInformation;
 import com.example.mealtracker.UI.editCalories;
 import com.example.mealtracker.UI.uploadPicture;
 import com.github.mikephil.charting.charts.BarChart;
