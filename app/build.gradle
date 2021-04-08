@@ -50,7 +50,7 @@ android {
 }
 
 
-// important for testing, don't remove!
+// important for testing, don't remove
 configurations.all {
     resolutionStrategy.dependencySubstitution {
         substitute module('org.hamcrest:hamcrest-core:1.1') with module('junit:junit:4.10')
