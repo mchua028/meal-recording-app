@@ -180,7 +180,6 @@ public class MealRecordManager {
         HealthInfo healthInfo = HealthInfo.getSingleton();
         double calorieSuggested = healthInfo.getSuggestCalorieIntake();
         calorieRemaining = calorieSuggested - calorieConsumedToday;
-        // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.calculateCalorieQuotaRemainingToday
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

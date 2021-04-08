@@ -25,6 +25,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.mealtracker.AppLogic.MealRecordManager;
+import com.example.mealtracker.DAO.Database;
 import com.example.mealtracker.DAO.HealthInfo;
 import com.example.mealtracker.UI.InputFoodDetails;
 import com.example.mealtracker.UI.editCalories;
@@ -75,11 +76,17 @@ public class myCalories extends Fragment {
             }
         });
         HealthInfo healthInfo = HealthInfo.getSingleton();
+        //while (healthInfo.getSuggestCalorieIntake() == 0) {
+          //  continue;
+        //}
+        //double calorieSuggested = healthInfo.getSuggestCalorieIntake();
+        double calorieSuggested = Database.getSingleton().retrieveHealthInfo(healthInfo);
         MealRecordManager mealRecordManager = MealRecordManager.getSingleton();
+        Log.d("uiedittext", "printing");
+        Log.d("uiedittext", Double.toString(calorieSuggested));
 
-        Log.d("uiedittext", Double.toString(healthInfo.getSuggestCalorieIntake()));
         TextView text = (TextView) v.findViewById(R.id.myCaloriesTodayMiniTxt);
-        text.setText("  Maximum Calories Today           " + Double.toString(healthInfo.getSuggestCalorieIntake()) +
+        text.setText("  Maximum Calories Today           " + Double.toString(calorieSuggested) +
                      "\n  Calories Eaten                              " + Double.toString(mealRecordManager.getCalorieConsumedToday()) +
                      "\n  Remaining Calories                      " + Double.toString(mealRecordManager.getCalorieRemaining()));
 

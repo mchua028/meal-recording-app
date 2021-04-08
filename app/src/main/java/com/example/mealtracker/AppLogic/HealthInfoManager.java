@@ -7,6 +7,7 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 
 import com.example.mealtracker.Activity;
+import com.example.mealtracker.DAO.Database;
 import com.example.mealtracker.Gender;
 import com.example.mealtracker.DAO.HealthInfo;
 import com.google.firebase.auth.FirebaseAuth;
