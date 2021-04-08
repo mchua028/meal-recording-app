@@ -166,5 +166,8 @@ public class HealthInfo {
 
     }
 
+    public double getSuggestedCalorie() {
+        return suggestCalorieIntake;
+    }
 }
 

@@ -11,11 +11,14 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
+import com.example.mealtracker.Activity;
+import com.example.mealtracker.AppLogic.HealthInfoManager;
 import com.example.mealtracker.DAO.Account;
 import com.example.mealtracker.DAO.Food;
 import com.example.mealtracker.DAO.HealthInfo;
 import com.example.mealtracker.DAO.MealRecord;
 import com.example.mealtracker.DAO.Nutrient;
+import com.example.mealtracker.Gender;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -259,6 +262,76 @@ public class Database {
         userReference.child("suggestCalorieIntake").setValue(healthInfo.getSuggestCalorieIntake());
     }
 
+
+    public HealthInfo queryHealthInfo() {
+        DatabaseReference userReference = getUserReference();
+        Query queryRef = getUserReference().orderByKey();
+        final DataSnapshot[] result = {null};
+        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                result[0] = snapshot;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        // wait for the returned result
+        while (result[0] == null) {
+
+        }
+
+        HealthInfo healthInfo = HealthInfo.getSingleton();
+        HashMap<String, String> parsedValue = new HashMap<>();
+        for (DataSnapshot attribute: result[0].getChildren()) {
+            String key = attribute.getKey();
+            switch (key) {
+                case "age":
+                    healthInfo.setAge(attribute.getValue(Integer.class));
+                    break;
+                case "dailyActivityLevel":
+                    String level = attribute.getValue(String.class);
+                    if (level.equals("NONE")) {
+                        healthInfo.setDailyActivityLevel(Activity.NONE);
+                    } else if (level.equals("LITTLE")) {
+                        healthInfo.setDailyActivityLevel(Activity.LITTLE);
+                    } else if (level.equals("MODERATE")) {
+                        healthInfo.setDailyActivityLevel(Activity.MODERATE);
+                    }  else if (level.equals("HIGH")) {
+                        healthInfo.setDailyActivityLevel(Activity.HIGH);
+                    }
+                    break;
+                case "gender":
+                    String gender = attribute.getValue(String.class);
+                    if (gender.equals("FEMALE")) {
+                        healthInfo.setGender(Gender.FEMALE);
+                    } else if (gender.equals("MALE")) {
+                        healthInfo.setGender(Gender.OTHERS);
+                    } else if (gender.equals("OTHERS")) {
+                        healthInfo.setGender(Gender.OTHERS);
+                    }
+                    break;
+                case "goalWeight":
+                    double goalWeight = attribute.getValue(Double.class);
+                    healthInfo.setGoalWeight(goalWeight);
+                    break;
+                case "height":
+                    double height = attribute.getValue(Double.class);
+                    healthInfo.setHeight(height);
+                    break;
+                case "suggestCalorieIntake":
+                    double suggestCalorie = attribute.getValue(Double.class);
+                    healthInfo.setSuggestCalorieIntake(suggestCalorie);
+                    break;
+                case "weight":
+                    double weight = attribute.getValue(Double.class);
+                    healthInfo.setWeight(weight);
+            }
+        }
+        return healthInfo;
+    }
 
     /**
      * Update health information to the server.
