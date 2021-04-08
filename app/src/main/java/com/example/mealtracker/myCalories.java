@@ -99,19 +99,28 @@ public class myCalories extends Fragment {
             }
         });
         HealthInfo healthInfo = HealthInfo.getSingleton();
+        Log.d("suggestcalore", "printcalorie");
+        double suggestedCalorie = healthInfo.getSuggestedCalorie();
+        if (suggestedCalorie == 0) suggestedCalorie = 1200;
+        //String strSuggested = Double.toString(suggestedCalorie);
         MealRecordManager mealRecordManager = MealRecordManager.getSingleton();
-        MealRecord[] mealRecords = null;
+        //MealRecord[] mealRecords = null;
         //mealRecords = MealRecord.queryAll(); - app crash at this
         //if (mealRecords.length == 0) {
          //   Toast.makeText(getActivity(), "You haven't added any meal records", Toast.LENGTH_SHORT).show();
         //}
+        double calorieConsumed = mealRecordManager.getCalorieConsumedToday();
+        //String strConsumed = Double.toString(calorieConsumed);
 
+        double calorieRemain = suggestedCalorie - calorieConsumed;
+        //String strRemain = Double.toString(calorieRemain);
 
-        Log.d("uiedittext", Double.toString(healthInfo.getSuggestCalorieIntake()));
+        Log.d("uiedittext", "before getting suggestedcalorie");
+        Log.d("uiedittext", Double.toString(mealRecordManager.getCalorieConsumedToday()));
         TextView text = (TextView) v.findViewById(R.id.myCaloriesTodayMiniTxt);
-        text.setText("  Maximum Calories Today           " + Double.toString(healthInfo.getSuggestCalorieIntake()) +
-                     "\n  Calories Eaten                              " + Double.toString(mealRecordManager.getCalorieConsumedToday()) +
-                     "\n  Remaining Calories                      " + Double.toString(mealRecordManager.getCalorieRemaining()));
+        text.setText("  Maximum Calories Today           " + String.format("%.1f", suggestedCalorie) +
+                     "\n  Calories Eaten                              " + String.format("%.1f", calorieConsumed) +
+                     "\n  Remaining Calories                      " + String.format("%.1f", calorieRemain));
 
 
         /**

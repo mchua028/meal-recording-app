@@ -36,7 +36,7 @@ public class MealRecordManager {
         return singleton;
     }
 
-    private double calorieConsumedToday = 0;
+    private double calorieConsumedToday;
     private double calorieRemaining;
 
     public void setCalorieConsumedToday(double calorieConsumedToday) {
@@ -163,6 +163,7 @@ public class MealRecordManager {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void calculateCalorieConsumedToday(){
         MealRecord[] mealRecordsForToday = new MealRecord[0];
+        Log.d("meal record", "into calc calorie");
         try {
             mealRecordsForToday = MealRecord.queryByDate(LocalDate.now(),LocalDate.now());
         } catch (EmptyResultException e) {
@@ -172,7 +173,7 @@ public class MealRecordManager {
         double calorieConsumed = 0;
         for (int i=0; i<mealRecordsForToday.length; i++){
             for (int j=0; j<mealRecordsForToday[i].getFoods().size(); j++) {
-                calorieConsumed += mealRecordsForToday[i].getNutrient().getCaloriePer100g() * mealRecordsForToday[i].getFoods().get(j).getTotalCalorie();
+                calorieConsumed += mealRecordsForToday[i].getFoods().get(j).getTotalCalorie();
             }
         }
         setCalorieConsumedToday(calorieConsumed);
