@@ -15,8 +15,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mealtracker.AppLogic.HealthInfoManager;
 import com.example.mealtracker.AppLogic.MealRecordManager;
 import com.example.mealtracker.DAO.Food;
+import com.example.mealtracker.DAO.HealthInfo;
 import com.example.mealtracker.DAO.MealRecord;
 import com.example.mealtracker.R;
 import com.google.android.material.navigation.NavigationView;
@@ -81,7 +83,8 @@ public class MyMealInformation extends AppCompatActivity {
                 else {
                     MealRecordManager mealRecordManager = MealRecordManager.getSingleton();
                     Log.d("mealRecrodManager", mealRecordManager.getMealRecord().getFoods().get(0).getName());
-                    //mealRecordManager.getMealRecord().addToServer();
+                    mealRecordManager.addMealRecordToDB(mealRecordManager.getMealRecord());
+                    HealthInfoManager.getSingleton().getSuggestedCalorie();
                     //mealRecordManager.calculateCalorieConsumedToday();//error
                     double calorieConsumedToday = mealRecordManager.getCalorieConsumedToday();
                     Toast.makeText(MyMealInformation.this, "calorieConsumedToday: " + Double.toString(calorieConsumedToday),
@@ -90,7 +93,6 @@ public class MyMealInformation extends AppCompatActivity {
                     double calorieQuotaRemaining = mealRecordManager.getCalorieRemaining();
                     Toast.makeText(MyMealInformation.this, "calorieQuotaRemainingToday: " + Double.toString(calorieQuotaRemaining),
                             Toast.LENGTH_SHORT).show();
-                    // TODO: add food to mealrecord (added)
                 }
 
                 Intent intent = new Intent(MyMealInformation.this, MainActivity.class);

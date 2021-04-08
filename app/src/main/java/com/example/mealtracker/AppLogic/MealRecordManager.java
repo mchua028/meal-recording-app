@@ -43,8 +43,20 @@ public class MealRecordManager {
         this.calorieConsumedToday = calorieConsumedToday;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public double getCalorieConsumedToday() {
-            return calorieConsumedToday;
+        double total = 0;
+        try {
+            MealRecord[] allMealRecords = Database.getSingleton().queryAllMealRecords();
+            for (MealRecord mealRecord: allMealRecords) {
+                if (LocalDate.now().equals(LocalDate.from(mealRecord.getTime()))) {
+                    total += mealRecord.getTotalCalorie();
+                }
+            }
+        } catch (EmptyResultException e) {
+            return 0;
+        }
+        return total;
     }
 
     public void setCalorieRemaining(double calorieRemaining) {

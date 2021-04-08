@@ -6,6 +6,7 @@ package com.example.mealtracker.DAO;
 
 import android.content.Intent;
 import android.os.Build;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -39,8 +40,10 @@ public class Database {
     private DatabaseReference userReference;
     private DatabaseReference mealRecordReference;
     private FirebaseAuth firebaseAuth;
+    private final DataSnapshot[] dataSnapshot = {null};
+    private HealthInfo healthInfo;
 
-    public  String userId = null;
+    public  String userId = "lvOInQbGwdMcWFnfeag6CMP2flw2";
 
     // for testing purpose
     private final String DATABASE_URL = "https://mealtracker-dc280-default-rtdb.firebaseio.com/";
@@ -52,6 +55,19 @@ public class Database {
     private Database() {
         database = FirebaseDatabase.getInstance(DATABASE_URL);
         firebaseAuth = FirebaseAuth.getInstance();
+        userReference = database.getReference("Users").child(userId);
+        userReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                dataSnapshot[0] = snapshot;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
     }
 
     static public Database getSingleton() {
@@ -187,26 +203,7 @@ public class Database {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public MealRecord[] queryAllMealRecords() throws EmptyResultException {
-        Query queryRef;
-        queryRef = getUserReference().child("MealRecords").orderByChild("Datetime");
-        final DataSnapshot[] result = {null};
-        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                result[0] = snapshot;
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        // waiting for query result
-        while (result[0] == null) {
-            ;
-        }
-
-        ArrayList<MealRecord> mealRecords = parseMealRecords(result[0]);
+        ArrayList<MealRecord> mealRecords = parseMealRecords(dataSnapshot[0].child("MealRecords"));
         return mealRecords.toArray(new MealRecord[0]);
     }
 
@@ -268,23 +265,8 @@ public class Database {
      * @return
      */
     public HealthInfo queryHealthInfo() {
-        DatabaseReference user = getUserReference();
-        final DataSnapshot[] result = {null};
-        user.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                result[0] = snapshot;
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        while (result[0] == null) {
-
-        }
-        HealthInfo healthInfo = HealthInfo.getSingleton();
-        for (DataSnapshot attribute: result[0].getChildren()) {
+        HealthInfo healthInfo = new HealthInfo();
+        for (DataSnapshot attribute: dataSnapshot[0].getChildren()) {
             String key = attribute.getKey();
             switch (key) {
                 case "age":

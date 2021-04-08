@@ -13,6 +13,7 @@ import com.example.mealtracker.Exceptions.ValueCannotBeNonPositiveException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -76,15 +77,19 @@ public class MealRecordInstrumentedTest {
 //    }
 //
 
-//    /**
-//     * TODO: test multiple dates
-//     */
-//    @Test
-//    public void queryMealRecordByDate() {
-//        LocalDate startDate = LocalDate.of(2021, 4, 2);
-//        LocalDate endDate = LocalDate.of(2021, 4, 3);
-//        MealRecord mealRecord = MealRecord.queryByDate(startDate, endDate)[0];
-//    }
+    /**
+     * TODO: test multiple dates
+     */
+    @Test
+    public void queryMealRecordByDate() {
+        LocalDate startDate = LocalDate.of(2021, 4, 2);
+        LocalDate endDate = LocalDate.of(2021, 4, 3);
+        try {
+            MealRecord mealRecord = MealRecord.queryByDate(startDate, endDate)[0];
+        } catch (EmptyResultException e) {
+            e.printStackTrace();
+        }
+    }
 //
 //    /**
 //     * TODO:
@@ -110,13 +115,13 @@ public class MealRecordInstrumentedTest {
 //        }
 //    }
 
-    @Test
-    public void getCalorieRecordPastWeek() {
-        d.userId = "lvOInQbGwdMcWFnfeag6CMP2flw2";
-        ArrayList<Double> record = MealRecordManager.getSingleton().getCalorieIntakeInWeek();
-        for (Double r: record) {
-            System.out.println(r);
-        }
-        return;
-    }
+//    @Test
+//    public void getCalorieRecordPastWeek() {
+//        d.userId = "lvOInQbGwdMcWFnfeag6CMP2flw2";
+//        ArrayList<Double> record = MealRecordManager.getSingleton().getCalorieIntakeInWeek();
+//        for (Double r: record) {
+//            System.out.println(r);
+//        }
+//        return;
+//    }
 }
