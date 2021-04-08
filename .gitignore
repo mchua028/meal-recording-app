@@ -18,3 +18,4 @@ local.properties
 app/src/test/java/com/example/mealtracker/sushi.jpg
 .idea/dictionaries/chris.xml
 .gradle/
+app/src/androidTest/resources/com.example.mealtracker/Meal Tracker.zip

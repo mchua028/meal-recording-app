@@ -66,11 +66,11 @@ public class Database {
     }
 
     public DatabaseReference getUserReference() {
-//        if (userId == null) {
-//            return database.getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid());
-//        } else {
-//            return database.getReference().child("Users").child(userId);
-//        }
+        if (userId == null) {
+            return database.getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid());
+        } else {
+            return database.getReference().child("Users").child(userId);
+        }
     }
 
     /**
