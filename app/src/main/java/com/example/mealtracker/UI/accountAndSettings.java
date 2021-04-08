@@ -116,16 +116,11 @@ public class accountAndSettings extends Fragment {
 
         // display username as it should not be edited
         EditText txtUsername = (EditText) v.findViewById(R.id.accountEditUsername);
-        if (firebaseAuth.getCurrentUser().getDisplayName().trim() != null
-                && !firebaseAuth.getCurrentUser().getDisplayName().trim().isEmpty()) {
-            String userDisplayName = firebaseAuth.getCurrentUser().getDisplayName().trim();
-            txtUsername.setText("Username: " + userDisplayName);
-        }
-        else if (firebaseAuth.getCurrentUser().isEmailVerified()
+        if (firebaseAuth.getCurrentUser().isEmailVerified()
                 && firebaseAuth.getCurrentUser().getEmail().trim() != null
                 && !firebaseAuth.getCurrentUser().getEmail().trim().isEmpty()) {
             String userEmail = firebaseAuth.getCurrentUser().getEmail().split("@")[0];
-            txtUsername.setText("Username: " + userEmail);
+            txtUsername.setText(userEmail);
         }
         else {
             txtUsername.setText("null");
