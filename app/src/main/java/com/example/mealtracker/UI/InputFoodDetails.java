@@ -27,7 +27,10 @@ import java.util.regex.Pattern;
 
 
 /**
- * Interface where the user adds foods to meal record
+ * Interface where the user adds foods to meal record.
+ * FIXME:
+ *  - There is a new empty food detail field. How would you deal with it when you "click" remove which actually deletes the food?
+ *  After I delete, how do I have the empty field to add food again.
  */
 public class InputFoodDetails extends AppCompatActivity {
     private ArrayList<InputFoodDetailsExampleItem> mExampleList;
@@ -131,6 +134,9 @@ public class InputFoodDetails extends AppCompatActivity {
             }
         });
 
+        /**
+         * Deletes the input field.
+         */
         removeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,24 +147,13 @@ public class InputFoodDetails extends AppCompatActivity {
 
                 editInputFoodName = findViewById(R.id.editFood);
                 editInputFoodWeight = findViewById(R.id.editFoodWeight); //TODO:multiply the weight to the nutrition obtained to get actual amount of nutrients
-
-                String foodName = textInputFoodName.getEditText().getText().toString().trim();
-                int foodWeight = Integer.parseInt(textInputFoodWeight.getEditText().getText().toString().trim());
-
-                //ArrayList<String> newFoodInfo = new ArrayList<String>();
-                //newFoodInfo.add(foodName);
-
-                Food newFood = new Food();
                 try {
-                    newFood = Food.searchFood(foodName);
-                } catch (EmptyInputException e) {
-                    e.printStackTrace();
-                } catch (EmptyResultException e) {
-                    e.printStackTrace();
+                    mealRecord.deleteLastFood();
+                    removeItem(position);
+                    Toast.makeText(InputFoodDetails.this, "Delete successfully.", Toast.LENGTH_SHORT).show();
+                } catch (IndexOutOfBoundsException e) {
+                    Toast.makeText(InputFoodDetails.this, "There is no food record to delete.", Toast.LENGTH_SHORT).show();
                 }
-                mealRecord.delFood(newFood);
-
-                removeItem(position);
             }
         });
 

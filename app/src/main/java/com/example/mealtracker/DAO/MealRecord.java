@@ -139,8 +139,15 @@ public class MealRecord {
         foods.add(food);
     }
 
-    public void delFood(Food food) {
-        foods.remove(food);
+    /**
+     * Deletes the last element in the food
+     * @throws IndexOutOfBoundsException, when the food is empty
+     */
+    public void deleteLastFood() throws IndexOutOfBoundsException{
+        if (foods.isEmpty()) {
+            throw new IndexOutOfBoundsException();
+        }
+        foods.remove(foods.size() - 1);
     }
 
 
