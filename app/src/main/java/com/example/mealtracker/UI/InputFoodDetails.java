@@ -82,14 +82,15 @@ public class InputFoodDetails extends AppCompatActivity {
                 textInputFoodWeight = findViewById(R.id.txtFoodWeight);
 
                 editInputFoodName = findViewById(R.id.editFood);
-                editInputFoodWeight = findViewById(R.id.editFoodWeight); //TODO:multiply the weight to the nutrition obtained to get actual amount of nutrients
+                editInputFoodWeight = findViewById(R.id.editFoodWeight);
 
                 String foodName = textInputFoodName.getEditText().getText().toString().trim();
                 if (!checkFoodNameCorrectness(foodName)) return;
 
+                double foodWeight=0;
                 String weightInputStr = textInputFoodWeight.getEditText().getText().toString().trim();
                 try {
-                    int foodWeight = Integer.parseInt(weightInputStr);
+                    foodWeight = Double.parseDouble(weightInputStr);
                     if (!(foodWeight >= 1 & foodWeight <= 2000)) {
                         throw new Exception();
                     }
@@ -109,6 +110,7 @@ public class InputFoodDetails extends AppCompatActivity {
                 try {
                     food = Food.searchFood(foodName);
                     Log.d("complete","queryFoodName");
+                    food.setActualIntake(foodWeight);
                     mealRecord.addFood(food);
                     Log.d("complete","addFood");
                     Toast.makeText(InputFoodDetails.this, String.format("%s is added.", foodName), Toast.LENGTH_SHORT).show();
@@ -183,6 +185,12 @@ public class InputFoodDetails extends AppCompatActivity {
                             "cannot be uploaded", Toast.LENGTH_SHORT).show();
                 }
                 MealRecordManager.getSingleton().addMealRecordToDB(mealRecord);
+                MealRecordManager.getSingleton().setMealRecord(mealRecord);
+                try {
+                    Log.d("successfully added",Double.toString(mealRecord.getTotalCalorie()));
+                } catch (EmptyResultException e) {
+                    e.printStackTrace();
+                }
                 startActivity(new Intent(v.getContext(), MyMealInformation.class));
             }
         });
