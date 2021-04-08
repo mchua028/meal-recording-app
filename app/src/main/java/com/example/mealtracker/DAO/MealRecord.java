@@ -122,17 +122,17 @@ public class MealRecord {
     public Nutrient getNutrient() {
         Nutrient nutrientConsumedInOneMeal = new Nutrient();
         for (int i=0; i<foods.size(); i++){
-            nutrientConsumedInOneMeal.setFat(nutrientConsumedInOneMeal.getFat()+nutrientConsumedInOneMeal.getFat());
-            nutrientConsumedInOneMeal.setCholesterol(nutrientConsumedInOneMeal.getCholesterol()+nutrientConsumedInOneMeal.getCholesterol());
-            nutrientConsumedInOneMeal.setSodium(nutrientConsumedInOneMeal.getSodium()+nutrientConsumedInOneMeal.getSodium());
-            nutrientConsumedInOneMeal.setPotassium(nutrientConsumedInOneMeal.getPotassium()+nutrientConsumedInOneMeal.getPotassium());
-            nutrientConsumedInOneMeal.setSugar(nutrientConsumedInOneMeal.getSugar()+nutrientConsumedInOneMeal.getSugar());
-            nutrientConsumedInOneMeal.setDietaryFibre(nutrientConsumedInOneMeal.getDietaryFibre()+nutrientConsumedInOneMeal.getDietaryFibre());
-            nutrientConsumedInOneMeal.setProtein(nutrientConsumedInOneMeal.getProtein()+nutrientConsumedInOneMeal.getProtein());
-            nutrientConsumedInOneMeal.setCalcium(nutrientConsumedInOneMeal.getCalcium()+nutrientConsumedInOneMeal.getCalcium());
-            nutrientConsumedInOneMeal.setVitaminC(nutrientConsumedInOneMeal.getVitaminC()+nutrientConsumedInOneMeal.getVitaminC());
-            nutrientConsumedInOneMeal.setIron(nutrientConsumedInOneMeal.getIron()+nutrientConsumedInOneMeal.getIron());
-            nutrientConsumedInOneMeal.setMagnesium(nutrientConsumedInOneMeal.getMagnesium()+nutrientConsumedInOneMeal.getMagnesium());
+            nutrientConsumedInOneMeal.setFat(nutrientConsumedInOneMeal.getFat()+ getFoods().get(i).getNutrients().getFat());
+            nutrientConsumedInOneMeal.setCholesterol(nutrientConsumedInOneMeal.getCholesterol()+getFoods().get(i).getNutrients().getCholesterol());
+            nutrientConsumedInOneMeal.setSodium(nutrientConsumedInOneMeal.getSodium()+getFoods().get(i).getNutrients().getSodium());
+            nutrientConsumedInOneMeal.setPotassium(nutrientConsumedInOneMeal.getPotassium()+getFoods().get(i).getNutrients().getPotassium());
+            nutrientConsumedInOneMeal.setSugar(nutrientConsumedInOneMeal.getSugar()+getFoods().get(i).getNutrients().getSugar());
+            nutrientConsumedInOneMeal.setDietaryFibre(nutrientConsumedInOneMeal.getDietaryFibre()+getFoods().get(i).getNutrients().getDietaryFibre());
+            nutrientConsumedInOneMeal.setProtein(nutrientConsumedInOneMeal.getProtein()+getFoods().get(i).getNutrients().getProtein());
+            nutrientConsumedInOneMeal.setCalcium(nutrientConsumedInOneMeal.getCalcium()+getFoods().get(i).getNutrients().getCalcium());
+            nutrientConsumedInOneMeal.setVitaminC(nutrientConsumedInOneMeal.getVitaminC()+getFoods().get(i).getNutrients().getVitaminC());
+            nutrientConsumedInOneMeal.setIron(nutrientConsumedInOneMeal.getIron()+getFoods().get(i).getNutrients().getIron());
+            nutrientConsumedInOneMeal.setMagnesium(nutrientConsumedInOneMeal.getMagnesium()+getFoods().get(i).getNutrients().getMagnesium());
         }
         return nutrientConsumedInOneMeal;
     }
