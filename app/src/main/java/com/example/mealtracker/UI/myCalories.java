@@ -1,4 +1,4 @@
-package com.example.mealtracker;
+package com.example.mealtracker.UI;
 
 import android.content.Intent;
 import android.os.Build;
@@ -22,6 +22,8 @@ import com.example.mealtracker.AppLogic.MealRecordManager;
 import com.example.mealtracker.DAO.Database;
 import com.example.mealtracker.DAO.HealthInfo;
 import com.example.mealtracker.DAO.MealRecord;
+import com.example.mealtracker.DataPoints;
+import com.example.mealtracker.R;
 import com.example.mealtracker.UI.InputFoodDetails;
 import com.example.mealtracker.UI.editCalories;
 import com.example.mealtracker.UI.uploadPicture;
