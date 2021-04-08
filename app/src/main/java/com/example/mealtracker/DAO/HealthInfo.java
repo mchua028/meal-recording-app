@@ -11,8 +11,11 @@ import com.example.mealtracker.Gender;
 
 import java.util.HashMap;
 
-public class HealthInfo {
 
+/**
+ * DAO about health information.
+ */
+public class HealthInfo {
     private double height;
     private double weight;
     private int age;
@@ -25,7 +28,7 @@ public class HealthInfo {
 
     static public HealthInfo getSingleton() {
         if (singleton == null) {
-            singleton = new HealthInfo();
+            singleton = getHealthInfoFromDB();
         }
         return singleton;
     }
@@ -171,6 +174,29 @@ public class HealthInfo {
 
     public double getSuggestedCalorie() {
         return Database.getSingleton().queryHealthInfo().suggestCalorieIntake;
+    }
+
+    /**
+     * @return suggested intake of nutrient info based on health information.
+     */
+    public Nutrient getSuggestedNutrientIntakePerWeek() {
+        Nutrient suggestion = new Nutrient();
+        suggestion.setCaloriePer100g(420);
+        suggestion.setCholesterol(2.1);
+        suggestion.setSodium(14);
+        suggestion.setPotassium(28);
+        suggestion.setSugar(140);
+        suggestion.setDietaryFibre(135);
+        suggestion.setProtein(0.36 * weight / 0.8);
+        suggestion.setCalcium(7);
+        suggestion.setVitaminC(0.56);
+        suggestion.setIron(0.56);
+        suggestion.setMagnesium(2.45);
+        return suggestion;
+    }
+
+    public static HealthInfo getHealthInfoFromDB() {
+        return Database.getSingleton().queryHealthInfo();
     }
 }
 
