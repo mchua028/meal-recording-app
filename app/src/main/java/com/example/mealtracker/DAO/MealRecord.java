@@ -107,12 +107,12 @@ public class MealRecord {
      * @Author: WANG1448
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static MealRecord[] queryByDate (LocalDate startDate, LocalDate endDate){
+    public static MealRecord[] queryByDate (LocalDate startDate, LocalDate endDate) throws EmptyResultException {
         return Database.getSingleton().queryByDate(startDate, endDate);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static MealRecord[] queryAll() {
+    public static MealRecord[] queryAll() throws EmptyResultException {
         return Database.getSingleton().queryAllMealRecords();
     }
 
@@ -167,4 +167,7 @@ public class MealRecord {
         return result;
     }
 
+    public LocalDateTime getTime() {
+        return time;
+    }
 }

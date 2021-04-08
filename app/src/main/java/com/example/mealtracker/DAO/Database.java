@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import com.example.mealtracker.Activity;
+import com.example.mealtracker.Exceptions.EmptyResultException;
 import com.example.mealtracker.Gender;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -155,7 +156,7 @@ public class Database {
      * @Author: Wang binli
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public MealRecord[] queryByDate(LocalDate startDate, LocalDate endDate) {
+    public MealRecord[] queryByDate(LocalDate startDate, LocalDate endDate) throws EmptyResultException {
         DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
         String formattedStartDate = startDate.format(formatter);
         String formattedEndDate = endDate.format(formatter);
@@ -185,7 +186,7 @@ public class Database {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public MealRecord[] queryAllMealRecords() {
+    public MealRecord[] queryAllMealRecords() throws EmptyResultException {
         Query queryRef;
         queryRef = getUserReference().child("MealRecords").orderByChild("Datetime");
         final DataSnapshot[] result = {null};
@@ -210,30 +211,35 @@ public class Database {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private static ArrayList<MealRecord> parseMealRecords(DataSnapshot dataSnapshot) {
+    private static ArrayList<MealRecord> parseMealRecords(DataSnapshot dataSnapshot) throws EmptyResultException {
         ArrayList<MealRecord> mealRecords = new ArrayList<>();
-        for (DataSnapshot mealRecord : dataSnapshot.getChildren()) {
-            MealRecord mealRecord1 = new MealRecord();
-            mealRecord1.setId(mealRecord.getKey());
-            LocalDateTime mealRecordDateTime = LocalDateTime.parse(mealRecord.child("Datetime").getValue(String.class));
-            mealRecord1.setTime(mealRecordDateTime);
-            // parse foods in meal record
-            for (DataSnapshot foodRecord : mealRecord.child("FoodRecords").getChildren()) {
-                Food food = new Food();
-                Nutrient nutrient = new Nutrient();
-                nutrient.setCaloriePer100g(foodRecord.child("Calorie").getValue(Double.class));
-                nutrient.setCalcium(foodRecord.child("Calcium").getValue(Double.class));
-                nutrient.setSodium(foodRecord.child("Sodium").getValue(Double.class));
-                nutrient.setFat(foodRecord.child("Fat").getValue(Double.class));
-                food.setName(foodRecord.child("name").getValue(String.class));
-                nutrient.setMagnesium(foodRecord.child("Magnesium").getValue(Double.class));
-                nutrient.setPotassium(foodRecord.child("Potassium").getValue(Double.class));
-                nutrient.setSugar(foodRecord.child("Sugar").getValue(Double.class));
-                nutrient.setVitaminC(foodRecord.child("VitaminC").getValue(Double.class));
-                food.setNutrients(nutrient);
-                mealRecord1.addFood(food);
-                mealRecords.add(mealRecord1);
+        try {
+            for (DataSnapshot mealRecord : dataSnapshot.getChildren()) {
+                MealRecord mealRecord1 = new MealRecord();
+                mealRecord1.setId(mealRecord.getKey());
+                LocalDateTime mealRecordDateTime = LocalDateTime.parse(mealRecord.child("Datetime").getValue(String.class));
+                mealRecord1.setTime(mealRecordDateTime);
+                // parse foods in meal record
+                for (DataSnapshot foodRecord : mealRecord.child("FoodRecords").getChildren()) {
+                    Food food = new Food();
+                    Nutrient nutrient = new Nutrient();
+                    nutrient.setCaloriePer100g(foodRecord.child("Calorie").getValue(Double.class));
+                    nutrient.setCalcium(foodRecord.child("Calcium").getValue(Double.class));
+                    nutrient.setSodium(foodRecord.child("Sodium").getValue(Double.class));
+                    nutrient.setFat(foodRecord.child("Fat").getValue(Double.class));
+                    food.setName(foodRecord.child("name").getValue(String.class));
+                    nutrient.setMagnesium(foodRecord.child("Magnesium").getValue(Double.class));
+                    nutrient.setPotassium(foodRecord.child("Potassium").getValue(Double.class));
+                    nutrient.setSugar(foodRecord.child("Sugar").getValue(Double.class));
+                    nutrient.setVitaminC(foodRecord.child("VitaminC").getValue(Double.class));
+                    food.setNutrients(nutrient);
+                    food.setActualIntake(foodRecord.child("weight").getValue(Double.class));
+                    mealRecord1.addFood(food);
+                    mealRecords.add(mealRecord1);
+                }
             }
+        } catch (IndexOutOfBoundsException e) {
+            throw new EmptyResultException();
         }
         return mealRecords;
     }
