@@ -28,6 +28,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * Singleton.
@@ -263,9 +264,11 @@ public class Database {
         userReference.child("suggestCalorieIntake").setValue(healthInfo.getSuggestCalorieIntake());
     }
 
-
+    /**
+     * Querys the health information of the current login user
+     * @return health Info
+     */
     public HealthInfo queryHealthInfo() {
-        DatabaseReference userReference = getUserReference();
         Query queryRef = getUserReference().orderByKey();
         final DataSnapshot[] result = {null};
         queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -283,7 +286,6 @@ public class Database {
         while (result[0] == null) {
 
         }
-
         HealthInfo healthInfo = HealthInfo.getSingleton();
         HashMap<String, String> parsedValue = new HashMap<>();
         for (DataSnapshot attribute: result[0].getChildren()) {
@@ -389,8 +391,6 @@ public class Database {
 
     }
 
-
-
     /**
      * Creates account dir under database "Users".
      * Author : Wang Binili, Tang Yuting
@@ -402,7 +402,7 @@ public class Database {
         HashMap<String, String> value = new HashMap<>();
         // add value as a place-holder, otherwise creation will fail
         value.put("registeredTime", LocalDateTime.now().format(formatter));
-        database.getReference().child("User").child(userId).setValue(value);
+        database.getReference().child("Users").child(userId).setValue(value);
     }
 
     /**
@@ -418,6 +418,39 @@ public class Database {
         userRef.child("lastName").setValue(account.getLastName());
         userRef.child("email").setValue(account.getEmail());
         userRef.child("password").setValue(account.getPassword());
+    }
+
+    /**
+     * @param nutrientName the nutrientName to query
+     * @return HashMap<String, Double>, key is the name of food, Double is the value of the containment
+     */
+    public HashMap<String, Double> queryRecommendFood(String nutrientName) {
+        DatabaseReference foodRecommend = database.getReference().child("FoodRichInNutrient");
+        Query foodRichInNutrient = foodRecommend.orderByKey();
+        final DataSnapshot[] result = {null};
+        // make the query
+        foodRichInNutrient.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                result[0] = snapshot;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        while (result[0] == null) {
+            ;
+        }
+        HashMap<String, Double> recommendFood = new HashMap<>();
+        for (DataSnapshot dataSnapshot: result[0].getChildren()) {
+            String foodName = dataSnapshot.getKey();
+            Double value = dataSnapshot.child("value").getValue(Double.class);
+            recommendFood.put(foodName, value);
+        }
+        return recommendFood;
     }
 }
 

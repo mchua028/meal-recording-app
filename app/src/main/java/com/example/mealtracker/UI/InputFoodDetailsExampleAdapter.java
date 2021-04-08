@@ -23,10 +23,15 @@ public class InputFoodDetailsExampleAdapter extends RecyclerView.Adapter<InputFo
         public TextInputLayout mTextView1;
         public TextInputLayout mTextView2;
 
+        public EditText editInputFoodName, editInputFoodWeight;
+
         public ExampleViewHolder(View itemView) {
             super(itemView);
             mTextView1 = itemView.findViewById(R.id.txtFood);
             mTextView2 = itemView.findViewById(R.id.txtFoodWeight);
+
+            editInputFoodName = itemView.findViewById(R.id.editFood);
+            editInputFoodWeight = itemView.findViewById(R.id.editFoodWeight);
         }
     }
 
@@ -46,6 +51,14 @@ public class InputFoodDetailsExampleAdapter extends RecyclerView.Adapter<InputFo
     public void onBindViewHolder(@NonNull ExampleViewHolder holder, int position) {
         InputFoodDetailsExampleItem currentItem = mExampleList.get(position);
 
+
+        Log.d("size of lise",Integer.toString(mExampleList.size()));
+
+        //Log.d("in adapter",currentItem.getText1().getEditText().getText().toString());
+
+
+//        holder.mTextView1.setText(currentItem.getText1());
+//        holder.mTextView2.setText(currentItem.getText2());
 
        // TextInputLayout text1 = itemView.findViewById(R.id.editFood);
        // String editText = textInputLayout.getEditText().getText();
