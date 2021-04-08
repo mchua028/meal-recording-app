@@ -9,6 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mealtracker.AppLogic.MealRecordManager;
+import com.example.mealtracker.DAO.Food;
+import com.example.mealtracker.DAO.MealRecord;
 import com.example.mealtracker.EditCaloriesExampleItem;
 import com.example.mealtracker.R;
 
@@ -33,9 +36,16 @@ public class EditCaloriesExampleAdapter extends RecyclerView.Adapter<EditCalorie
 
         public ExampleViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
-            mTextView1 = itemView.findViewById(R.id.editCaloriesfoodLabel);
-            mTextView2 = itemView.findViewById(R.id.editCaloriesfoodCalories);
+            mTextView1 = (TextView) itemView.findViewById(R.id.editCaloriesfoodLabel);
+            mTextView2 = (TextView) itemView.findViewById(R.id.editCaloriesfoodCalories);
             mCancel = itemView.findViewById(R.id.editCaloriesRemove);
+
+
+
+
+
+            mTextView1.setText("");
+            mTextView2.setText("");
 
             mCancel.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -12,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mealtracker.AppLogic.MealRecordManager;
+import com.example.mealtracker.DAO.Food;
+import com.example.mealtracker.DAO.MealRecord;
 import com.example.mealtracker.EditCaloriesExampleItem;
 import com.example.mealtracker.R;
 import com.google.android.material.navigation.NavigationView;
@@ -41,6 +44,10 @@ public class editCalories extends AppCompatActivity {
 
         createExampleList();
         buildRecyclerView();
+
+        /*MealRecordManager mealRecordManager = MealRecordManager.getSingleton();
+        MealRecord mealRecord = mealRecordManager.getMealRecord();
+        ArrayList<Food> foods = mealRecord.getFoods();*/
 
         // Save button
         // TODO: to connect to db to edit meal records
