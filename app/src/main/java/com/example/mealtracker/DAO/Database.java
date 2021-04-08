@@ -6,6 +6,7 @@ package com.example.mealtracker.DAO;
 
 import android.os.Build;
 import android.provider.ContactsContract;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -76,12 +77,16 @@ public class Database {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void postNewMealRecord(MealRecord mealRecord) {
+        Log.d("into","postnewmealrecord");
         DatabaseReference newMealRecord = mealRecordReference.push();
+        Log.d("into2","postnewmealrecord");
+
         mealRecord.setId(newMealRecord.getKey());
         newMealRecord.child("Datetime").setValue(mealRecord.getTimeString());
         DatabaseReference foodRecords = newMealRecord.child("FoodRecords");
 
         for (Food food : mealRecord.getFoods()) {
+            Log.d("into","pushFoodRecords");
             DatabaseReference foodRecord = foodRecords.push();
             foodRecord.child("name").setValue(food.getName());
             Nutrient nutrient = food.getNutrients();

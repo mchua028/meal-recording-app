@@ -58,7 +58,9 @@ public class MyMealInformation extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO: logic for adding to calories
+                Log.d("into ","myMealInfo");
                 MealRecordManager mealRecordManager = MealRecordManager.getSingleton();
+                Log.d("mealRecrodManager",mealRecordManager.getMealRecord().getFoods().get(0).getName());
                 mealRecordManager.getMealRecord().addToServer();
                 double calorieConsumedToday = mealRecordManager.getCalorieConsumedToday();
                 Toast.makeText(MyMealInformation.this,"calorieConsumedToday: "+Double.toString(calorieConsumedToday),

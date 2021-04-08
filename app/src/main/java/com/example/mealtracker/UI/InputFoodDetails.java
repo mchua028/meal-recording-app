@@ -1,10 +1,12 @@
 package com.example.mealtracker.UI;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -25,6 +27,7 @@ import com.example.mealtracker.R;
 import com.example.mealtracker.UI.MyMealInformation;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class InputFoodDetails extends AppCompatActivity {
@@ -141,7 +144,11 @@ public class InputFoodDetails extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void goToMyMealInformation(View view) {
+        Log.d("mealReocrd",mealRecord.getFoods().get(0).getName());
+        mealRecord.setTime(LocalDateTime.now());
+        Log.d("mealRecord",mealRecord.getTimeString());
         mealRecordMgr.setMealRecord(mealRecord);
         Intent intent = new Intent(this, MyMealInformation.class);
         startActivity(intent);

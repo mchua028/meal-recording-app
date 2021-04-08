@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.annotation.RequiresApi;
 
 import com.example.mealtracker.Activity;
+import com.example.mealtracker.AppLogic.MealRecordManager;
 import com.example.mealtracker.Gender;
 
 import java.util.HashMap;
@@ -20,7 +21,15 @@ public class HealthInfo {
     private Activity dailyActivityLevel;
     private double suggestCalorieIntake;
 
-    public HealthInfo(){};
+    private HealthInfo(){};
+
+    static public HealthInfo getSingleton() {
+        if (singleton == null) {
+            singleton = new HealthInfo();
+        }
+        return singleton;
+    }
+    private static HealthInfo singleton;
 
     public double getHeight() {
         return this.height;

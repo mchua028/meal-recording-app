@@ -4,6 +4,7 @@ import android.os.Build;
 import android.provider.ContactsContract;
 import android.util.Log;
 
+import com.example.mealtracker.DAO.Database;
 import com.example.mealtracker.DAO.Food;
 import com.example.mealtracker.DAO.HealthInfo;
 import com.example.mealtracker.DAO.MealRecord;
@@ -23,13 +24,17 @@ import java.time.LocalDateTime;
 
 
 public class MealRecordManager {
+    private MealRecordManager(){}
+
+    static public MealRecordManager getSingleton() {
+        if (singleton == null) {
+            singleton = new MealRecordManager();
+        }
+        return singleton;
+    }
     private static MealRecordManager singleton;
 
     private MealRecord mealRecord;
-
-    public static MealRecordManager getSingleton() {
-        return singleton;
-    }
 
     private double calorieConsumedToday = 0;
     private double calorieRemaining = 0;
@@ -50,9 +55,9 @@ public class MealRecordManager {
         return calorieRemaining;
     }
 
-    public MealRecordManager(){}
 
     public void setMealRecord(MealRecord mealRecord){
+        Log.d("entering","mealreocrdmgr");
         this.mealRecord = mealRecord;
     }
 
@@ -179,7 +184,7 @@ public class MealRecordManager {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void calculateCalorieQuotaRemainingToday() {
-        HealthInfo healthInfo = new HealthInfo();
+        HealthInfo healthInfo = HealthInfo.getSingleton();
         double calorieSuggested = healthInfo.getSuggestCalorieIntake();
         calorieRemaining = calorieSuggested - calorieConsumedToday;
         // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.calculateCalorieQuotaRemainingToday
