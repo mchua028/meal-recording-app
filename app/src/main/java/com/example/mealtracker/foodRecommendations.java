@@ -35,6 +35,9 @@ public class foodRecommendations extends Fragment {
     private TextView mText1;
     private TextView mText2;
     private TextView mText3;
+    private TextView mText4;
+    private TextView mText5;
+    private TextView mText6;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
@@ -54,7 +57,6 @@ public class foodRecommendations extends Fragment {
 
 
         mExampleList = new ArrayList<>();
-        mExampleList.add(new FoodRecommendationsExampleItem(mText1, mText2));
 
         mRecyclerView = v.findViewById(R.id.myMealsRecyclerView);
         mRecyclerView.setHasFixedSize(true);
@@ -70,11 +72,12 @@ public class foodRecommendations extends Fragment {
         return v;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void addMoreCardviews(){
         int position = getExampleListSize();
 
         // for each type of nutrient i'm lacking in
-        for (int i=1; i<3; i++) {   // TODO: insert actual num of datasets instead of dummy number 3
+        for (int i=0; i<3; i++) {
             //int position = Integer.parseInt(editTextInsert.getText().toString());
             insertItem(position);
         }
