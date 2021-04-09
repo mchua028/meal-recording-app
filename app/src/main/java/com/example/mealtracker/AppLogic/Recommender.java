@@ -34,7 +34,7 @@ public class Recommender {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void recommend() {
         // calculate lacked nutrient
-        Nutrient actualIntake = MealRecordManager.getSingleton().getNutrientInWeek();
+        Nutrient actualIntake = consumedNutrient;
         Nutrient suggestion = HealthInfo.getSingleton().getSuggestedNutrientIntakePerWeek();
         lackedNutrient = actualIntake.compare(suggestion);
         // get recommend from database
@@ -44,5 +44,29 @@ public class Recommender {
             results.add(Database.getSingleton().queryRecommendFood(nutrientName));
         }
 
+    }
+
+    public Nutrient getConsumedNutrient() {
+        return consumedNutrient;
+    }
+
+    public void setConsumedNutrient(Nutrient consumedNutrient) {
+        this.consumedNutrient = consumedNutrient;
+    }
+
+    public HashMap<String, Double> getLackedNutrient() {
+        return lackedNutrient;
+    }
+
+    public void setLackedNutrient(HashMap<String, Double> lackedNutrient) {
+        this.lackedNutrient = lackedNutrient;
+    }
+
+    public HashMap<String, Double> getRecommendFood() {
+        return recommendFood;
+    }
+
+    public void setRecommendFood(HashMap<String, Double> recommendFood) {
+        this.recommendFood = recommendFood;
     }
 }

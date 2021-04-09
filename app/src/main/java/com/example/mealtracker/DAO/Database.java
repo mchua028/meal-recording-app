@@ -4,18 +4,15 @@
  */
 package com.example.mealtracker.DAO;
 
-import android.content.Intent;
 import android.os.Build;
-import android.provider.ContactsContract;
 import android.util.Log;
-import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+
 import com.example.mealtracker.Activity;
 import com.example.mealtracker.Exceptions.EmptyResultException;
 import com.example.mealtracker.Gender;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,9 +25,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Random;
 
 /**
  * Singleton.
@@ -41,8 +36,10 @@ public class Database {
     // Database Reference: like the table in relational database
     private DatabaseReference userReference;
     private DatabaseReference mealRecordReference;
+    private DatabaseReference foodRecommend;
+
     private FirebaseAuth firebaseAuth;
-    private final DataSnapshot[] dataSnapshot = {null};
+    public final DataSnapshot[] dataSnapshot = {null, null};
     private HealthInfo healthInfo;
 
     public  String userId = "lvOInQbGwdMcWFnfeag6CMP2flw2";
@@ -69,6 +66,20 @@ public class Database {
 
             }
 
+        });
+        foodRecommend = database.getReference().child("FoodRichInNutrient");
+        Query foodRichInNutrient = foodRecommend.orderByKey();
+        // make the query
+        foodRichInNutrient.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                dataSnapshot[1] = snapshot;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
         });
     }
 
@@ -248,7 +259,6 @@ public class Database {
     }
 
     /**
-<<<<<<< HEAD
      * Queries the user information
      * @return
      */
@@ -358,27 +368,8 @@ public class Database {
      * @return HashMap<String, Double>, key is the name of food, Double is the value of the containment
      */
     public HashMap<String, Double> queryRecommendFood(String nutrientName) {
-        DatabaseReference foodRecommend = database.getReference().child("FoodRichInNutrient");
-        Query foodRichInNutrient = foodRecommend.orderByKey();
-        final DataSnapshot[] result = {null};
-        // make the query
-        foodRichInNutrient.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                result[0] = snapshot;
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        while (result[0] == null) {
-            ;
-        }
         HashMap<String, Double> recommendFood = new HashMap<>();
-        for (DataSnapshot dataSnapshot: result[0].getChildren()) {
+        for (DataSnapshot dataSnapshot: dataSnapshot[1].child(nutrientName).getChildren()) {
             String foodName = dataSnapshot.getKey();
             Double value = dataSnapshot.child("value").getValue(Double.class);
             recommendFood.put(foodName, value);

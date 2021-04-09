@@ -205,8 +205,7 @@ public class MealRecordManager {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Nutrient calculateTotalNutrient() throws EmptyResultException {
         Nutrient totalConsumed = new Nutrient();
-        MealRecord[] mealRecordsForToday = MealRecord.queryByDate(LocalDate.now(),LocalDate.now());
-
+        MealRecord[] mealRecordsForToday = MealRecord.queryAll();
 
         for (int i=0; i<mealRecordsForToday.length; i++){
             totalConsumed.setFat(totalConsumed.getFat()+mealRecordsForToday[i].getNutrient().getFat());
