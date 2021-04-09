@@ -371,8 +371,12 @@ public class Database {
         HashMap<String, Double> recommendFood = new HashMap<>();
         for (DataSnapshot dataSnapshot: dataSnapshot[1].child(nutrientName).getChildren()) {
             String foodName = dataSnapshot.getKey();
-            Double value = dataSnapshot.child("value").getValue(Double.class);
-            recommendFood.put(foodName, value);
+            try {
+                Double value = dataSnapshot.child("value").getValue(Double.class);
+                recommendFood.put(foodName, value);
+            } catch (com.google.firebase.database.DatabaseException e) {
+                continue;
+            }
         }
         return recommendFood;
     }
