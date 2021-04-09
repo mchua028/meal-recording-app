@@ -13,6 +13,7 @@ import androidx.annotation.RequiresApi;
 import com.example.mealtracker.Activity;
 import com.example.mealtracker.Exceptions.EmptyResultException;
 import com.example.mealtracker.Gender;
+import com.example.mealtracker.UI.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -59,6 +60,7 @@ public class Database {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 dataSnapshot[0] = snapshot;
+                MainActivity.isInit = true;
             }
 
             @Override
