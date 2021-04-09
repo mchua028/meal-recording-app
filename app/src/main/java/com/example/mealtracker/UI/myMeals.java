@@ -105,7 +105,12 @@ public class myMeals extends Fragment {
                     ArrayList<Food> foods = new ArrayList<Food>();
                     Food food1 = new Food();
                     food1.setName("egg");
+                    food1.setActualIntake(100);
+                    Food food2 = new Food();
+                    food2.setName("chicken");
+                    food2.setActualIntake(200);
                     foods.add(food1);
+                    foods.add(food2);
                     mealRecord1.setFoods(foods);
                     mealRecords.add(mealRecord1);
                     Log.d("queryfrom","databasebydate");
