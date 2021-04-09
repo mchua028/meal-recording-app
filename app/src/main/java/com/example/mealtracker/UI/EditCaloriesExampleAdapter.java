@@ -41,12 +41,6 @@ public class EditCaloriesExampleAdapter extends RecyclerView.Adapter<EditCalorie
             mCancel = itemView.findViewById(R.id.editCaloriesRemove);
 
 
-
-
-
-            mTextView1.setText("");
-            mTextView2.setText("");
-
             mCancel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -76,6 +70,13 @@ public class EditCaloriesExampleAdapter extends RecyclerView.Adapter<EditCalorie
     @Override
     public void onBindViewHolder(@NonNull ExampleViewHolder holder, int position) {
         EditCaloriesExampleItem currentItem = mExampleList.get(position);
+
+        MealRecordManager mealRecordManager = MealRecordManager.getSingleton();
+        MealRecord mealRecord = mealRecordManager.getMealRecord();
+        ArrayList<Food> foods = mealRecord.getFoods();
+
+        holder.mTextView1.setText(foods.get(position).getName());
+        holder.mTextView2.setText(Double.toString(foods.get(position).getTotalCalorie()));
 
         //holder.mTextView1.setText(currentItem.getText1());
         //holder.mTextView2.setText(currentItem.getText2());

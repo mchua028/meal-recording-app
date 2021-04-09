@@ -47,7 +47,7 @@ import java.util.ArrayList;
 public class Food {
     private String name;
     private Nutrient nutrients;
-    private double actualIntake = 0;
+    private double actualIntake;
     private int suggestedIntake = 0;
 
 
@@ -265,7 +265,7 @@ public class Food {
     }
 
     public double getTotalCalorie() {
-        return nutrients.getCaloriePer100g() * actualIntake;
+        return nutrients.getCaloriePer100g() * actualIntake / 100;
     }
 
     /**
