@@ -32,7 +32,7 @@ public class Recommender {
      * It must be used before accessing the attributes.
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void recommend() {
+    public HashMap<String, Double> recommend() {
         // calculate lacked nutrient
         Nutrient actualIntake = consumedNutrient;
         Nutrient suggestion = HealthInfo.getSingleton().getSuggestedNutrientIntakePerWeek();
@@ -44,6 +44,14 @@ public class Recommender {
             results.add(Database.getSingleton().queryRecommendFood(nutrientName));
         }
 
+        HashMap<String, Double> returnVal = new HashMap<>();
+        for (HashMap<String, Double> map: results) {
+            for (Map.Entry<String, Double> entry: map.entrySet()) {
+                returnVal.put(entry.getKey(), entry.getValue());
+            }
+        }
+        recommendFood = returnVal;
+        return returnVal;
     }
 
     public Nutrient getConsumedNutrient() {
