@@ -86,6 +86,7 @@ public class myMeals extends Fragment {
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                mSearchView = v.findViewById(R.id.searchView);
                 String searchDate = mSearchView.getQuery().toString();
                 Log.d("searchDate",searchDate);
                 ArrayList<MealRecord> mealRecords = new ArrayList<MealRecord>();
@@ -101,7 +102,9 @@ public class myMeals extends Fragment {
                     //mealRecords = Database.getSingleton().queryByDate(startDate,endDate);
                     MealRecord mealRecord1 = new MealRecord();
                     DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-                    mealRecord1.setTime(LocalDateTime.parse("08-04-2021 08:14",formatter2));
+                    LocalDateTime mealRecordDateTime = LocalDateTime.parse("09-04-2021 08:14",formatter2);
+                    LocalDate mealRecordDate = mealRecordDateTime.toLocalDate();
+                    mealRecord1.setTime(mealRecordDateTime);
                     ArrayList<Food> foods = new ArrayList<Food>();
                     Food food1 = new Food();
                     food1.setName("egg");
@@ -112,7 +115,11 @@ public class myMeals extends Fragment {
                     foods.add(food1);
                     foods.add(food2);
                     mealRecord1.setFoods(foods);
-                    mealRecords.add(mealRecord1);
+                    Log.d("newdate",startDate.toString());
+                    Log.d("mealrecroddate",mealRecord1.getTime().toLocalDate().toString());
+                    if(mealRecordDate.equals(startDate)) {
+                        mealRecords.add(mealRecord1);
+                    }
                     Log.d("queryfrom","databasebydate");
                     mealRecordManager.setMealRecords(mealRecords);
                     Log.d("set","mealrecords");
