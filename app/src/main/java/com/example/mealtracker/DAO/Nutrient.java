@@ -1,5 +1,10 @@
 package com.example.mealtracker.DAO;
 
+import java.util.HashMap;
+
+
+/**
+ */
 public class Nutrient {
 
     private double caloriePer100g = 0;
@@ -130,5 +135,48 @@ public class Nutrient {
                 ", iron=" + iron +
                 ", magnesium=" + magnesium +
                 '}';
+    }
+
+    /**
+     * Compares the nutrient with the suggested nutrient.
+     * @param suggested Nutrient
+     * @return HashMap<String, Double>, key=name of the nutrient lacked, double = the amount lacked
+     */
+    public HashMap<String, Double> compare(Nutrient suggested) {
+        HashMap<String, Double> result = new HashMap<>();
+        if (suggested.getCalcium() * 0.8 >= calcium) {
+            result.put("Calcium", calcium - suggested.getCalcium());
+        }
+        if (suggested.getCholesterol() * 0.8 >= cholesterol) {
+            result.put("Cholesterol", cholesterol - suggested.getCholesterol());
+        }
+        if (suggested.getDietaryFibre() * 0.8 >= dietaryFibre) {
+            result.put("Dietary Fibre", dietaryFibre - suggested.getDietaryFibre());
+        }
+        if (suggested.getIron() * 0.8 >= iron) {
+            result.put("Iron", iron - suggested.getIron());
+        }
+        if (suggested.getMagnesium() * 0.8 >= magnesium) {
+            result.put("Magnesium", magnesium - suggested.getMagnesium());
+        }
+        if (suggested.getSodium() * 0.8 >= sodium) {
+            result.put("Sodium", sodium - suggested.getSodium());
+        }
+        if (suggested.getPotassium() * 0.8 >= potassium) {
+            result.put("Potassium", potassium - suggested.getPotassium());
+        }
+        if (suggested.getProtein() * 0.8 >= protein) {
+            result.put("Protein", protein - suggested.getProtein());
+        }
+        if (suggested.getVitaminC() * 0.8 >= vitaminC) {
+            result.put("Vitamin C", vitaminC - suggested.getVitaminC());
+        }
+        if (suggested.getFat() * 0.8 >= fat) {
+            result.put("Fat", fat - suggested.getFat());
+        }
+        if (suggested.getSugar() * 0.8 >= sugar) {
+            result.put("Sugar", sugar - suggested.getSugar());
+        }
+        return result;
     }
 }

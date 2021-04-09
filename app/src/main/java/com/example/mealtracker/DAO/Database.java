@@ -4,18 +4,15 @@
  */
 package com.example.mealtracker.DAO;
 
-import android.content.Intent;
 import android.os.Build;
-import android.provider.ContactsContract;
 import android.util.Log;
-import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+
 import com.example.mealtracker.Activity;
 import com.example.mealtracker.Exceptions.EmptyResultException;
 import com.example.mealtracker.Gender;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,7 +25,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -40,8 +36,10 @@ public class Database {
     // Database Reference: like the table in relational database
     private DatabaseReference userReference;
     private DatabaseReference mealRecordReference;
+    private DatabaseReference foodRecommend;
+
     private FirebaseAuth firebaseAuth;
-    private final DataSnapshot[] dataSnapshot = {null};
+    public final DataSnapshot[] dataSnapshot = {null, null};
     private HealthInfo healthInfo;
 
     public  String userId = "lvOInQbGwdMcWFnfeag6CMP2flw2";
@@ -68,6 +66,20 @@ public class Database {
 
             }
 
+        });
+        foodRecommend = database.getReference().child("FoodRichInNutrient");
+        Query foodRichInNutrient = foodRecommend.orderByKey();
+        // make the query
+        foodRichInNutrient.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                dataSnapshot[1] = snapshot;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
         });
     }
 
@@ -321,6 +333,7 @@ public class Database {
         userReference.child("suggestCalorieIntake").setValue(healthInfo.getSuggestCalorieIntake());
     }
 
+
     /**
      * Creates account dir under database "Users".
      * Author : Wang Binili, Tang Yuting
@@ -332,7 +345,7 @@ public class Database {
         HashMap<String, String> value = new HashMap<>();
         // add value as a place-holder, otherwise creation will fail
         value.put("registeredTime", LocalDateTime.now().format(formatter));
-        database.getReference().child("User").child(userId).setValue(value);
+        database.getReference().child("Users").child(userId).setValue(value);
     }
 
     /**
@@ -348,6 +361,20 @@ public class Database {
         userRef.child("lastName").setValue(account.getLastName());
         userRef.child("email").setValue(account.getEmail());
         userRef.child("password").setValue(account.getPassword());
+    }
+
+    /**
+     * @param nutrientName the nutrientName to query
+     * @return HashMap<String, Double>, key is the name of food, Double is the value of the containment
+     */
+    public HashMap<String, Double> queryRecommendFood(String nutrientName) {
+        HashMap<String, Double> recommendFood = new HashMap<>();
+        for (DataSnapshot dataSnapshot: dataSnapshot[1].child(nutrientName).getChildren()) {
+            String foodName = dataSnapshot.getKey();
+            Double value = dataSnapshot.child("value").getValue(Double.class);
+            recommendFood.put(foodName, value);
+        }
+        return recommendFood;
     }
 }
 

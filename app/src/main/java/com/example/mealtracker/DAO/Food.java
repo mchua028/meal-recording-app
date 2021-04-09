@@ -50,6 +50,8 @@ public class Food {
     private double actualIntake = 0;
     private int suggestedIntake = 0;
 
+
+
     private final static String FOOD_RECOGNITION_URL = "https://api.logmeal.es/v2/recognition/complete";
     private final static String USER_TOKEN = "0aabb46949de93de6ef729331af1d0a36fb202f0";
 
