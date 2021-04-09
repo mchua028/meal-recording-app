@@ -17,41 +17,10 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/myNutrientsMiniTxt"
-        android:layout_width="360dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/myNutrientsTxt"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:text="Your meals this week are lacking these nutrients:\n"
-        android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/nutrientsTxt"
-        android:layout_width="360dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/myNutrientsTxt"
-        android:layout_marginTop="70dp"
-        android:layout_marginLeft="10dp"
-        android:text="Insert Nutrients here..."
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/myMealsTxt"
-        android:layout_width="360dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/nutrientsTxt"
-        android:layout_marginTop="25dp"
-        android:layout_marginLeft="10dp"
-        android:text="My Meals"
-        android:textSize="30sp"
-        android:textStyle="bold" />
-
-    <TextView
         android:id="@+id/myMealsMiniTxt"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/myMealsTxt"
+        android:layout_below="@id/myNutrientsTxt"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:text="Click on the date to see meals and nutrition information for that particular date."

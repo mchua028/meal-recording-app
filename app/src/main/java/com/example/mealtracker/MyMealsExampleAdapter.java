@@ -60,7 +60,7 @@ public class MyMealsExampleAdapter extends RecyclerView.Adapter<MyMealsExampleAd
         for(int i=0;i<mealRecords.size();i++){
             ArrayList<Food> foodRecords = mealRecords.get(i).getFoods();
             for(int j=0;j<foodRecords.size();j++){
-                foodNames+= foodRecords.get(j).getName()+"\n";
+                foodNames+= foodRecords.get(j).getName()+"\n"+foodRecords.get(j).getActualIntake()+"g\n\n";
             }
         }
         holder.mTextView3.setText(foodNames);
