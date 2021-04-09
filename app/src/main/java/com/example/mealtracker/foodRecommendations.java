@@ -1,17 +1,26 @@
 package com.example.mealtracker;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.mealtracker.AppLogic.HealthInfoManager;
+import com.example.mealtracker.AppLogic.MealRecordManager;
+import com.example.mealtracker.AppLogic.Recommender;
+import com.example.mealtracker.DAO.MealRecord;
+import com.example.mealtracker.Exceptions.EmptyResultException;
 
 import java.util.*;
 
@@ -27,19 +36,22 @@ public class foodRecommendations extends Fragment {
     private TextView mText2;
     private TextView mText3;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_food_recommendations, container, false);
         getActivity().setTitle("Food Recommendations");
 
-        /*Recommender recommender = new Recommender();
-        recommender.setSuggestedNutrientAmt();
-        recommender.setActualNutrientAmt();
-        recommender.setLackedNutrients();
-        recommender.setRecommendedFoods();
-        HashMap<String, String> recommendedFoods = recommender.getRecommendedFoods();
-         */
+        try {
+            Recommender recommender = new Recommender(MealRecordManager.getSingleton().calculateTotalNutrient());
+            recommender.recommend();
+            recommender.getLackedNutrient();
+            recommender.getRecommendFood();
+        } catch (EmptyResultException e) {
+            Toast.makeText(getActivity(), "You haven't added any meal records", Toast.LENGTH_SHORT).show();
+        }
+
 
         mExampleList = new ArrayList<>();
         mExampleList.add(new FoodRecommendationsExampleItem(mText1, mText2));

@@ -4,17 +4,15 @@
  */
 package com.example.mealtracker.DAO;
 
-import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
-import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+
 import com.example.mealtracker.Activity;
 import com.example.mealtracker.Exceptions.EmptyResultException;
 import com.example.mealtracker.Gender;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,9 +36,13 @@ public class Database {
     // Database Reference: like the table in relational database
     private DatabaseReference userReference;
     private DatabaseReference mealRecordReference;
-    private FirebaseAuth firebaseAuth;
+    private DatabaseReference foodRecommend;
 
-    public  String userId = null;
+    private FirebaseAuth firebaseAuth;
+    public final DataSnapshot[] dataSnapshot = {null, null};
+    private HealthInfo healthInfo;
+
+    public  String userId = "lvOInQbGwdMcWFnfeag6CMP2flw2";
 
     // for testing purpose
     private final String DATABASE_URL = "https://mealtracker-dc280-default-rtdb.firebaseio.com/";
@@ -52,6 +54,33 @@ public class Database {
     private Database() {
         database = FirebaseDatabase.getInstance(DATABASE_URL);
         firebaseAuth = FirebaseAuth.getInstance();
+        userReference = database.getReference("Users").child(userId);
+        userReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                dataSnapshot[0] = snapshot;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
+        foodRecommend = database.getReference().child("FoodRichInNutrient");
+        Query foodRichInNutrient = foodRecommend.orderByKey();
+        // make the query
+        foodRichInNutrient.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                dataSnapshot[1] = snapshot;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     static public Database getSingleton() {
@@ -157,56 +186,22 @@ public class Database {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public MealRecord[] queryByDate(LocalDate startDate, LocalDate endDate) throws EmptyResultException {
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
-        String formattedStartDate = startDate.format(formatter);
-        String formattedEndDate = endDate.format(formatter);
-
-        Query queryRef;
-        queryRef = getUserReference().child("MealRecords").orderByChild("Datetime").startAt(formattedStartDate).endAt(formattedEndDate);
-
-        final DataSnapshot[] result = {null};
-        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                result[0] = snapshot;
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        // waiting for query result
-        while (result[0] == null) {
-            ;
-        }
-
-        ArrayList<MealRecord> mealRecords = parseMealRecords(result[0]);
-        return mealRecords.toArray(new MealRecord[0]);
+        MealRecord[] mealRecords = queryAllMealRecords();
+//        ArrayList<MealRecord> results = new ArrayList<>();
+////        for (MealRecord mealRecord : mealRecords) {
+////            LocalDate date = mealRecord.getTime().toLocalDate();
+////            if (date.minusDays(7).isAfter(startDate) || date.plusDays(7).isBefore(endDate)) {
+////                results.add(mealRecord);
+////            }
+////        }
+//        MealRecord[] returnVals = new MealRecord[results.size()];
+//        returnVals = results.toArray(returnVals);
+        return mealRecords;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public MealRecord[] queryAllMealRecords() throws EmptyResultException {
-        Query queryRef;
-        queryRef = getUserReference().child("MealRecords").orderByChild("Datetime");
-        final DataSnapshot[] result = {null};
-        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                result[0] = snapshot;
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        // waiting for query result
-        while (result[0] == null) {
-            ;
-        }
-
-        ArrayList<MealRecord> mealRecords = parseMealRecords(result[0]);
+        ArrayList<MealRecord> mealRecords = parseMealRecords(dataSnapshot[0].child("MealRecords"));
         return mealRecords.toArray(new MealRecord[0]);
     }
 
@@ -263,32 +258,13 @@ public class Database {
         userReference.child("suggestCalorieIntake").setValue(healthInfo.getSuggestCalorieIntake());
     }
 
-
+    /**
+     * Queries the user information
+     * @return
+     */
     public HealthInfo queryHealthInfo() {
-        Log.d("went in", "query");
-        //DatabaseReference userReference = getUserReference();
-        Query queryRef = getUserReference().orderByKey();
-        final DataSnapshot[] result = {null};
-        Log.d("went in", "query2");
-        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                result[0] = snapshot;
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        // wait for the returned result
-        //while (result[0] == null) {
-
-        //}
-        Log.d("went in", "before healthingo");
-        HealthInfo healthInfo = HealthInfo.getSingleton();
-        HashMap<String, String> parsedValue = new HashMap<>();
-        for (DataSnapshot attribute: result[0].getChildren()) {
+        HealthInfo healthInfo = new HealthInfo();
+        for (DataSnapshot attribute: dataSnapshot[0].getChildren()) {
             String key = attribute.getKey();
             switch (key) {
                 case "age":
@@ -336,7 +312,6 @@ public class Database {
                     healthInfo.setWeight(weight);
             }
         }
-        Log.d("went into", "before return");
         return healthInfo;
     }
 
@@ -358,45 +333,6 @@ public class Database {
         userReference.child("suggestCalorieIntake").setValue(healthInfo.getSuggestCalorieIntake());
     }
 
-    public double retrieveHealthInfo() {
-        HealthInfo healthInfo = HealthInfo.getSingleton();
-        Log.d("retrieve", "went in");
-        DatabaseReference userReference = getUserReference();
-        //final HealthInfo[] changeInfo = {null};
-        Log.d("retrieve", "healthinfo");
-
-        userReference.child("suggestCalorieIntake").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-
-            //double calorieSuggest = 1200;
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-
-                if (!task.isSuccessful()) {
-                    Log.e("firebase", "Error getting data", task.getException());
-                } else {
-                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
-                    System.out.println(String.valueOf(task.getResult().getValue()));
-                    if (String.valueOf(task.getResult().getValue()) == "null") {
-                        healthInfo.setSuggestCalorieIntake(1200);
-                    } else {
-                        healthInfo.setSuggestCalorieIntake(Double.parseDouble(String.valueOf(task.getResult().getValue())));
-                    }
-                }
-            }
-        });
-        /*double suggestCalorie = 0;
-        while (suggestCalorie == 0){
-            //Log.d("waiting", "wait");
-            suggestCalorie = healthInfo.getSuggestCalorieIntake();
-        }*/
-        double suggestion = healthInfo.getSuggestCalorieIntake();
-        System.out.println(suggestion);
-        Log.d("before getcalorie", Double.toString(healthInfo.getSuggestCalorieIntake()));
-        return healthInfo.getSuggestCalorieIntake();
-
-    }
-
-
 
     /**
      * Creates account dir under database "Users".
@@ -409,7 +345,7 @@ public class Database {
         HashMap<String, String> value = new HashMap<>();
         // add value as a place-holder, otherwise creation will fail
         value.put("registeredTime", LocalDateTime.now().format(formatter));
-        database.getReference().child("User").child(userId).setValue(value);
+        database.getReference().child("Users").child(userId).setValue(value);
     }
 
     /**
@@ -425,6 +361,20 @@ public class Database {
         userRef.child("lastName").setValue(account.getLastName());
         userRef.child("email").setValue(account.getEmail());
         userRef.child("password").setValue(account.getPassword());
+    }
+
+    /**
+     * @param nutrientName the nutrientName to query
+     * @return HashMap<String, Double>, key is the name of food, Double is the value of the containment
+     */
+    public HashMap<String, Double> queryRecommendFood(String nutrientName) {
+        HashMap<String, Double> recommendFood = new HashMap<>();
+        for (DataSnapshot dataSnapshot: dataSnapshot[1].child(nutrientName).getChildren()) {
+            String foodName = dataSnapshot.getKey();
+            Double value = dataSnapshot.child("value").getValue(Double.class);
+            recommendFood.put(foodName, value);
+        }
+        return recommendFood;
     }
 }
 

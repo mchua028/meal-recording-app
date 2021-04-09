@@ -21,7 +21,7 @@ public class HealthInfo {
     private Activity dailyActivityLevel;
     private double suggestCalorieIntake = 1200;
 
-    private HealthInfo(){};
+    HealthInfo(){};
 
     static public HealthInfo getSingleton() {
         if (singleton == null) {
@@ -172,7 +172,7 @@ public class HealthInfo {
     public double getSuggestedCalorie() {
         //Log.d("print", Double.toString(Database.getSingleton().queryHealthInfo().suggestCalorieIntake));
         //return Database.getSingleton().queryHealthInfo().suggestCalorieIntake;
-        return Database.getSingleton().retrieveHealthInfo();
+        return suggestCalorieIntake;
     }
 }
 

@@ -46,8 +46,20 @@ public class MealRecordManager {
         this.calorieConsumedToday = calorieConsumedToday;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public double getCalorieConsumedToday() {
-            return calorieConsumedToday;
+        double total = 0;
+        try {
+            MealRecord[] allMealRecords = Database.getSingleton().queryAllMealRecords();
+            for (MealRecord mealRecord: allMealRecords) {
+                if (LocalDate.now().equals(LocalDate.from(mealRecord.getTime()))) {
+                    total += mealRecord.getTotalCalorie();
+                }
+            }
+        } catch (EmptyResultException e) {
+            return 0;
+        }
+        return total;
     }
 
     public void setCalorieRemaining(double calorieRemaining) {
@@ -172,23 +184,26 @@ public class MealRecordManager {
         // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.editMealRecord
     }
 
+    /**
+     * Calculate the total calorie consumption today
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void calculateCalorieConsumedToday(){
+    public double calculateCalorieConsumedToday(){
         MealRecord[] mealRecordsForToday = new MealRecord[0];
-        Log.d("meal record", "into calc calorie");
         try {
             mealRecordsForToday = MealRecord.queryByDate(LocalDate.now(),LocalDate.now());
         } catch (EmptyResultException e) {
-            calorieConsumedToday = 0;
-            return;
+            return 0;
         }
-        double calorieConsumed = 0;
-        for (int i=0; i<mealRecordsForToday.length; i++){
-            for (int j=0; j<mealRecordsForToday[i].getFoods().size(); j++) {
-                calorieConsumed += mealRecordsForToday[i].getFoods().get(j).getTotalCalorie();
+        double calorieTakenToday = 0;
+        for (MealRecord mealRecord: mealRecordsForToday) {
+            try {
+                calorieTakenToday += mealRecord.getTotalCalorie();
+            } catch (EmptyResultException e) {
+                continue;
             }
         }
-        setCalorieConsumedToday(calorieConsumed);
+        return calorieTakenToday;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -201,8 +216,7 @@ public class MealRecordManager {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Nutrient calculateTotalNutrient() throws EmptyResultException {
         Nutrient totalConsumed = new Nutrient();
-        MealRecord[] mealRecordsForToday = MealRecord.queryByDate(LocalDate.now(),LocalDate.now());
-
+        MealRecord[] mealRecordsForToday = MealRecord.queryAll();
 
         for (int i=0; i<mealRecordsForToday.length; i++){
             totalConsumed.setFat(totalConsumed.getFat()+mealRecordsForToday[i].getNutrient().getFat());

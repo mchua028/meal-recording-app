@@ -88,6 +88,6 @@ public class HealthInfoManager {
      * @return the suggested Calorie intake of the user.
      */
     public double getSuggestedCalorie() {
-        return HealthInfo.getSingleton().getSuggestedCalorie();
+        return Database.getSingleton().queryHealthInfo().getSuggestedCalorie();
     }
 }
