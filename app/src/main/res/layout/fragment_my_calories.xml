@@ -100,16 +100,6 @@
             android:layout_below="@id/myCaloriesTodayTxt"
             android:layout_marginTop="60dp"/>
 
-        <TextView
-            android:id="@+id/myCaloriesThisWeekMiniTxt"
-            android:layout_width="360dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/myCaloriesThisWeekTxt"
-            android:layout_marginTop="-70dp"
-            android:layout_marginLeft="10dp"
-            android:text="  Average calories this week \n  Good Job! You have met..."
-            android:textSize="20sp" />
-
         <!--Button
             android:id="@+id/backToTopBtn"
             android:layout_width="wrap_content"
