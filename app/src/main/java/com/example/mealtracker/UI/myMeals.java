@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mealtracker.AppLogic.MealRecordManager;
 import com.example.mealtracker.DAO.Database;
+import com.example.mealtracker.DAO.Food;
 import com.example.mealtracker.DAO.MealRecord;
 //import com.example.mealtracker.Exceptions.DateValidatorUsingLocalDate;
 import com.example.mealtracker.Exceptions.EmptyResultException;
@@ -30,6 +31,7 @@ import com.example.mealtracker.R;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -59,7 +61,7 @@ public class myMeals extends Fragment {
         getActivity().setTitle("My Meals");
 
         mExampleList = new ArrayList<>();
-        mExampleList.add(new MyMealsExampleItem(mText1, mText2, mText3));
+        //mExampleList.add(new MyMealsExampleItem(mText1, mText2, mText3));
 
         mRecyclerView = v.findViewById(R.id.myMealsRecyclerView);
         mRecyclerView.setHasFixedSize(true);
@@ -70,7 +72,7 @@ public class myMeals extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
 
         mSearchView = v.findViewById(R.id.searchView);
-        //Log.d("before","editsearchdate");
+        Log.d("before","editsearchdate");
         //EditText editSearchDate = null;
         //Log.d("before2","editsearchdate");
 
@@ -86,22 +88,38 @@ public class myMeals extends Fragment {
             public boolean onQueryTextSubmit(String query) {
                 String searchDate = mSearchView.getQuery().toString();
                 Log.d("searchDate",searchDate);
-                MealRecord[] mealRecords = null;
-                Log.e("onQueryTextSubmit", "called");
+                ArrayList<MealRecord> mealRecords = new ArrayList<MealRecord>();
+                //MealRecord[] mealRecords1 = null;
+                Log.d("onQueryTextSubmit", "called");
 
-                LocalDate startDate = LocalDate.parse(searchDate);
-                LocalDate endDate = LocalDate.parse(searchDate);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                LocalDate startDate = LocalDate.parse(searchDate,formatter);
+                LocalDate endDate = LocalDate.parse(searchDate,formatter);
+                Log.d("dategotten",startDate.toString()+"hiii");
                 try {
-                    mealRecords = Database.getSingleton().queryByDate(startDate,endDate);
+                    Log.d("inside","try");
+                    //mealRecords = Database.getSingleton().queryByDate(startDate,endDate);
+                    MealRecord mealRecord1 = new MealRecord();
+                    DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+                    mealRecord1.setTime(LocalDateTime.parse("08-04-2021 08:14",formatter2));
+                    ArrayList<Food> foods = new ArrayList<Food>();
+                    Food food1 = new Food();
+                    food1.setName("egg");
+                    foods.add(food1);
+                    mealRecord1.setFoods(foods);
+                    mealRecords.add(mealRecord1);
+                    Log.d("queryfrom","databasebydate");
                     mealRecordManager.setMealRecords(mealRecords);
-                } catch (EmptyResultException e) {
+                    Log.d("set","mealrecords");
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-                if(mealRecords.length==0){
+                Log.d("after","trycatch");
+                if(mealRecords.size()==0){
                     Toast.makeText(getActivity(),"There are no meal records for the chosen date",Toast.LENGTH_SHORT).show();
                 }
                 Log.d("before","addMoreCardViews");
-                addMoreCardviews(mealRecords.length);
+                addMoreCardviews(mealRecords.size());
                 Log.d("after","addMoreCardViews");
 
                 return true;
@@ -131,7 +149,9 @@ public class myMeals extends Fragment {
     // insert card views
     public void insertItem(int position) {
         Log.d("insert item","position is" + position);
+
         mExampleList.add(position, new MyMealsExampleItem(mText1, mText2, mText3));
+
         mAdapter.notifyItemInserted(position);
     }
 
