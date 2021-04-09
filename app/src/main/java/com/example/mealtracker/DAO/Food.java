@@ -265,7 +265,7 @@ public class Food {
     }
 
     public double getTotalCalorie() {
-        return nutrients.getCaloriePer100g() * actualIntake;
+        return nutrients.getCaloriePer100g() * actualIntake/100;
     }
 
     /**
