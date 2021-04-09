@@ -17,6 +17,7 @@ import com.example.mealtracker.Exceptions.EmptyInputException;
 import com.example.mealtracker.Exceptions.EmptyResultException;
 import com.example.mealtracker.Exceptions.RecordNotInServerException;
 
+import java.lang.reflect.Array;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,8 +31,7 @@ public class MealRecordManager {
 
     private MealRecord mealRecord;
 
-    private MealRecord[] mealRecords;
-
+    private ArrayList<MealRecord> mealRecords;
     static public MealRecordManager getSingleton() {
         if (singleton == null) {
             singleton = new MealRecordManager();
@@ -80,12 +80,12 @@ public class MealRecordManager {
         return mealRecord;
     }
 
-    public void setMealRecords(MealRecord[] mealRecords){
+    public void setMealRecords(ArrayList<MealRecord> mealRecords){
         Log.d("entering","mealreocrdmgr");
         this.mealRecords = mealRecords;
     }
 
-    public MealRecord[] getMealRecords(){
+    public ArrayList<MealRecord> getMealRecords(){
         return mealRecords;
     }
 
