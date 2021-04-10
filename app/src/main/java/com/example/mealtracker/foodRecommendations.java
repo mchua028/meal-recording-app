@@ -34,10 +34,6 @@ public class foodRecommendations extends Fragment {
 
     private TextView mText1;
     private TextView mText2;
-    private TextView mText3;
-    private TextView mText4;
-    private TextView mText5;
-    private TextView mText6;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
