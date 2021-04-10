@@ -53,19 +53,26 @@ public class Database {
      * Author: Tang Yuting
      */
     private Database() {
+        Log.d("database","constructor");
         database = FirebaseDatabase.getInstance(DATABASE_URL);
+        Log.d("firebaseauth","get instance");
         firebaseAuth = FirebaseAuth.getInstance();
+        Log.d("get","userid");
         userReference = database.getReference("Users").child(userId);
+        Log.d("going","addvalueeventlistener");
         userReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.d("getting","datasnapshot");
                 dataSnapshot[0] = snapshot;
+                Log.d("finsih","snapshot");
                 MainActivity.isInit = true;
+                Log.d("isinit","set to true");
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.d("on","cancelled");
             }
 
         });
@@ -86,9 +93,13 @@ public class Database {
     }
 
     static public Database getSingleton() {
+        Log.d("getting","singleton");
         if (singleton == null) {
+            Log.d("singleton","null");
             singleton = new Database();
+            Log.d("database","new");
         }
+        Log.d("done with ","singleton");
         return singleton;
     }
 
