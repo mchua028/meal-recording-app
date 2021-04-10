@@ -1,5 +1,6 @@
 package com.example.mealtracker.UI;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -8,13 +9,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mealtracker.AppLogic.HealthInfoManager;
+import com.example.mealtracker.AppLogic.MealRecordManager;
+import com.example.mealtracker.DAO.Food;
+import com.example.mealtracker.DAO.HealthInfo;
+import com.example.mealtracker.DAO.MealRecord;
+import com.example.mealtracker.DAO.Nutrient;
 import com.example.mealtracker.EditCaloriesExampleItem;
 import com.example.mealtracker.R;
 import com.google.android.material.navigation.NavigationView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -34,13 +44,41 @@ public class editCalories extends AppCompatActivity {
     private TextView mText2;
     private ImageView mCancel;
 
+    MealRecordManager mealRecordManager = MealRecordManager.getSingleton();
+    MealRecord mealRecord = new MealRecord();
+    //ArrayList<Food> foods = mealRecord.getFoods();
+    ArrayList<Food> foods = new ArrayList<>();
+
+    private double calorieConsumed;
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("start", "go in");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_calories);
-
+        Log.d("start", "go in2");
         createExampleList();
         buildRecyclerView();
+        Log.d("start", "go in3");
+
+        HealthInfo healthInfo = HealthInfo.getSingleton();
+        double suggestedCalorie;
+        suggestedCalorie = HealthInfoManager.getSingleton().getSuggestedCalorie();
+        //MealRecordManager mealRecordManager = MealRecordManager.getSingleton();
+
+        calorieConsumed = mealRecordManager.getCalorieConsumedToday();
+
+        double calorieRemain = suggestedCalorie - calorieConsumed;
+
+        TextView text = (TextView) findViewById(R.id.textViewMaxCalories);
+        text.setText(String.format("%.1f", suggestedCalorie));
+
+        TextView text2 = (TextView) findViewById(R.id.textViewRemainingCalories);
+        text2.setText(String.format("%.1f", calorieConsumed));
+
+        TextView text3 = (TextView) findViewById(R.id.textViewCaloriesConsumed);
+        text3.setText(String.format("%.1f", calorieRemain));
 
         // Save button
         // TODO: to connect to db to edit meal records
@@ -48,7 +86,19 @@ public class editCalories extends AppCompatActivity {
         onClickSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                calorieConsumed = 0;
+                int i;
+                for (i = 0; i<foods.size(); i++){
+                    calorieConsumed += foods.get(i).getTotalCalorie();
+                    double calorieRemain = suggestedCalorie - calorieConsumed;
+
+                    TextView text2 = (TextView) findViewById(R.id.textViewRemainingCalories);
+                    text2.setText(String.format("%.1f", calorieConsumed));
+
+                    TextView text3 = (TextView) findViewById(R.id.textViewCaloriesConsumed);
+                    text3.setText(String.format("%.1f", calorieRemain));
+                    //finish();
+                }
             }
         });
 
@@ -66,13 +116,54 @@ public class editCalories extends AppCompatActivity {
     }
 
     public void addMoreCardviews(){
-        int position = getExampleListSize();
+        Log.d("go in", "cardviews");
+        int position = 0;// getExampleListSize();
+
+        try {
+            Food food1 = new Food();
+            food1.setName("egg");
+            food1.setActualIntake(100);
+            Nutrient nutrient = new Nutrient();
+            nutrient.setCaloriePer100g(513);
+            food1.setNutrients(nutrient);
+            food1.setSuggestedIntake(200);
+            foods.add(food1);
+
+            Food food2 = new Food();
+            food2.setName("chicken");
+            food2.setActualIntake(200);
+            Nutrient nutrient2 = new Nutrient();
+            nutrient2.setCaloriePer100g(158);
+            food2.setNutrients(nutrient2);
+            food2.setSuggestedIntake(150);
+            foods.add(food2);
+
+            Food food3 = new Food();
+            food3.setName("bread");
+            food3.setActualIntake(100);
+            Nutrient nutrient3 = new Nutrient();
+            nutrient3.setCaloriePer100g(265);
+            food3.setNutrients(nutrient3);
+            food3.setSuggestedIntake(100);
+            foods.add(food3);
+
+            //get values from database
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        mealRecord.setFoods(foods);
+        mealRecordManager.setMealRecord(mealRecord);
 
         // for each type of food in Today's meals
-        for (int i=1; i<3; i++) {   // TODO: insert actual num of datasets instead of dummy number 3
-            //int position = Integer.parseInt(editTextInsert.getText().toString());
-            insertItem(position);
+        if (foods!=null) {
+            Log.d("go in", Integer.toString(foods.size()));
+            for (int i = 0; i < foods.size(); i++) {
+                //int position = Integer.parseInt(editTextInsert.getText().toString());
+                //mExampleList.add(mText1.setText(foods.get(i).getName()), mText2.setText(Double.toString(foods.get(i).getTotalCalorie())), mCancel);
+                insertItem(position);
+            }
         }
+        else return;
     }
 
     // insert card views
@@ -85,16 +176,20 @@ public class editCalories extends AppCompatActivity {
     public void removeItem(int position) {
         Log.d("tag: remove item:", "removing item");
         mExampleList.remove(position);
+        foods.remove(position);
         mAdapter.notifyItemRemoved(position);
     }
 
     public void createExampleList() {
+        Log.d("go in", "create eg");
         mExampleList = new ArrayList<>();
-        mExampleList.add(new EditCaloriesExampleItem(mText1, mText2, mCancel));
-        mExampleList.add(new EditCaloriesExampleItem(mText1, mText2, mCancel));
+        //mExampleList.add(new EditCaloriesExampleItem(mText1, mText2, mCancel));
+        //mExampleList.add(new EditCaloriesExampleItem(mText1, mText2, mCancel));
+
     }
 
     public void buildRecyclerView() {
+        Log.d("go in", "recycler view");
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
@@ -116,6 +211,7 @@ public class editCalories extends AppCompatActivity {
         if (getExampleListSize() != 0) {
             Log.d("remove item","position is" + position);
             mExampleList.remove(position);
+            foods.remove(position);
             mAdapter.notifyItemRemoved(position);
         }
         else {

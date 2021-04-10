@@ -61,11 +61,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/textViewMaxCalories"
-        android:layout_marginTop="10dp"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="25dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="24dp"
         android:text="XXXX kcal"
-        android:textSize="15sp"/>
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textViewCaloriesConsumed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewMaxCalories"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="33dp"
+        android:layout_marginRight="24dp"
+        android:text="XXXX kcal"
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/caloriesEatenLabel"
