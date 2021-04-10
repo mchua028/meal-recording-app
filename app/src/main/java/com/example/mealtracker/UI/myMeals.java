@@ -32,10 +32,13 @@ import com.example.mealtracker.MyMealsExampleItem;
 import com.example.mealtracker.R;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 
 /**
@@ -51,7 +54,10 @@ public class myMeals extends Fragment {
     private TextView mText1;
     private TextView mText2;
     private TextView mText3;
-    private SearchView mSearchView;
+    //private SearchView mSearchView;
+
+    DatePicker datePicker;
+    Button searchMealBtn;
 
     MealRecordManager mealRecordManager = MealRecordManager.getSingleton();
 
@@ -60,9 +66,12 @@ public class myMeals extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_my_meals, container, false);
+        Log.d("inside","oncreateview");
         getActivity().setTitle("My Meals");
-        DatePicker simpleDatePicker=(DatePicker)v.findViewById(R.id.datePicker);
-        simpleDatePicker.setSpinnersShown(false);
+        datePicker=(DatePicker)v.findViewById(R.id.datePicker);
+        searchMealBtn=(Button)v.findViewById(R.id.searchMealsBtn);
+
+        //simpleDatePicker.setSpinnersShown(false);
 
         mExampleList = new ArrayList<>();
         //mExampleList.add(new MyMealsExampleItem(mText1, mText2, mText3));
@@ -75,8 +84,65 @@ public class myMeals extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
+        searchMealBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("inside","onClickListener");
+                int searchYear = datePicker.getYear();
+                Log.d("got","datefromdatepicker");
+                int searchMonth = datePicker.getMonth();
+                int searchDay = datePicker.getDayOfMonth();
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(searchYear, searchMonth, searchDay);
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                String formatedDate = sdf.format(calendar.getTime());
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                LocalDate startDate = LocalDate.parse(formatedDate,formatter);
+                LocalDate endDate = startDate;
+                //Toast.makeText(getActivity(),"date chosen:"+startDate.toString(), Toast.LENGTH_SHORT).show();
+                Log.d("dategotten",startDate.toString()+"hiii");
+                ArrayList<MealRecord> mealRecords = new ArrayList<MealRecord>();
+                try {
+                    Log.d("inside","try");
+                    //mealRecords = Database.getSingleton().queryByDate(startDate,endDate);
+                    MealRecord mealRecord1 = new MealRecord();
+                    DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+                    LocalDateTime mealRecordDateTime = LocalDateTime.parse("09-04-2021 08:14",formatter2);
+                    LocalDate mealRecordDate = mealRecordDateTime.toLocalDate();
+                    mealRecord1.setTime(mealRecordDateTime);
+                    ArrayList<Food> foods = new ArrayList<Food>();
+                    Food food1 = new Food();
+                    food1.setName("egg");
+                    food1.setActualIntake(100);
+                    Food food2 = new Food();
+                    food2.setName("chicken");
+                    food2.setActualIntake(200);
+                    foods.add(food1);
+                    foods.add(food2);
+                    mealRecord1.setFoods(foods);
+                    Log.d("newdate",startDate.toString());
+                    Log.d("mealrecroddate",mealRecord1.getTime().toLocalDate().toString());
+                    if(mealRecordDate.equals(startDate)) {
+                        mealRecords.add(mealRecord1);
+                    }
+                    Log.d("queryfrom","databasebydate");
+                    mealRecordManager.setMealRecords(mealRecords);
+                    Log.d("set","mealrecords");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Log.d("after","trycatch");
+                if(mealRecords.size()==0){
+                    Toast.makeText(getActivity(),"There are no meal records for the chosen date",Toast.LENGTH_SHORT).show();
+                }
+                Log.d("before","addMoreCardViews");
+                addMoreCardviews(mealRecords.size());
+                Log.d("after","addMoreCardViews");
+
+            }
+        });
         //mSearchView = v.findViewById(R.id.searchView);
-        Log.d("before","editsearchdate");
+        //Log.d("before","editsearchdate");
         //EditText editSearchDate = null;
         //Log.d("before2","editsearchdate");
 
@@ -148,6 +214,9 @@ public class myMeals extends Fragment {
             }
         });*/
         //addMoreCardviews(mealRecords.length);
+
+
+
         return v;
     }
 

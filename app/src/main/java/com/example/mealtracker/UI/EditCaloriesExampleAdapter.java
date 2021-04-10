@@ -9,6 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mealtracker.AppLogic.MealRecordManager;
+import com.example.mealtracker.DAO.Food;
+import com.example.mealtracker.DAO.MealRecord;
 import com.example.mealtracker.EditCaloriesExampleItem;
 import com.example.mealtracker.R;
 
@@ -33,9 +36,10 @@ public class EditCaloriesExampleAdapter extends RecyclerView.Adapter<EditCalorie
 
         public ExampleViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
-            mTextView1 = itemView.findViewById(R.id.editCaloriesfoodLabel);
-            mTextView2 = itemView.findViewById(R.id.editCaloriesfoodCalories);
+            mTextView1 = (TextView) itemView.findViewById(R.id.editCaloriesfoodLabel);
+            mTextView2 = (TextView) itemView.findViewById(R.id.editCaloriesfoodCalories);
             mCancel = itemView.findViewById(R.id.editCaloriesRemove);
+
 
             mCancel.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -66,6 +70,13 @@ public class EditCaloriesExampleAdapter extends RecyclerView.Adapter<EditCalorie
     @Override
     public void onBindViewHolder(@NonNull ExampleViewHolder holder, int position) {
         EditCaloriesExampleItem currentItem = mExampleList.get(position);
+
+        MealRecordManager mealRecordManager = MealRecordManager.getSingleton();
+        MealRecord mealRecord = mealRecordManager.getMealRecord();
+        ArrayList<Food> foods = mealRecord.getFoods();
+
+        holder.mTextView1.setText(foods.get(position).getName());
+        holder.mTextView2.setText(Double.toString(foods.get(position).getTotalCalorie()));
 
         //holder.mTextView1.setText(currentItem.getText1());
         //holder.mTextView2.setText(currentItem.getText2());
