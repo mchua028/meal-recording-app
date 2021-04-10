@@ -42,49 +42,26 @@
 
             <Button
                 android:id="@+id/insertBtn"
-                android:layout_width="wrap_content"
+                android:layout_width="156dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="80dp"
-                android:layout_marginLeft="60dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentBottom="true"
+                android:layout_marginLeft="29dp"
+                android:layout_marginBottom="11dp"
                 android:background="@color/button_grey"
-                android:text="insert"
-                android:textColor="@color/white"/>
-
-            <Button
-                android:id="@+id/removeBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="80dp"
-                android:layout_marginRight="60dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:background="@color/button_grey"
-                android:text="remove"
-                android:textColor="@color/white"/>
+                android:text="count calories"
+                android:textColor="@color/white" />
 
         </RelativeLayout>
 
     <Button
-        android:id="@+id/inputDetailsCountCaloriesBtn"
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:onClick="goToMyMealInformation"
-        android:backgroundTint="@color/button_grey"
-        android:text="Count My Calories!"
-        android:textColor="@color/white" />
-
-    <Button
         android:id="@+id/cancelBtn"
-        android:layout_width="170dp"
+        android:layout_width="156dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
+        android:layout_marginStart="235dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="10dp"
         android:backgroundTint="@color/button_grey"

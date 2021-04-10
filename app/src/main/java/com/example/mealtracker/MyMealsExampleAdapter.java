@@ -63,6 +63,15 @@ public class MyMealsExampleAdapter extends RecyclerView.Adapter<MyMealsExampleAd
                 foodNames+= foodRecords.get(j).getName()+"\n"+foodRecords.get(j).getActualIntake()+"g\n\n";
             }
         }
+        /*MealRecord[] mealRecords1 = mealRecordManager.getMealRecords1();
+        String foodNames = "";
+        if(mealRecords1==null){return;}
+        for(int i=0;i<mealRecords1.length;i++){
+            ArrayList<Food> foodRecords = mealRecords1[i].getFoods();
+            for(int j=0;j<foodRecords.size();j++){
+                foodNames+= foodRecords.get(j).getName()+"\n"+foodRecords.get(j).getActualIntake()+"g\n\n";
+            }
+        }*/
         holder.mTextView3.setText(foodNames);
         LocalDate date = mealRecords.get(0).getTime().toLocalDate();
         holder.mTextView1.setText(date.toString());

@@ -32,6 +32,9 @@ public class MealRecordManager {
     private MealRecord mealRecord;
 
     private ArrayList<MealRecord> mealRecords;
+
+    private MealRecord[] mealRecords1;
+
     static public MealRecordManager getSingleton() {
         if (singleton == null) {
             singleton = new MealRecordManager();
@@ -50,7 +53,7 @@ public class MealRecordManager {
     public double getCalorieConsumedToday() {
         double total = 0;
         try {
-            MealRecord[] allMealRecords = Database.getSingleton().queryAllMealRecords();
+            ArrayList<MealRecord> allMealRecords = Database.getSingleton().queryAllMealRecords();
             for (MealRecord mealRecord: allMealRecords) {
                 if (LocalDate.now().equals(LocalDate.from(mealRecord.getTime()))) {
                     total += mealRecord.getTotalCalorie();
@@ -89,6 +92,15 @@ public class MealRecordManager {
         return mealRecords;
     }
 
+    public void setMealRecords1(MealRecord[] mealRecords1){
+        Log.d("entering","mealreocrdmgr");
+        this.mealRecords1 = mealRecords1;
+    }
+
+    public MealRecord[] getMealRecords1(){
+        return mealRecords1;
+    }
+
     /**
      *
      * @param foodName
@@ -117,21 +129,22 @@ public class MealRecordManager {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public MealRecord[] getMealRecordsFromDB() throws EmptyResultException {
+    public ArrayList<MealRecord> getMealRecordsFromDB() throws EmptyResultException {
         return MealRecord.queryAll();
     }
 
     /**
      *
-     * @param mealRecordId
+     * @param mealRecord
      */
-    public void deleteMealRecord(int mealRecordId) {
-        ArrayList<MealRecord> mealRecord = new ArrayList<MealRecord>();
+    public void deleteMealRecord(MealRecord mealRecord) {
+        //ArrayList<MealRecord> mealRecord = new ArrayList<MealRecord>();
         try {
-            mealRecord.get(mealRecordId).deleteFromServer();
+            mealRecord.deleteFromServer();
         } catch (RecordNotInServerException e) {
             e.printStackTrace();
         }
+        //Database.getSingleton().deleteMealRecord(mealRecordId);
         // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.deleteMealRecord
     }
 
@@ -189,7 +202,7 @@ public class MealRecordManager {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public double calculateCalorieConsumedToday(){
-        MealRecord[] mealRecordsForToday = new MealRecord[0];
+        ArrayList<MealRecord> mealRecordsForToday = new ArrayList<MealRecord>();
         try {
             mealRecordsForToday = MealRecord.queryByDate(LocalDate.now(),LocalDate.now());
         } catch (EmptyResultException e) {
@@ -216,20 +229,20 @@ public class MealRecordManager {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Nutrient calculateTotalNutrient() throws EmptyResultException {
         Nutrient totalConsumed = new Nutrient();
-        MealRecord[] mealRecordsForToday = MealRecord.queryAll();
+        ArrayList<MealRecord> mealRecordsForToday = MealRecord.queryAll();
 
-        for (int i=0; i<mealRecordsForToday.length; i++){
-            totalConsumed.setFat(totalConsumed.getFat()+mealRecordsForToday[i].getNutrient().getFat());
-            totalConsumed.setCholesterol(totalConsumed.getCholesterol()+mealRecordsForToday[i].getNutrient().getCholesterol());
-            totalConsumed.setSodium(totalConsumed.getSodium()+mealRecordsForToday[i].getNutrient().getSodium());
-            totalConsumed.setPotassium(totalConsumed.getPotassium()+mealRecordsForToday[i].getNutrient().getPotassium());
-            totalConsumed.setSugar(totalConsumed.getSugar()+mealRecordsForToday[i].getNutrient().getSugar());
-            totalConsumed.setDietaryFibre(totalConsumed.getDietaryFibre()+mealRecordsForToday[i].getNutrient().getDietaryFibre());
-            totalConsumed.setProtein(totalConsumed.getProtein()+mealRecordsForToday[i].getNutrient().getProtein());
-            totalConsumed.setCalcium(totalConsumed.getCalcium()+mealRecordsForToday[i].getNutrient().getCalcium());
-            totalConsumed.setVitaminC(totalConsumed.getVitaminC()+mealRecordsForToday[i].getNutrient().getVitaminC());
-            totalConsumed.setIron(totalConsumed.getIron()+mealRecordsForToday[i].getNutrient().getIron());
-            totalConsumed.setMagnesium(totalConsumed.getMagnesium()+mealRecordsForToday[i].getNutrient().getMagnesium());
+        for (int i=0; i<mealRecordsForToday.size(); i++){
+            totalConsumed.setFat(totalConsumed.getFat()+mealRecordsForToday.get(i).getNutrient().getFat());
+            totalConsumed.setCholesterol(totalConsumed.getCholesterol()+mealRecordsForToday.get(i).getNutrient().getCholesterol());
+            totalConsumed.setSodium(totalConsumed.getSodium()+mealRecordsForToday.get(i).getNutrient().getSodium());
+            totalConsumed.setPotassium(totalConsumed.getPotassium()+mealRecordsForToday.get(i).getNutrient().getPotassium());
+            totalConsumed.setSugar(totalConsumed.getSugar()+mealRecordsForToday.get(i).getNutrient().getSugar());
+            totalConsumed.setDietaryFibre(totalConsumed.getDietaryFibre()+mealRecordsForToday.get(i).getNutrient().getDietaryFibre());
+            totalConsumed.setProtein(totalConsumed.getProtein()+mealRecordsForToday.get(i).getNutrient().getProtein());
+            totalConsumed.setCalcium(totalConsumed.getCalcium()+mealRecordsForToday.get(i).getNutrient().getCalcium());
+            totalConsumed.setVitaminC(totalConsumed.getVitaminC()+mealRecordsForToday.get(i).getNutrient().getVitaminC());
+            totalConsumed.setIron(totalConsumed.getIron()+mealRecordsForToday.get(i).getNutrient().getIron());
+            totalConsumed.setMagnesium(totalConsumed.getMagnesium()+mealRecordsForToday.get(i).getNutrient().getMagnesium());
         }
         return totalConsumed;
     }
@@ -248,7 +261,7 @@ public class MealRecordManager {
         for (int i = 0; i < 7; i++) {
             results.add(0.0);
         }
-        MealRecord[] mealRecords;
+        ArrayList<MealRecord> mealRecords;
         try {
             mealRecords= MealRecord.queryByDate(startDate, endDate);
         } catch (EmptyResultException e) {
@@ -281,7 +294,7 @@ public class MealRecordManager {
         for (int i = 0; i < 7; i++) {
             results.add(0.0);
         }
-        MealRecord[] mealRecords;
+        ArrayList<MealRecord> mealRecords;
         // request meal records
         try {
             mealRecords= MealRecord.queryByDate(startDate, endDate);

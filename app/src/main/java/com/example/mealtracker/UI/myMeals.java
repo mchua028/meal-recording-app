@@ -135,10 +135,12 @@ public class myMeals extends Fragment {
                 //Toast.makeText(getActivity(),"date chosen:"+startDate.toString(), Toast.LENGTH_SHORT).show();
                 Log.d("dategotten",startDate.toString()+"hiii");
                 ArrayList<MealRecord> mealRecords = new ArrayList<MealRecord>();
+                MealRecord[] mealRecords1=null;
                 try {
                     Log.d("inside","try");
-                    //mealRecords = Database.getSingleton().queryByDate(startDate,endDate);
-                    MealRecord mealRecord1 = new MealRecord();
+                    mealRecords = Database.getSingleton().queryByDate(startDate,endDate);
+                    //mealRecords1 = Database.getSingleton().queryByDate(startDate,endDate);
+                    /*MealRecord mealRecord1 = new MealRecord();
                     DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
                     LocalDateTime mealRecordDateTime = LocalDateTime.parse("09-04-2021 08:14",formatter2);
                     LocalDate mealRecordDate = mealRecordDateTime.toLocalDate();
@@ -159,7 +161,10 @@ public class myMeals extends Fragment {
                         mealRecords.add(mealRecord1);
                     }
                     Log.d("queryfrom","databasebydate");
+                    */
                     mealRecordManager.setMealRecords(mealRecords);
+
+                    //mealRecordManager.setMealRecords1(mealRecords1);
                     Log.d("set","mealrecords");
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -168,8 +173,12 @@ public class myMeals extends Fragment {
                 if(mealRecords.size()==0){
                     Toast.makeText(getActivity(),"There are no meal records for the chosen date",Toast.LENGTH_SHORT).show();
                 }
+                //if(mealRecords1.length==0){
+                 //   Toast.makeText(getActivity(),"There are no meal records for the chosen date",Toast.LENGTH_SHORT).show();
+                //}
                 Log.d("before","addMoreCardViews");
-                addMoreCardviews(mealRecords.size());
+                addMoreCardviews(1);
+                //addMoreCardviews(mealRecords1.length);
                 Log.d("after","addMoreCardViews");
 
             }
