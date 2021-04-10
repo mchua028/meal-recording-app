@@ -28,6 +28,8 @@ public class Login extends AppCompatActivity {
     }
 
     public void onLoginButtonClick (View view) {
+        Intent intent = new Intent(this, WelcomePage.class);
+
         TextView txtEmail = findViewById(R.id.txtLoginEmailUser);
         TextView txtPassword = findViewById(R.id.txtLoginPassword);
 
@@ -52,19 +54,22 @@ public class Login extends AppCompatActivity {
         //if(accountManager.logInAccount(email,password)) {
 
         FirebaseAuth firebaseAuth = AccountManager.getSingleton().getFirebaseAuth();
+        Log.d("aft", "firebaseAuth");
         firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+                Log.d("in", "onComplete");
                 if(task.isSuccessful()) {
                     Log.d("loginhellooooooooooo","successful");
                     Toast.makeText(Login.this, "Login successful.", Toast.LENGTH_SHORT).show();
                     Log.d("login2","successful2");
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    startActivity(intent);
                 }
                 else{
+                    Log.d("login", "exception");
                     Toast.makeText(Login.this,"Error!"+task.getException().getMessage(),Toast.LENGTH_SHORT).show();
                 }
-
+                Log.d("end", "onComplete");
             }
         });
     }
