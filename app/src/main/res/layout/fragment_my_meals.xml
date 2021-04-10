@@ -16,15 +16,6 @@
         android:textSize="30sp"
         android:textStyle="bold" /-->
 
-    <TextView
-        android:id="@+id/myMealsMiniTxt"
-        android:layout_width="360dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:layout_marginLeft="10dp"
-        android:text="Click on the date to see meals and nutrition information for that particular date."
-        android:textSize="20sp" />
-
     <!-- TODO: Make the search accept input -->
 
     <!--SearchView
@@ -38,20 +29,50 @@
         app:iconifiedByDefault="false"
         android:background="@drawable/spinner_border"/-->
 
+    <TextView
+        android:id="@+id/myMealsMiniTxt"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="31dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="20dp"
+        android:text="Click on the date to see meals and nutrition information for that particular date."
+        android:textSize="20sp" />
+
     <DatePicker
         android:id="@+id/datePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/myMealsMiniTxt"
-        android:layout_marginLeft="60dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="31dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="30dp"
+        android:datePickerMode="calendar" />
+
+    <Button
+        android:id="@+id/searchMealsBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/datePicker"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="114dp"
+        android:layout_marginLeft="100dp"
         android:layout_marginTop="0dp"
-        android:datePickerMode="spinner" />
+        android:layout_marginEnd="113dp"
+        android:text="Search Meal Records" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/myMealsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/datePicker"
+        android:layout_below="@id/searchMealsBtn"
         android:layout_marginTop="10dp"
         android:padding="8dp"
         android:clipToPadding="false"
