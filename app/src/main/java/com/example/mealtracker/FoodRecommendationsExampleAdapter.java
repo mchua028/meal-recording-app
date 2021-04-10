@@ -24,25 +24,18 @@ public class FoodRecommendationsExampleAdapter extends RecyclerView.Adapter<Food
     private ArrayList<FoodRecommendationsExampleItem> mExampleList;
 
     private String lackedNutrient;
-    private String lackedNutrientHM;
+    private String recommendFood;
+    private HashMap<String, Double> lackedNutrientHM;
     private String recommendFoodHM;
 
     public static class ExampleViewHolder extends RecyclerView.ViewHolder {
         public TextView mTextView1;
         public TextView mTextView2;
-        public TextView mTextView3;
-        public TextView mTextView4;
-        public TextView mTextView5;
-        public TextView mTextView6;
 
         public ExampleViewHolder(View itemView) {
             super(itemView);
             mTextView1 = itemView.findViewById(R.id.vitaminNameTxt);
             mTextView2 = itemView.findViewById(R.id.foodsLabel);
-            /*mTextView3 = itemView.findViewById(R.id.vitaminName2Txt);
-            mTextView4 = itemView.findViewById(R.id.foodsLabel2);
-            mTextView5 = itemView.findViewById(R.id.vitaminName3Txt);
-            mTextView6 = itemView.findViewById(R.id.foodsLabel3);*/
         }
     }
 
@@ -66,15 +59,19 @@ public class FoodRecommendationsExampleAdapter extends RecyclerView.Adapter<Food
         try {
             Recommender recommender = new Recommender(MealRecordManager.getSingleton().calculateTotalNutrient());
             recommender.recommend();
-            recommender.getLackedNutrient();
-            lackedNutrientHM = recommender.getLackedNutrient().toString();
+            lackedNutrientHM = recommender.getLackedNutrient();
+            //lackedNutrientHM = recommender.getLackedNutrient().toString();
             recommender.getRecommendFood();
             recommendFoodHM = recommender.getRecommendFood().toString();
         } catch (EmptyResultException e) {
             e.printStackTrace();
         }
+        lackedNutrient = lackedNutrientHM.keySet().toArray()[position].toString();
+        Log.d("numberoffoodrec", Integer.toString(position));
+        holder.mTextView1.setText(lackedNutrient);
+        holder.mTextView2.setText(recommendFoodHM);
 
-        if (position == 0) {
+        /*if (position == 0) {
             holder.mTextView1.setText(lackedNutrientHM.split("\\{")[1].split("=")[0]);
             holder.mTextView2.setText("Foods containing this nutrient:\n"
                     + "1. " + recommendFoodHM.split(", ")[1].split("=")[0] + "\n"
@@ -98,7 +95,7 @@ public class FoodRecommendationsExampleAdapter extends RecyclerView.Adapter<Food
                     + "1. " + recommendFoodHM.split(", ")[5].split("=")[0] + "\n"
                     + "2. " + "Nuts\n"
                     + "3. " + "Broccoli\n");
-        }
+        }*/
     }
 
     @Override
