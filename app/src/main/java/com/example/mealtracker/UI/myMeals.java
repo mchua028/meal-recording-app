@@ -32,10 +32,12 @@ import com.example.mealtracker.MyMealsExampleItem;
 import com.example.mealtracker.R;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -90,10 +92,12 @@ public class myMeals extends Fragment {
                 Log.d("got","datefromdatepicker");
                 int searchMonth = datePicker.getMonth();
                 int searchDay = datePicker.getDayOfMonth();
-                String date = Integer.toString(searchDay)+"-"+Integer.toString(searchMonth)+"-"+Integer.toString(searchYear);
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(searchYear, searchMonth, searchDay);
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                String formatedDate = sdf.format(calendar.getTime());
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                //Date searchdate = datePicker.getValue();
-                LocalDate startDate = LocalDate.parse(date,formatter);
+                LocalDate startDate = LocalDate.parse(formatedDate,formatter);
                 LocalDate endDate = startDate;
                 //Toast.makeText(getActivity(),"date chosen:"+startDate.toString(), Toast.LENGTH_SHORT).show();
                 Log.d("dategotten",startDate.toString()+"hiii");
