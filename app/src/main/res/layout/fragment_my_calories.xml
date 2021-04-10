@@ -64,7 +64,7 @@
             android:layout_below="@id/myCaloriesTodayTxt"
             android:layout_marginTop="-95dp"
             android:layout_marginLeft="10dp"
-            android:text="  Maximum Calories Today \n  Calories Eaten \n  Remaining Calories"
+            android:text="  Maximum Calories Today \n  Calories Consumed \n  Remaining Calories"
             android:textSize="20sp" />
 
         <ImageButton
