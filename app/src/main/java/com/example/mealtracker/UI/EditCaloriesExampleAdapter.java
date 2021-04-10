@@ -1,5 +1,6 @@
 package com.example.mealtracker.UI;
 
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,19 +8,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mealtracker.AppLogic.MealRecordManager;
 import com.example.mealtracker.DAO.Food;
 import com.example.mealtracker.DAO.MealRecord;
 import com.example.mealtracker.EditCaloriesExampleItem;
+import com.example.mealtracker.Exceptions.EmptyResultException;
 import com.example.mealtracker.R;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class EditCaloriesExampleAdapter extends RecyclerView.Adapter<EditCaloriesExampleAdapter.ExampleViewHolder> {
     private ArrayList<EditCaloriesExampleItem> mExampleList;
     private static OnItemClickListener mListener;
+
+    double totalCalorie;
 
     public interface OnItemClickListener {
         void onDeleteClick(int position);
@@ -67,17 +73,27 @@ public class EditCaloriesExampleAdapter extends RecyclerView.Adapter<EditCalorie
         return evh;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull ExampleViewHolder holder, int position) {
         EditCaloriesExampleItem currentItem = mExampleList.get(position);
 
         MealRecordManager mealRecordManager = MealRecordManager.getSingleton();
         MealRecord mealRecord = mealRecordManager.getMealRecord();
-        ArrayList<Food> foods = mealRecord.getFoods();
-
-        holder.mTextView1.setText(foods.get(position).getName());
-        holder.mTextView2.setText(Double.toString(foods.get(position).getTotalCalorie()));
-
+        //ArrayList<Food> foods = mealRecord.getFoods();
+        MealRecord[] foods = null;
+        try {
+            foods = mealRecord.queryByDate(LocalDate.now(), LocalDate.now());
+        } catch (EmptyResultException e) {
+            e.printStackTrace();
+        }
+        holder.mTextView1.setText(foods[position].getFoods().toString().split("'")[1].split("'")[0]);
+        try {
+            totalCalorie = foods[position].getTotalCalorie();
+        } catch (EmptyResultException e) {
+            e.printStackTrace();
+        }
+        holder.mTextView2.setText(String.format("%.1f", totalCalorie) + " kcal");
         //holder.mTextView1.setText(currentItem.getText1());
         //holder.mTextView2.setText(currentItem.getText2());
         //holder.mCancel.setImageResource(currentItem.getImageResource());

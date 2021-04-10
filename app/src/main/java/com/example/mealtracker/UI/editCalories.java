@@ -21,11 +21,13 @@ import com.example.mealtracker.DAO.HealthInfo;
 import com.example.mealtracker.DAO.MealRecord;
 import com.example.mealtracker.DAO.Nutrient;
 import com.example.mealtracker.EditCaloriesExampleItem;
+import com.example.mealtracker.Exceptions.EmptyResultException;
 import com.example.mealtracker.R;
 import com.google.android.material.navigation.NavigationView;
 
 import org.w3c.dom.Text;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class editCalories extends AppCompatActivity {
@@ -46,8 +48,8 @@ public class editCalories extends AppCompatActivity {
 
     MealRecordManager mealRecordManager = MealRecordManager.getSingleton();
     MealRecord mealRecord = new MealRecord();
-    //ArrayList<Food> foods = mealRecord.getFoods();
     ArrayList<Food> foods = new ArrayList<>();
+    MealRecord[] MRfoods = null;
 
     private double calorieConsumed;
 
@@ -62,6 +64,12 @@ public class editCalories extends AppCompatActivity {
         buildRecyclerView();
         Log.d("start", "go in3");
 
+        try {
+            MRfoods = mealRecord.queryByDate(LocalDate.now(), LocalDate.now());
+        } catch (EmptyResultException e) {
+            e.printStackTrace();
+        }
+
         HealthInfo healthInfo = HealthInfo.getSingleton();
         double suggestedCalorie;
         suggestedCalorie = HealthInfoManager.getSingleton().getSuggestedCalorie();
@@ -75,10 +83,10 @@ public class editCalories extends AppCompatActivity {
         text.setText(String.format("%.1f", suggestedCalorie));
 
         TextView text2 = (TextView) findViewById(R.id.textViewRemainingCalories);
-        text2.setText(String.format("%.1f", calorieConsumed));
+        text2.setText(String.format("%.1f", calorieRemain));
 
         TextView text3 = (TextView) findViewById(R.id.textViewCaloriesConsumed);
-        text3.setText(String.format("%.1f", calorieRemain));
+        text3.setText(String.format("%.1f", calorieConsumed));
 
         // Save button
         // TODO: to connect to db to edit meal records
@@ -93,10 +101,10 @@ public class editCalories extends AppCompatActivity {
                     double calorieRemain = suggestedCalorie - calorieConsumed;
 
                     TextView text2 = (TextView) findViewById(R.id.textViewRemainingCalories);
-                    text2.setText(String.format("%.1f", calorieConsumed));
+                    text2.setText(String.format("%.1f", calorieRemain));
 
                     TextView text3 = (TextView) findViewById(R.id.textViewCaloriesConsumed);
-                    text3.setText(String.format("%.1f", calorieRemain));
+                    text3.setText(String.format("%.1f", calorieConsumed));
                     //finish();
                 }
             }
@@ -110,15 +118,23 @@ public class editCalories extends AppCompatActivity {
                 finish();
             }
         });
-
+        Log.d("add", "morecardviews");
         addMoreCardviews();
 
     }
 
     public void addMoreCardviews(){
-        Log.d("go in", "cardviews");
-        int position = 0;// getExampleListSize();
+        int position = getExampleListSize();
 
+        // for each food entered in previous page (input food details)
+        Log.d("before cal","noOfCardViews");
+        int noOfCardViews = MRfoods.length;
+        Log.d("noOfCardViews",Integer.toString(noOfCardViews));
+        for (int i=0; i<noOfCardViews; i++) {
+            Log.d("int i =",Integer.toString(i)+"th cardView");
+            insertItem(position);
+        }
+        /*
         try {
             Food food1 = new Food();
             food1.setName("egg");
@@ -163,7 +179,7 @@ public class editCalories extends AppCompatActivity {
                 insertItem(position);
             }
         }
-        else return;
+        else return;*/
     }
 
     // insert card views

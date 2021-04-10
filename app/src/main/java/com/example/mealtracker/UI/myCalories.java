@@ -124,7 +124,7 @@ public class myCalories extends Fragment {
         Log.d("uiedittext", Double.toString(mealRecordManager.getCalorieConsumedToday()));
         TextView text = (TextView) v.findViewById(R.id.myCaloriesTodayMiniTxt);
         text.setText("  Maximum Calories Today           " + String.format("%.1f", suggestedCalorie) +
-                     "\n  Calories Eaten                              " + String.format("%.1f", calorieConsumed) +
+                     "\n  Calories Consumed                     " + String.format("%.1f", calorieConsumed) +
                      "\n  Remaining Calories                      " + String.format("%.1f", calorieRemain));
 
 
