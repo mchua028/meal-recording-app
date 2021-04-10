@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -17,12 +18,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.mealtracker.AppLogic.HealthInfoManager;
 import com.example.mealtracker.DAO.HealthInfo;
 import com.example.mealtracker.R;
+import com.example.mealtracker.foodRecommendations;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -35,12 +40,16 @@ public class accountAndSettings extends Fragment {
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
     private Toolbar toolbar;
+
+    Bundle mSavedInstanceState;
 
     @Override
      public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        mSavedInstanceState = savedInstanceState;
     }
     private TextInputLayout textInputHeight, textInputWeight, textInputAge, textInputGoalWeight;
     private EditText editHeight, editWeight, editAge, editGoalWeight;
@@ -52,6 +61,7 @@ public class accountAndSettings extends Fragment {
         getActivity().setTitle("Account and Settings");
 
         View v = inflater.inflate(R.layout.fragment_account_and_settings, container, false);
+        navigationView = v.findViewById(R.id.nav_view);
 
         // Gender dropdown box
         Spinner gender_spinner = (Spinner) v.findViewById(R.id.gender_spinner);
@@ -182,7 +192,8 @@ public class accountAndSettings extends Fragment {
 
                 // if input correct, save data and show success message
                 Toast.makeText(getActivity().getApplicationContext(), "Edit successful", Toast.LENGTH_SHORT).show();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new myCalories()).commit();
+                Intent intent = new Intent(getContext(), MainActivity.class);
+                startActivity(intent);
             }
 
         });
