@@ -39,6 +39,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -134,11 +135,9 @@ public class myMeals extends Fragment {
                 LocalDate endDate = startDate;
                 //Toast.makeText(getActivity(),"date chosen:"+startDate.toString(), Toast.LENGTH_SHORT).show();
                 Log.d("dategotten",startDate.toString()+"hiii");
-                ArrayList<MealRecord> mealRecords = new ArrayList<MealRecord>();
-                MealRecord[] mealRecords1=null;
                 try {
                     Log.d("inside","try");
-                    mealRecords = Database.getSingleton().queryByDate(startDate,endDate);
+                    MealRecord[] mealRecords1 = Database.getSingleton().queryByDate(startDate,endDate);
                     //mealRecords1 = Database.getSingleton().queryByDate(startDate,endDate);
                     /*MealRecord mealRecord1 = new MealRecord();
                     DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
@@ -162,17 +161,16 @@ public class myMeals extends Fragment {
                     }
                     Log.d("queryfrom","databasebydate");
                     */
-                    mealRecordManager.setMealRecords(mealRecords);
+                    // make the type of variables match 
+                    mealRecordManager.setMealRecords(new ArrayList<>(Arrays.asList(mealRecords1)));
 
                     //mealRecordManager.setMealRecords1(mealRecords1);
                     Log.d("set","mealrecords");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                Log.d("after","trycatch");
-                if(mealRecords.size()==0){
+                } catch (EmptyResultException e) {
+                    // when there is no result found
                     Toast.makeText(getActivity(),"There are no meal records for the chosen date",Toast.LENGTH_SHORT).show();
                 }
+                Log.d("after","trycatch");
                 //if(mealRecords1.length==0){
                  //   Toast.makeText(getActivity(),"There are no meal records for the chosen date",Toast.LENGTH_SHORT).show();
                 //}
