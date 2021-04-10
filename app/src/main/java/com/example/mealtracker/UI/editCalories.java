@@ -68,10 +68,6 @@ public class editCalories extends AppCompatActivity {
 
         try {
             MRfoods = mealRecord.queryByDate(LocalDate.now(), LocalDate.now());
-            for (MealRecord mealRecord: MRfoods) {
-                ArrayList<Food> foodsBuffer = mealRecord.getFoods();
-                foods.addAll(foodsBuffer);
-            }
         } catch (EmptyResultException e) {
             e.printStackTrace();
         }

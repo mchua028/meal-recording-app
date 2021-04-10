@@ -1,29 +1,23 @@
 package com.example.mealtracker.AppLogic;
 
-import android.icu.number.NumberRangeFormatter;
 import android.os.Build;
-import android.provider.ContactsContract;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import com.example.mealtracker.DAO.Database;
 import com.example.mealtracker.DAO.Food;
 import com.example.mealtracker.DAO.HealthInfo;
 import com.example.mealtracker.DAO.MealRecord;
-
-import androidx.annotation.RequiresApi;
-
 import com.example.mealtracker.DAO.Nutrient;
 import com.example.mealtracker.Exceptions.EmptyInputException;
 import com.example.mealtracker.Exceptions.EmptyResultException;
 import com.example.mealtracker.Exceptions.RecordNotInServerException;
 
-import java.lang.reflect.Array;
-import java.time.Period;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
+import java.util.ArrayList;
 
 
 public class MealRecordManager {
@@ -53,7 +47,7 @@ public class MealRecordManager {
     public double getCalorieConsumedToday() {
         double total = 0;
         try {
-            ArrayList<MealRecord> allMealRecords = Database.getSingleton().queryAllMealRecords();
+            MealRecord[] allMealRecords = Database.getSingleton().queryAllMealRecords();
             for (MealRecord mealRecord: allMealRecords) {
                 if (LocalDate.now().equals(LocalDate.from(mealRecord.getTime()))) {
                     total += mealRecord.getTotalCalorie();

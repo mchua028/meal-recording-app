@@ -13,10 +13,12 @@ import com.example.mealtracker.Exceptions.EmptyResultException;
 import com.example.mealtracker.Exceptions.RecordNotInServerException;
 import com.example.mealtracker.Exceptions.ValueCannotBeNonPositiveException;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class MealRecord {
@@ -109,12 +111,12 @@ public class MealRecord {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static ArrayList<MealRecord> queryByDate (LocalDate startDate, LocalDate endDate) throws EmptyResultException {
-        return Database.getSingleton().queryByDate(startDate, endDate);
+        return new ArrayList<>(Arrays.asList(Database.getSingleton().queryByDate(startDate, endDate)));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static ArrayList<MealRecord> queryAll() throws EmptyResultException {
-        return Database.getSingleton().queryAllMealRecords();
+        return new ArrayList<>(Arrays.asList(Database.getSingleton().queryAllMealRecords()));
     }
 
     /**
