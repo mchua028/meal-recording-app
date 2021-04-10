@@ -39,7 +39,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -131,48 +130,55 @@ public class myMeals extends Fragment {
                 String formatedDate = sdf.format(calendar.getTime());
                 Log.d("formtaeddate",formatedDate+"hiii");
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                LocalDate startDate = LocalDate.parse(formatedDate, formatter);
+                LocalDate startDate = LocalDate.parse(formatedDate,formatter);
                 LocalDate endDate = startDate;
                 //Toast.makeText(getActivity(),"date chosen:"+startDate.toString(), Toast.LENGTH_SHORT).show();
                 Log.d("dategotten",startDate.toString()+"hiii");
                 ArrayList<MealRecord> mealRecords = new ArrayList<MealRecord>();
+                MealRecord[] mealRecords1=null;
                 try {
                     Log.d("inside","try");
-                    //mealRecords = Database.getSingleton().queryByDate(startDate,endDate);
-//                    MealRecord mealRecord1 = new MealRecord();
-//                    DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-//                    LocalDateTime mealRecordDateTime = LocalDateTime.parse("09-04-2021 08:14",formatter2);
-//                    LocalDate mealRecordDate = mealRecordDateTime.toLocalDate();
-//                    mealRecord1.setTime(mealRecordDateTime);
-//                    ArrayList<Food> foods = new ArrayList<Food>();
-//                    Food food1 = new Food();
-//                    food1.setName("egg");
-//                    food1.setActualIntake(100);
-//                    Food food2 = new Food();
-//                    food2.setName("chicken");
-//                    food2.setActualIntake(200);
-//                    foods.add(food1);
-//                    foods.add(food2);
-//                    mealRecord1.setFoods(foods);
-//                    Log.d("newdate",startDate.toString());
-//                    Log.d("mealrecroddate",mealRecord1.getTime().toLocalDate().toString());
-//                    if(mealRecordDate.equals(startDate)) {
-//                        mealRecords.add(mealRecord1);
-//                    }
-                    MealRecord[] mealRecords1 = MealRecordManager.getSingleton().queryFood(startDate);
-                    mealRecords = new ArrayList<>(Arrays.asList(mealRecords1));
+                    mealRecords = Database.getSingleton().queryByDate(startDate,endDate);
+                    //mealRecords1 = Database.getSingleton().queryByDate(startDate,endDate);
+                    /*MealRecord mealRecord1 = new MealRecord();
+                    DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+                    LocalDateTime mealRecordDateTime = LocalDateTime.parse("09-04-2021 08:14",formatter2);
+                    LocalDate mealRecordDate = mealRecordDateTime.toLocalDate();
+                    mealRecord1.setTime(mealRecordDateTime);
+                    ArrayList<Food> foods = new ArrayList<Food>();
+                    Food food1 = new Food();
+                    food1.setName("egg");
+                    food1.setActualIntake(100);
+                    Food food2 = new Food();
+                    food2.setName("chicken");
+                    food2.setActualIntake(200);
+                    foods.add(food1);
+                    foods.add(food2);
+                    mealRecord1.setFoods(foods);
+                    Log.d("newdate",startDate.toString());
+                    Log.d("mealrecroddate",mealRecord1.getTime().toLocalDate().toString());
+                    if(mealRecordDate.equals(startDate)) {
+                        mealRecords.add(mealRecord1);
+                    }
                     Log.d("queryfrom","databasebydate");
+                    */
                     mealRecordManager.setMealRecords(mealRecords);
+
+                    //mealRecordManager.setMealRecords1(mealRecords1);
                     Log.d("set","mealrecords");
-                } catch (EmptyResultException e) {
-                    Toast.makeText(getActivity(),"There are no meal records for the chosen date",Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 Log.d("after","trycatch");
                 if(mealRecords.size()==0){
                     Toast.makeText(getActivity(),"There are no meal records for the chosen date",Toast.LENGTH_SHORT).show();
                 }
+                //if(mealRecords1.length==0){
+                 //   Toast.makeText(getActivity(),"There are no meal records for the chosen date",Toast.LENGTH_SHORT).show();
+                //}
                 Log.d("before","addMoreCardViews");
-                addMoreCardviews(mealRecords.size());
+                addMoreCardviews(1);
+                //addMoreCardviews(mealRecords1.length);
                 Log.d("after","addMoreCardViews");
 
             }

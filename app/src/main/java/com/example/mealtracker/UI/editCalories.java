@@ -1,5 +1,6 @@
 package com.example.mealtracker.UI;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +23,7 @@ import com.example.mealtracker.DAO.MealRecord;
 import com.example.mealtracker.DAO.Nutrient;
 import com.example.mealtracker.EditCaloriesExampleItem;
 import com.example.mealtracker.Exceptions.EmptyResultException;
+import com.example.mealtracker.Exceptions.RecordNotInServerException;
 import com.example.mealtracker.R;
 import com.google.android.material.navigation.NavigationView;
 
@@ -47,9 +49,9 @@ public class editCalories extends AppCompatActivity {
     private ImageView mCancel;
 
     MealRecordManager mealRecordManager = MealRecordManager.getSingleton();
-    MealRecord mealRecord = new MealRecord();
-    ArrayList<Food> foods = new ArrayList<>();
-    MealRecord[] MRfoods = null;
+    MealRecord mealRecord = mealRecordManager.getMealRecord();;
+    ArrayList<MealRecord> foods = new ArrayList<>();
+    ArrayList<MealRecord> MRfoods = new ArrayList<MealRecord>();
 
     private double calorieConsumed;
 
@@ -101,7 +103,11 @@ public class editCalories extends AppCompatActivity {
                 calorieConsumed = 0;
                 int i;
                 for (i = 0; i<foods.size(); i++){
-                    calorieConsumed += foods.get(i).getTotalCalorie();
+                    try {
+                        calorieConsumed += foods.get(i).getTotalCalorie();
+                    } catch (EmptyResultException e) {
+                        e.printStackTrace();
+                    }
                     double calorieRemain = suggestedCalorie - calorieConsumed;
 
                     TextView text2 = (TextView) findViewById(R.id.textViewRemainingCalories);
@@ -111,6 +117,7 @@ public class editCalories extends AppCompatActivity {
                     text3.setText(String.format("%.1f", calorieConsumed));
                     //finish();
                 }
+                goToMainActivity();
             }
         });
 
@@ -126,12 +133,17 @@ public class editCalories extends AppCompatActivity {
         addMoreCardviews();
     }
 
+    public void goToMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
     public void addMoreCardviews(){
         int position = getExampleListSize();
 
         // for each food entered in previous page (input food details)
         Log.d("before cal","noOfCardViews");
-        int noOfCardViews = MRfoods.length;
+        int noOfCardViews = MRfoods.size();
         Log.d("noOfCardViews",Integer.toString(noOfCardViews));
         for (int i=0; i<noOfCardViews; i++) {
             Log.d("int i =",Integer.toString(i)+"th cardView");
@@ -192,10 +204,17 @@ public class editCalories extends AppCompatActivity {
         mAdapter.notifyItemInserted(position);
     }
 
-    public void removeItem(int position) {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void removeItem(int position) throws RecordNotInServerException {
         Log.d("tag: remove item:", "removing item");
         mExampleList.remove(position);
-        foods.remove(position);
+        //foods.remove(position);
+        try {
+            foods = mealRecord.queryByDate(LocalDate.now(), LocalDate.now());
+        } catch (EmptyResultException e) {
+            e.printStackTrace();
+        }
+        foods.get(position).deleteFromServer();
         mAdapter.notifyItemRemoved(position);
     }
 
@@ -218,19 +237,27 @@ public class editCalories extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
 
         EditCaloriesExampleAdapter.setOnItemClickListener(new EditCaloriesExampleAdapter.OnItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
-            public void onDeleteClick(int position) {
+            public void onDeleteClick(int position) throws RecordNotInServerException {
                 removeItem(position);
             }
         });
     }
 
     // remove card views
-    public void editCaloriesRemoveItem(int position) {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void editCaloriesRemoveItem(int position) throws RecordNotInServerException {
         if (getExampleListSize() != 0) {
             Log.d("remove item","position is" + position);
             mExampleList.remove(position);
-            foods.remove(position);
+            // foods.remove(position);
+            try {
+                foods = mealRecord.queryByDate(LocalDate.now(), LocalDate.now());
+            } catch (EmptyResultException e) {
+                e.printStackTrace();
+            }
+            foods.get(position).deleteFromServer();
             mAdapter.notifyItemRemoved(position);
         }
         else {

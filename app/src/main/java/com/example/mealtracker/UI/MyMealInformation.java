@@ -83,15 +83,15 @@ public class MyMealInformation extends AppCompatActivity {
                 else {
                     MealRecordManager mealRecordManager = MealRecordManager.getSingleton();
                     Log.d("mealRecrodManager", mealRecordManager.getMealRecord().getFoods().get(0).getName());
-                    mealRecordManager.addMealRecordToDB(mealRecordManager.getMealRecord());
-                    HealthInfoManager.getSingleton().getSuggestedCalorie();
+                    //mealRecordManager.addMealRecordToDB(mealRecordManager.getMealRecord());
+                    double suggestedCalorie = HealthInfoManager.getSingleton().getSuggestedCalorie();
                     //mealRecordManager.calculateCalorieConsumedToday();//error
                     double calorieConsumedToday = mealRecordManager.getCalorieConsumedToday();
                     Toast.makeText(MyMealInformation.this, "calorieConsumedToday: " + Double.toString(calorieConsumedToday),
                             Toast.LENGTH_SHORT).show();
                     //mealRecordManager.calculateCalorieQuotaRemainingToday();//error
-                    double calorieQuotaRemaining = mealRecordManager.getCalorieRemaining();
-                    Toast.makeText(MyMealInformation.this, "calorieQuotaRemainingToday: " + Double.toString(calorieQuotaRemaining),
+                    //double calorieQuotaRemaining = mealRecordManager.getCalorieRemaining();
+                    Toast.makeText(MyMealInformation.this, "calorieQuotaRemainingToday: " + Double.toString(suggestedCalorie-calorieConsumedToday),
                             Toast.LENGTH_SHORT).show();
                 }
 
@@ -104,7 +104,16 @@ public class MyMealInformation extends AppCompatActivity {
         onClickCancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Log.d("getting","mealrecordmgrsingleton");
+                MealRecordManager mealRecordManager = MealRecordManager.getSingleton();
+                Log.d("deleting","deleting mealrecord");
+                Log.d("mealrecordid",mealRecordManager.getMealRecord().getId());
+                mealRecordManager.deleteMealRecord(mealRecordManager.getMealRecord());
+                Toast.makeText(MyMealInformation.this,"no food record added",Toast.LENGTH_SHORT).show();
+
+                //finish();
+                Intent intent = new Intent(MyMealInformation.this, MainActivity.class);
+                startActivity(intent);
             }
         });
         addMoreCardviews();

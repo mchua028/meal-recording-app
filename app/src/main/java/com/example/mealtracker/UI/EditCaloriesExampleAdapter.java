@@ -16,6 +16,7 @@ import com.example.mealtracker.DAO.Food;
 import com.example.mealtracker.DAO.MealRecord;
 import com.example.mealtracker.EditCaloriesExampleItem;
 import com.example.mealtracker.Exceptions.EmptyResultException;
+import com.example.mealtracker.Exceptions.RecordNotInServerException;
 import com.example.mealtracker.R;
 
 import java.time.LocalDate;
@@ -28,7 +29,7 @@ public class EditCaloriesExampleAdapter extends RecyclerView.Adapter<EditCalorie
     double totalCalorie;
 
     public interface OnItemClickListener {
-        void onDeleteClick(int position);
+        void onDeleteClick(int position) throws RecordNotInServerException;
     }
 
     public static void setOnItemClickListener(OnItemClickListener listener) {
@@ -53,7 +54,11 @@ public class EditCaloriesExampleAdapter extends RecyclerView.Adapter<EditCalorie
                     if (listener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            listener.onDeleteClick(position);
+                            try {
+                                listener.onDeleteClick(position);
+                            } catch (RecordNotInServerException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }
@@ -81,15 +86,15 @@ public class EditCaloriesExampleAdapter extends RecyclerView.Adapter<EditCalorie
         MealRecordManager mealRecordManager = MealRecordManager.getSingleton();
         MealRecord mealRecord = mealRecordManager.getMealRecord();
         //ArrayList<Food> foods = mealRecord.getFoods();
-        MealRecord[] foods = null;
+        ArrayList<MealRecord> foods = new ArrayList<MealRecord>();
         try {
             foods = mealRecord.queryByDate(LocalDate.now(), LocalDate.now());
         } catch (EmptyResultException e) {
             e.printStackTrace();
         }
-        holder.mTextView1.setText(foods[position].getFoods().toString().split("'")[1].split("'")[0]);
+        holder.mTextView1.setText(foods.get(position).getFoods().toString().split("'")[1].split("'")[0]);
         try {
-            totalCalorie = foods[position].getTotalCalorie();
+            totalCalorie = foods.get(position).getTotalCalorie();
         } catch (EmptyResultException e) {
             e.printStackTrace();
         }
