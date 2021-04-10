@@ -29,6 +29,7 @@ import com.example.mealtracker.UI.InputFoodDetails;
 import com.example.mealtracker.UI.editCalories;
 import com.example.mealtracker.UI.uploadPicture;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -152,6 +153,14 @@ public class myCalories extends Fragment {
         YAxis yAxisRight = mpBarChart.getAxisRight();
         yAxisLeft.setAxisMinimum(0);
         yAxisRight.setAxisMinimum(0);
+        double suggestedCalorieToThousand = Math.ceil(suggestedCalorie/500)*500;
+        yAxisLeft.setAxisMaximum((float) suggestedCalorieToThousand);
+        yAxisRight.setAxisMaximum((float) suggestedCalorieToThousand);
+
+        // get max calories as limit
+        LimitLine mLimitLine = new LimitLine((float) suggestedCalorie);
+        mLimitLine.setLineWidth(1f);
+        yAxisLeft.addLimitLine(mLimitLine);
 
         ArrayList<BarEntry> dataVals = new ArrayList<BarEntry>();
         ArrayList<Double> records = MealRecordManager.getSingleton().getCalorieIntakeInWeek();
