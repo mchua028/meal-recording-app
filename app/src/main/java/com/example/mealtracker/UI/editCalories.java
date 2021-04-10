@@ -49,7 +49,7 @@ public class editCalories extends AppCompatActivity {
     MealRecordManager mealRecordManager = MealRecordManager.getSingleton();
     MealRecord mealRecord = new MealRecord();
     ArrayList<Food> foods = new ArrayList<>();
-    MealRecord[] MRfoods = null;
+    ArrayList<MealRecord> MRfoods = new ArrayList<MealRecord>();
 
     private double calorieConsumed;
 
@@ -128,7 +128,7 @@ public class editCalories extends AppCompatActivity {
 
         // for each food entered in previous page (input food details)
         Log.d("before cal","noOfCardViews");
-        int noOfCardViews = MRfoods.length;
+        int noOfCardViews = MRfoods.size();
         Log.d("noOfCardViews",Integer.toString(noOfCardViews));
         for (int i=0; i<noOfCardViews; i++) {
             Log.d("int i =",Integer.toString(i)+"th cardView");

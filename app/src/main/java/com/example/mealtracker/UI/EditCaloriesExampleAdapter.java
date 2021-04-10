@@ -81,15 +81,15 @@ public class EditCaloriesExampleAdapter extends RecyclerView.Adapter<EditCalorie
         MealRecordManager mealRecordManager = MealRecordManager.getSingleton();
         MealRecord mealRecord = mealRecordManager.getMealRecord();
         //ArrayList<Food> foods = mealRecord.getFoods();
-        MealRecord[] foods = null;
+        ArrayList<MealRecord> foods = new ArrayList<MealRecord>();
         try {
             foods = mealRecord.queryByDate(LocalDate.now(), LocalDate.now());
         } catch (EmptyResultException e) {
             e.printStackTrace();
         }
-        holder.mTextView1.setText(foods[position].getFoods().toString().split("'")[1].split("'")[0]);
+        holder.mTextView1.setText(foods.get(position).getFoods().toString().split("'")[1].split("'")[0]);
         try {
-            totalCalorie = foods[position].getTotalCalorie();
+            totalCalorie = foods.get(position).getTotalCalorie();
         } catch (EmptyResultException e) {
             e.printStackTrace();
         }
