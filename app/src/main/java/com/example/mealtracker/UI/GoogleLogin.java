@@ -86,7 +86,12 @@ public class GoogleLogin extends AppCompatActivity{
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d("google","got google account");
                         Toast.makeText(getApplicationContext(), "Your Google Account is Connected to Meal Tracker", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        if (task.getResult().getAdditionalUserInfo().isNewUser() == true) {
+                            startActivity(new Intent(getApplicationContext(), setupHealthInfo.class));
+                        }
+                        else {
+                            startActivity(new Intent(getApplicationContext(), WelcomePage.class));
+                        }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
