@@ -6,29 +6,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <!--TextView
         android:id="@+id/myNutrientsTxt"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="30dp"
         android:layout_marginLeft="10dp"
         android:text="My Nutrients"
         android:textSize="30sp"
-        android:textStyle="bold" />
+        android:textStyle="bold" /-->
 
     <TextView
         android:id="@+id/myMealsMiniTxt"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/myNutrientsTxt"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="60dp"
         android:layout_marginLeft="10dp"
         android:text="Click on the date to see meals and nutrition information for that particular date."
         android:textSize="20sp" />
 
     <!-- TODO: Make the search accept input -->
 
-    <SearchView
+    <!--SearchView
         android:id="@+id/searchView"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
@@ -37,13 +36,22 @@
         android:layout_marginLeft="10dp"
         android:inputType="date"
         app:iconifiedByDefault="false"
-        android:background="@drawable/spinner_border"/>
+        android:background="@drawable/spinner_border"/-->
+
+    <DatePicker
+        android:id="@+id/datePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/myMealsMiniTxt"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="0dp"
+        android:datePickerMode="spinner" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/myMealsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/searchView"
+        android:layout_below="@id/datePicker"
         android:layout_marginTop="10dp"
         android:padding="8dp"
         android:clipToPadding="false"

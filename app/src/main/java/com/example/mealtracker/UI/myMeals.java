@@ -1,5 +1,6 @@
 package com.example.mealtracker.UI;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -59,6 +61,8 @@ public class myMeals extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_my_meals, container, false);
         getActivity().setTitle("My Meals");
+        DatePicker simpleDatePicker=(DatePicker)v.findViewById(R.id.datePicker);
+        simpleDatePicker.setSpinnersShown(false);
 
         mExampleList = new ArrayList<>();
         //mExampleList.add(new MyMealsExampleItem(mText1, mText2, mText3));
@@ -71,7 +75,7 @@ public class myMeals extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
-        mSearchView = v.findViewById(R.id.searchView);
+        //mSearchView = v.findViewById(R.id.searchView);
         Log.d("before","editsearchdate");
         //EditText editSearchDate = null;
         //Log.d("before2","editsearchdate");
@@ -83,11 +87,12 @@ public class myMeals extends Fragment {
         //get string from input
         //String searchDate = editSearchDate.getText().toString().trim();
 
-        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        /*mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                mSearchView = v.findViewById(R.id.searchView);
-                String searchDate = mSearchView.getQuery().toString();
+                //mSearchView = v.findViewById(R.id.searchView);
+                //String searchDate = mSearchView.getQuery().toString();
+
                 Log.d("searchDate",searchDate);
                 ArrayList<MealRecord> mealRecords = new ArrayList<MealRecord>();
                 //MealRecord[] mealRecords1 = null;
@@ -141,7 +146,7 @@ public class myMeals extends Fragment {
             public boolean onQueryTextChange(String newText) {
                 return false;
             }
-        });
+        });*/
         //addMoreCardviews(mealRecords.length);
         return v;
     }
