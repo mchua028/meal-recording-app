@@ -201,4 +201,3 @@ public class HealthInfo {
         return Database.getSingleton().queryHealthInfo();
     }
 }
-
