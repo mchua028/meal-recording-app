@@ -30,28 +30,21 @@ public class Recommender {
     /**
      * Calculates the lacked nutrient and get recommended food.
      * It must be used before accessing the attributes.
+     * @return HashMap<NutrientName(String), HashMap<(FoodName)String, (ContainInfoOfNutrient)Double>>
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public HashMap<String, Double> recommend() {
+    public HashMap<String, HashMap<String, Double>> recommend() {
         // calculate lacked nutrient
         Nutrient actualIntake = consumedNutrient;
         Nutrient suggestion = HealthInfo.getSingleton().getSuggestedNutrientIntakePerWeek();
         lackedNutrient = actualIntake.compare(suggestion);
         // get recommend from database
-        ArrayList<HashMap<String, Double>>results = new ArrayList<>();
+        HashMap<String, HashMap<String, Double>> results = new HashMap<>();
         for (Map.Entry<String, Double> entry : lackedNutrient.entrySet()) {
             String nutrientName = entry.getKey();
-            results.add(Database.getSingleton().queryRecommendFood(nutrientName));
+            results.put(nutrientName, Database.getSingleton().queryRecommendFood(nutrientName));
         }
-
-        HashMap<String, Double> returnVal = new HashMap<>();
-        for (HashMap<String, Double> map: results) {
-            for (Map.Entry<String, Double> entry: map.entrySet()) {
-                returnVal.put(entry.getKey(), entry.getValue());
-            }
-        }
-        recommendFood = returnVal;
-        return returnVal;
+        return results;
     }
 
     public Nutrient getConsumedNutrient() {
