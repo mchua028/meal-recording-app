@@ -43,7 +43,7 @@ public class Database {
     public final DataSnapshot[] dataSnapshot = {null, null};
     private HealthInfo healthInfo;
 
-    public  String userId = "5h9bCsAeG9TBgjw5LjPubECGnWy1";
+    public  String userId;  // this attribute only for testing purpose
 
     // for testing purpose
     private final String DATABASE_URL = "https://mealtracker-dc280-default-rtdb.firebaseio.com/";
@@ -58,7 +58,7 @@ public class Database {
         Log.d("firebaseauth","get instance");
         firebaseAuth = FirebaseAuth.getInstance();
         Log.d("get","userid");
-        userReference = database.getReference("Users").child(userId);
+        userReference = database.getReference("Users").child(firebaseAuth.getCurrentUser().getUid());
         Log.d("going","addvalueeventlistener");
         userReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -162,8 +162,7 @@ public class Database {
 
     /**
      * Update meal record to the server.
-     *
-     * @param mealRecord MealRecord
+     * @param mealRecord MealRecord, the id shouldn't be empty
      * Author : Wang Binli
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -193,23 +192,45 @@ public class Database {
     /**
      * Search meal record from database within the dates (inclusive)
      *
-     * @param startDate, LocalDate including only
+     * @param startDate, LocalDate
      * @param endDate,   LocalDate
      * @Author: Wang binli
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public MealRecord[] queryByDate(LocalDate startDate, LocalDate endDate) throws EmptyResultException {
         MealRecord[] mealRecords = queryAllMealRecords();
-//        ArrayList<MealRecord> results = new ArrayList<>();
-////        for (MealRecord mealRecord : mealRecords) {
-////            LocalDate date = mealRecord.getTime().toLocalDate();
-////            if (date.minusDays(7).isAfter(startDate) || date.plusDays(7).isBefore(endDate)) {
-////                results.add(mealRecord);
-////            }
-////        }
-//        MealRecord[] returnVals = new MealRecord[results.size()];
-//        returnVals = results.toArray(returnVals);
-        return mealRecords;
+        ArrayList<MealRecord> results = new ArrayList<>();
+        for (MealRecord mealRecord : mealRecords) {
+            LocalDate date = mealRecord.getTime().toLocalDate();
+            if (date.minusDays(7).isAfter(startDate) || date.plusDays(7).isBefore(endDate)) {
+                continue;
+            }
+            results.add(mealRecord);
+        }
+        MealRecord[] returnVals = new MealRecord[results.size()];
+        returnVals = results.toArray(returnVals);
+        return returnVals;
+    }
+
+    /**
+     * Queries all meal records within one day
+     * @param queryDate
+     * @return
+     * @throws EmptyResultException
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public MealRecord[] queryByDate(LocalDate queryDate) throws EmptyResultException{
+        MealRecord[] mealRecords = queryAllMealRecords();
+        ArrayList<MealRecord> results = new ArrayList<>();
+        for (MealRecord mealRecord : mealRecords) {
+            LocalDate date = mealRecord.getTime().toLocalDate();
+            if (queryDate.equals(date)) {
+                results.add(mealRecord);
+            }
+        }
+        MealRecord[] returnVals = new MealRecord[results.size()];
+        returnVals = results.toArray(returnVals);
+        return returnVals;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

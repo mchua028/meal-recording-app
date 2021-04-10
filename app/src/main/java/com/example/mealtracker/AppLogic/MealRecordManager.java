@@ -175,13 +175,12 @@ public class MealRecordManager {
 
 
     /**
-     *
-     * @param idInList
-     * @param newInfo
+     * Updates meal record
+     * @param mealRecord MealRecord to edit
      */
-    public void editMealRecord(double idInList, Food[] newInfo) {
-
-        // TODO - implement com.example.healthtracker.business_layer.MealRecordManager.editMealRecord
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void editMealRecord(MealRecord mealRecord) {
+        Database.getSingleton().updateMealRecord(mealRecord);
     }
 
     /**
@@ -293,5 +292,10 @@ public class MealRecordManager {
             nutrient = mealRecord.addWithNutrient(nutrient);
         }
         return nutrient;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public MealRecord[] queryFood(LocalDate date) throws EmptyResultException {
+        return Database.getSingleton().queryByDate(date);
     }
 }
