@@ -43,7 +43,7 @@ public class Database {
     public final DataSnapshot[] dataSnapshot = {null, null};
     private HealthInfo healthInfo;
 
-    public  String userId = "lvOInQbGwdMcWFnfeag6CMP2flw2";
+    public  String userId = "5h9bCsAeG9TBgjw5LjPubECGnWy1";
 
     // for testing purpose
     private final String DATABASE_URL = "https://mealtracker-dc280-default-rtdb.firebaseio.com/";
