@@ -1,8 +1,10 @@
 package com.example.mealtracker.UI;
 
+import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,8 +58,10 @@ public class myMeals extends Fragment {
     private TextView mText3;
     //private SearchView mSearchView;
 
-    DatePicker datePicker;
+    DatePickerDialog datePicker;
     Button searchMealBtn;
+    EditText editDate;
+
 
     MealRecordManager mealRecordManager = MealRecordManager.getSingleton();
 
@@ -68,7 +72,7 @@ public class myMeals extends Fragment {
         View v = inflater.inflate(R.layout.fragment_my_meals, container, false);
         Log.d("inside","oncreateview");
         getActivity().setTitle("My Meals");
-        datePicker=(DatePicker)v.findViewById(R.id.datePicker);
+        //datePicker=(DatePicker)v.findViewById(R.id.datePicker);
         searchMealBtn=(Button)v.findViewById(R.id.searchMealsBtn);
 
         //simpleDatePicker.setSpinnersShown(false);
@@ -84,18 +88,47 @@ public class myMeals extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
+        editDate=(EditText) v.findViewById(R.id.editDate);
+        editDate.setInputType(InputType.TYPE_NULL);
+        editDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar cldr = Calendar.getInstance();
+                int day = cldr.get(Calendar.DAY_OF_MONTH);
+                int month = cldr.get(Calendar.MONTH);
+                int year = cldr.get(Calendar.YEAR);
+                // date picker dialog
+                datePicker = new DatePickerDialog(getActivity(),
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                editDate.setText(dayOfMonth + "/" + (monthOfYear+1) + "/" + year);
+                            }
+                        }, year, month, day);
+                datePicker.show();
+            }
+        });
+
         searchMealBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("inside","onClickListener");
-                int searchYear = datePicker.getYear();
+                //int searchYear = datePicker.getYear();
+                String date = editDate.getText().toString();
+                Log.d("editdate",date+"hiii");
                 Log.d("got","datefromdatepicker");
-                int searchMonth = datePicker.getMonth();
-                int searchDay = datePicker.getDayOfMonth();
+                int  searchDay = Integer.parseInt(date.split("/")[0]);
+                int searchMonth = Integer.parseInt(date.split("/")[1])-1;
+                Log.d("searchMonth",Integer.toString(searchMonth)+"hiii");
+                int searchYear = Integer.parseInt(date.split("/")[2]);
+                //int searchMonth = datePicker.getMonth();
+                //int searchDay = datePicker.getDayOfMonth();
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(searchYear, searchMonth, searchDay);
+                Log.d("calendar",calendar.getTime()+"hiii");
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                 String formatedDate = sdf.format(calendar.getTime());
+                Log.d("formtaeddate",formatedDate+"hiii");
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
                 LocalDate startDate = LocalDate.parse(formatedDate,formatter);
                 LocalDate endDate = startDate;
@@ -235,7 +268,9 @@ public class myMeals extends Fragment {
     // insert card views
     public void insertItem(int position) {
         Log.d("insert item","position is" + position);
-
+        if(position>0) {
+            mExampleList.remove(position - 1);
+        }
         mExampleList.add(position, new MyMealsExampleItem(mText1, mText2, mText3));
 
         mAdapter.notifyItemInserted(position);

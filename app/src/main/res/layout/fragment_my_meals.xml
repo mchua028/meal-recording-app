@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:scrollbars="vertical">
 
     <!--TextView
         android:id="@+id/myNutrientsTxt"
@@ -42,7 +43,8 @@
         android:text="Click on the date to see meals and nutrition information for that particular date."
         android:textSize="20sp" />
 
-    <DatePicker
+
+    <!--DatePicker
         android:id="@+id/datePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -53,13 +55,24 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="30dp"
-        android:datePickerMode="calendar" />
+        android:datePickerMode="calendar" /-->
+
+
+    <EditText
+        android:id="@+id/editDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/myMealsMiniTxt"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="Enter Date" />
 
     <Button
         android:id="@+id/searchMealsBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/datePicker"
+        android:layout_below="@+id/editDate"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="114dp"
@@ -74,10 +87,9 @@
         android:layout_height="match_parent"
         android:layout_below="@id/searchMealsBtn"
         android:layout_marginTop="10dp"
-        android:padding="8dp"
+        android:background="@color/real_grey"
         android:clipToPadding="false"
-        android:scrollbars="vertical"
-        android:background="@color/real_grey"/>
-
+        android:padding="8dp"
+        android:scrollbars="vertical" />
 
 </RelativeLayout>
