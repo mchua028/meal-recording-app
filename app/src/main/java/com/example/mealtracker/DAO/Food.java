@@ -18,6 +18,7 @@ import com.example.mealtracker.Exceptions.HttpsErrorException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.ssl.SSLSocketFactory;
@@ -216,10 +217,11 @@ public class Food {
             // upload the image file
             Log.d("before","upload image");
             MultipartEntity reqEntity = new MultipartEntity();
+            //reqEntity.addPart(new InputStreamBody(img));
             reqEntity.addPart("image", new InputStreamBody(img, "data_recognition.jpeg"));
             Log.d("middle","upload image");
 
-            httppost.setEntity(reqEntity);
+            //httppost.setEntity(new UrlEncodedFormEntity(img));
             Log.d("after","upload image");
 
             // add the line below, otherwise the error is happening

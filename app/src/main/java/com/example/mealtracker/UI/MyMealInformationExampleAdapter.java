@@ -57,19 +57,20 @@ public class MyMealInformationExampleAdapter extends RecyclerView.Adapter<MyMeal
         holder.mTextView1.setText(food.getName());
         holder.mTextView2.setText(Double.toString(food.getActualIntake()));
         String nutritionAmt = "";
-        nutritionAmt+=Double.toString(food.getNutrients().getCaloriePer100g());
+        //nutritionAmt+=Double.toString(food.getNutrients().getCaloriePer100g())+"kcal";
+        nutritionAmt+=Double.toString(food.getTotalCalorie())+" kcal";
         Log.d("nutritionAmt",nutritionAmt);
-        nutritionAmt+="\n"+Double.toString(food.getNutrients().getFat());
-        nutritionAmt+="\n"+Double.toString(food.getNutrients().getCholesterol());
-        nutritionAmt+="\n"+Double.toString(food.getNutrients().getSodium());
-        nutritionAmt+="\n"+Double.toString(food.getNutrients().getPotassium());
-        nutritionAmt+="\n"+Double.toString(food.getNutrients().getSugar());
-        nutritionAmt+="\n"+Double.toString(food.getNutrients().getDietaryFibre());
-        nutritionAmt+="\n"+Double.toString(food.getNutrients().getProtein());
-        nutritionAmt+="\n"+Double.toString(food.getNutrients().getCalcium());
-        nutritionAmt+="\n"+Double.toString(food.getNutrients().getVitaminC());
-        nutritionAmt+="\n"+Double.toString(food.getNutrients().getIron());
-        nutritionAmt+="\n"+Double.toString(food.getNutrients().getMagnesium());
+        nutritionAmt+="\n"+String.format("%.2f", food.getNutrients().getFat()*food.getActualIntake()/100)+" g";
+        nutritionAmt+="\n"+String.format("%.2f", food.getNutrients().getCholesterol()*food.getActualIntake()/100)+" mg";
+        nutritionAmt+="\n"+String.format("%.2f", food.getNutrients().getSodium()*food.getActualIntake()/100)+" mg";
+        nutritionAmt+="\n"+String.format("%.2f", food.getNutrients().getPotassium()*food.getActualIntake()/100)+" mg";
+        nutritionAmt+="\n"+String.format("%.2f", food.getNutrients().getSugar()*food.getActualIntake()/100)+" g";
+        nutritionAmt+="\n"+String.format("%.2f", food.getNutrients().getDietaryFibre()*food.getActualIntake()/100)+" g";
+        nutritionAmt+="\n"+String.format("%.2f", food.getNutrients().getProtein()*food.getActualIntake()/100)+" g";
+        nutritionAmt+="\n"+String.format("%.2f", food.getNutrients().getCalcium()*food.getActualIntake()/100)+" mg";
+        nutritionAmt+="\n"+String.format("%.2f", food.getNutrients().getVitaminC()*food.getActualIntake()/100)+" mg";
+        nutritionAmt+="\n"+String.format("%.2f", food.getNutrients().getIron()*food.getActualIntake()/100)+" mg";
+        nutritionAmt+="\n"+String.format("%.2f", food.getNutrients().getMagnesium()*food.getActualIntake()/100)+" mg";
         holder.mTextView4.setText(nutritionAmt);
     }
 

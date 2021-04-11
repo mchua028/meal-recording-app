@@ -3,6 +3,7 @@ package com.example.mealtracker.UI;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -57,6 +58,7 @@ public class setupHealthInfo extends AppCompatActivity {
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+                return;
             }
         });
 
@@ -85,6 +87,7 @@ public class setupHealthInfo extends AppCompatActivity {
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+                return;
             }
         });
     }
@@ -111,6 +114,58 @@ public class setupHealthInfo extends AppCompatActivity {
         String weightInput = textInputWeight.getEditText().getText().toString().trim();
         String ageInput = textInputAge.getEditText().getText().toString().trim();
         String goalWeightInput = textInputGoalWeight.getEditText().getText().toString().trim();
+
+        if (gender=="Select a gender "){
+            Toast.makeText(view.getContext(), "Please select a gender", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (TextUtils.isEmpty(ageInput)){
+            textInputAge.setError("Age is required.");
+            return;
+        }
+
+        if (Double.parseDouble(ageInput)<=0 || Double.parseDouble(ageInput)>=200){
+            textInputAge.setError("Invalid age.");
+            return;
+        }
+
+        if (TextUtils.isEmpty(heightInput)){
+            textInputHeight.setError("Height is required.");
+            return;
+        }
+
+        if (Double.parseDouble(heightInput)<=0 || Double.parseDouble(heightInput)>=300){
+            textInputHeight.setError("Invalid height.");
+            return;
+        }
+
+        if (TextUtils.isEmpty(weightInput)){
+            textInputWeight.setError("Weight is required.");
+            return;
+        }
+
+        if (Double.parseDouble(weightInput)<=0 || Double.parseDouble(weightInput)>=500){
+            textInputWeight.setError("Invalid weight.");
+            return;
+        }
+
+        if (TextUtils.isEmpty(goalWeightInput)){
+            textInputGoalWeight.setError("Goal weight loss per month is required.");
+            return;
+        }
+
+
+        if  (Double.parseDouble(goalWeightInput)>=4){
+            textInputGoalWeight.setError("Goal weight loss per month is too unhealthy!");
+            return;
+        }
+
+
+        if (activity=="Select an activity "){
+            Toast.makeText(view.getContext(), "Please select an activity", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         HealthInfoManager healthInfoManager = new HealthInfoManager();
         HashMap<String, String> info = new HashMap<String, String>();
