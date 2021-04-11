@@ -26,8 +26,20 @@
         android:textSize="30sp"
         android:textStyle="bold"/>
 
+    <TextView
+        android:id="@+id/noFoodToRecommend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/foodRecommendationsTxt"
+        android:layout_marginTop="230dp"
+        android:layout_marginLeft="10dp"
+        android:layout_centerHorizontal="true"
+        android:text="No meal record found! \Please add food to get recommendations!"
+        android:textAlignment="center"
+        android:textSize="25sp" />
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/myMealsRecyclerView"
+        android:id="@+id/foodRecRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/foodRecommendationsTxt"
