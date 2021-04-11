@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -145,10 +146,15 @@ public class accountAndSettings extends Fragment {
 
         int genderPosition;
         if (HealthInfo.getSingleton().getGender() == Gender.FEMALE){
+            Log.d("gender", "female");
             genderPosition = gender_adapter.getPosition("Female");
         }
 
-        else genderPosition = gender_adapter.getPosition("Male");
+        else {
+            Log.d("gender", "male");
+            genderPosition = gender_adapter.getPosition("Male");
+        }
+
         gender_spinner.setSelection(genderPosition);
 
         //int activityPosition = activity_adapter.getPosition(HealthInfo.getSingleton().getDailyActivityLevel().name());
