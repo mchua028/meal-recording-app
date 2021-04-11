@@ -20,6 +20,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.mealtracker.DAO.Food;
+import com.example.mealtracker.UI.MainActivity;
+import com.example.mealtracker.UI.MyMealInformation;
+import com.example.mealtracker.UI.myCalories;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -39,6 +43,7 @@ public class GalleryFragment extends Fragment {
     private static final int RESULT_OK = -1;
     private Button mChooseImageBtn;
     private Button mUploadBtn;
+    private Button mCountCaloriesBtn;
     private EditText mEditTextFileName;
     private ImageView mImageView;
     private ProgressBar mProgressBar;
@@ -56,6 +61,7 @@ public class GalleryFragment extends Fragment {
 
         mChooseImageBtn = view.findViewById(R.id.chooseImageBtn);
         mUploadBtn = view.findViewById(R.id.uploadBtn);
+        mCountCaloriesBtn = view.findViewById(R.id.galleryCountCaloriesBtn);
         mEditTextFileName = view.findViewById(R.id.editTextFileName);
         mImageView = view.findViewById(R.id.imageView);
         mProgressBar = view.findViewById(R.id.progressBar);
@@ -76,10 +82,22 @@ public class GalleryFragment extends Fragment {
                 uploadFile();
             }
         });
-        
+
+        mCountCaloriesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Food.searchFoodsFromImg()
+            }
+        });
+
         return view;
     }
-    
+
+    public void goToMyMealInformation(View view) {
+        Intent intent = new Intent(getContext(), MyMealInformation.class);
+        startActivity(intent);
+    }
+
     private void openFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");

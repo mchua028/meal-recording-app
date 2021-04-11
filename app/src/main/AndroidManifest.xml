@@ -17,7 +17,8 @@
         android:roundIcon="@drawable/outline_ramen_dining_24"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".UI.WelcomePage"></activity>
+        <activity android:name=".UI.FoodRecommendationsExampleItem"></activity>
+        <activity android:name=".UI.WelcomePage" />
         <activity android:name=".EditCaloriesExampleItem" />
         <activity android:name=".UI.MyMealInformation" />
         <activity android:name=".UI.ChangePassword" />

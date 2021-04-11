@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="8dp"
+    android:divider="@android:color/transparent"
+    android:dividerHeight="0.0px"
+    android:clipToPadding="false"
+    android:clipChildren="false"
+    app:cardElevation="10dp"
+    app:cardPreventCornerOverlap="false"
+    app:cardCornerRadius="4dp"
+    android:layout_marginBottom="4dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="4dp">
+
+        <TextView
+            android:id="@+id/foodRecFoodLabel"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:text="Food"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/foodRecFoodWeight"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="-10dp"
+            android:text="Weight"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/foodRecNutrientName"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/foodRecFoodLabel"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:text="Calorie per 100g\nFat\nCholesterol\nSodium
+            \nPotassium\nSugar\nDietary fibre\nProtein\nCalcium\nVitamin C\nIron\nMagnesium"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/foodRecNutrientWeight"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/foodRecFoodWeight"
+            android:gravity="right"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="-10dp"
+            android:text="Weight 1\nWeight 2"
+            android:textSize="20sp"/>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

@@ -26,6 +26,8 @@ import androidx.fragment.app.Fragment;
 import com.example.mealtracker.DAO.Food;
 import com.example.mealtracker.Exceptions.EmptyResultException;
 import com.example.mealtracker.Exceptions.HttpsErrorException;
+import com.example.mealtracker.UI.MainActivity;
+import com.example.mealtracker.UI.MyMealInformation;
 import com.example.mealtracker.UI.uploadPicture;
 
 import org.apache.http.entity.mime.HttpMultipartMode;
@@ -68,6 +70,8 @@ public class CameraFragment extends Fragment {
     private Uri mImageUri;
     String currentPhotoPath;
 
+    private Button mCountCaloriesBtn;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -75,6 +79,7 @@ public class CameraFragment extends Fragment {
         Log.d(TAG, "onCreateView: started.");
 
         mImageView = view.findViewById(R.id.cameraImageView);
+        mCountCaloriesBtn = view.findViewById(R.id.cameraCountCaloriesBtn);
 
         Button launchCameraBtn = (Button) view.findViewById(R.id.launchCameraBtn);
         launchCameraBtn.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +100,19 @@ public class CameraFragment extends Fragment {
                 }
             }
         });
+
+        mCountCaloriesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+
         return view;
+    }
+
+    public void goToMyMealInformation(View view) {
+        Intent intent = new Intent(getContext(), MyMealInformation.class);
+        startActivity(intent);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
