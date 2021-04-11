@@ -151,6 +151,7 @@ public class Register extends AppCompatActivity {
                     Log.d("verifyemail","successful");
                     Database.getSingleton().postNewAccount();
 
+
                     //startActivity(goToSetupHealthInfo);
                 }
                 else{
