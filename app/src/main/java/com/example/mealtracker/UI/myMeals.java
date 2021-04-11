@@ -74,7 +74,9 @@ public class myMeals extends Fragment {
         Log.d("inside","oncreateview");
         getActivity().setTitle("My Meals");
         //datePicker=(DatePicker)v.findViewById(R.id.datePicker);
+
         searchMealBtn=(Button)v.findViewById(R.id.searchMealsBtn);
+        searchMealBtn.setVisibility(View.GONE);
 
         //simpleDatePicker.setSpinnersShown(false);
 
@@ -90,7 +92,9 @@ public class myMeals extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
 
         editDate=(EditText) v.findViewById(R.id.editDate);
+
         editDate.setInputType(InputType.TYPE_NULL);
+        editDate.setText(null);
         editDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,6 +111,7 @@ public class myMeals extends Fragment {
                             }
                         }, year, month, day);
                 datePicker.show();
+                searchMealBtn.setVisibility(View.VISIBLE);
             }
         });
 
@@ -115,7 +120,10 @@ public class myMeals extends Fragment {
             public void onClick(View v) {
                 Log.d("inside","onClickListener");
                 //int searchYear = datePicker.getYear();
+
                 String date = editDate.getText().toString();
+
+
                 Log.d("editdate",date+"hiii");
                 Log.d("got","datefromdatepicker");
                 int  searchDay = Integer.parseInt(date.split("/")[0]);
@@ -173,6 +181,7 @@ public class myMeals extends Fragment {
                 Log.d("after","trycatch");
                 if(mealRecords.size()==0){
                     Toast.makeText(getActivity(),"There are no meal records for the chosen date",Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 //if(mealRecords1.length==0){
                  //   Toast.makeText(getActivity(),"There are no meal records for the chosen date",Toast.LENGTH_SHORT).show();

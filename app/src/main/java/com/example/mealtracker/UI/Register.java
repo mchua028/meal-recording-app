@@ -77,6 +77,7 @@ public class Register extends AppCompatActivity {
 
         if (!usernameInput.matches("^[0-9a-zA-Z]*$")){
             textInputUsername.setError("Username must only contain alphabets and numbers.");
+            return;
         }
 
         if (TextUtils.isEmpty(firstNameInput)){
@@ -84,8 +85,9 @@ public class Register extends AppCompatActivity {
             return;
         }
 
-        if (!firstNameInput.matches("^[a-zA-Z]*$")){
+        if (!firstNameInput.matches("^[a-zA-Z ]*$")){
             textInputFirstName.setError("First name must only contain alphabets.");
+            return;
         }
 
         if (TextUtils.isEmpty(lastNameInput)){
@@ -93,8 +95,9 @@ public class Register extends AppCompatActivity {
             return;
         }
 
-        if (!lastNameInput.matches("^[a-zA-Z]*$")){
+        if (!lastNameInput.matches("^[a-zA-Z ]*$")){
             textInputLastName.setError("Last name must only contain alphabets.");
+            return;
         }
 
         if (TextUtils.isEmpty(emailInput)){

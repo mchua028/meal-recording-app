@@ -104,6 +104,7 @@ dependencies {
 
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'com.google.firebase:firebase-storage:19.2.2'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
 
     testImplementation 'junit:junit:4.+'

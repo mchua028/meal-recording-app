@@ -3,6 +3,7 @@ package com.example.mealtracker.UI;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -174,6 +175,26 @@ public class accountAndSettings extends Fragment {
                 String weightInput = editWeight.getText().toString().trim();
                 String ageInput = editAge.getText().toString().trim();
                 String goalWeightInput = editGoalWeight.getText().toString().trim();
+
+                if (Double.parseDouble(ageInput)<=0 || Double.parseDouble(ageInput)>=200){
+                    textInputAge.setError("Invalid age.");
+                    return;
+                }
+
+                if (Double.parseDouble(heightInput)<=0 || Double.parseDouble(heightInput)>=300){
+                    textInputHeight.setError("Invalid height.");
+                    return;
+                }
+
+                if (Double.parseDouble(weightInput)<=0 || Double.parseDouble(weightInput)>=500){
+                    textInputWeight.setError("Invalid weight.");
+                    return;
+                }
+
+                if  (Double.parseDouble(goalWeightInput)>=4){
+                    textInputGoalWeight.setError("Goal weight loss per month is too unhealthy!");
+                    return;
+                }
 
                 HealthInfoManager healthInfoManager = new HealthInfoManager();
                 HashMap<String, String> info = new HashMap<String, String>();
