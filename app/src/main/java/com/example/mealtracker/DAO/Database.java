@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -155,8 +156,9 @@ public class Database {
      * Author : Tang Yuting
      */
     public void deleteMealRecord(MealRecord mealRecord) {
-        DatabaseReference mealRecordReference = this.mealRecordReference.child(mealRecord.getId());
-        mealRecordReference.setValue(null);  // the deletion operation mentioned in Firebase api
+        Log.d("mealrecordref","mealrecordred"+getUserReference());
+        DatabaseReference mealRecordToDelete = getUserReference().child("MealRecords").child(mealRecord.getId());
+        mealRecordToDelete.setValue(null);  // the deletion operation mentioned in Firebase api
     }
 
 
@@ -197,8 +199,8 @@ public class Database {
      * @Author: Wang binli
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public MealRecord[] queryByDate(LocalDate startDate, LocalDate endDate) throws EmptyResultException {
-        MealRecord[] mealRecords = queryAllMealRecords();
+    public ArrayList<MealRecord> queryByDate(LocalDate startDate, LocalDate endDate) throws EmptyResultException {
+        ArrayList<MealRecord> mealRecords = queryAllMealRecords();
         ArrayList<MealRecord> results = new ArrayList<>();
         for (MealRecord mealRecord : mealRecords) {
             LocalDate date = mealRecord.getTime().toLocalDate();
@@ -207,9 +209,7 @@ public class Database {
             }
             results.add(mealRecord);
         }
-        MealRecord[] returnVals = new MealRecord[results.size()];
-        returnVals = results.toArray(returnVals);
-        return returnVals;
+        return results;
     }
 
     /**
@@ -219,8 +219,8 @@ public class Database {
      * @throws EmptyResultException
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public MealRecord[] queryByDate(LocalDate queryDate) throws EmptyResultException{
-        MealRecord[] mealRecords = queryAllMealRecords();
+    public ArrayList<MealRecord> queryByDate(LocalDate queryDate) throws EmptyResultException{
+        ArrayList<MealRecord> mealRecords = queryAllMealRecords();
         ArrayList<MealRecord> results = new ArrayList<>();
         for (MealRecord mealRecord : mealRecords) {
             LocalDate date = mealRecord.getTime().toLocalDate();
@@ -228,15 +228,13 @@ public class Database {
                 results.add(mealRecord);
             }
         }
-        MealRecord[] returnVals = new MealRecord[results.size()];
-        returnVals = results.toArray(returnVals);
-        return returnVals;
+        return results;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public MealRecord[] queryAllMealRecords() throws EmptyResultException {
+    public ArrayList<MealRecord> queryAllMealRecords() throws EmptyResultException {
         ArrayList<MealRecord> mealRecords = parseMealRecords(dataSnapshot[0].child("MealRecords"));
-        return mealRecords.toArray(new MealRecord[0]);
+        return mealRecords;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
