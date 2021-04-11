@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.mealtracker.AppLogic.HealthInfoManager;
 import com.example.mealtracker.DAO.HealthInfo;
+import com.example.mealtracker.Gender;
 import com.example.mealtracker.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.TextInputLayout;
@@ -141,18 +142,24 @@ public class accountAndSettings extends Fragment {
         editGoalWeight.setText(Double.toString(HealthInfo.getSingleton().getGoalWeight()));
 
         // TODO: display old information from Gender spinner and Activity spinner
-        /*
-        int genderPosition = gender_adapter.getPosition(HealthInfo.getSingleton().getGender().name());
+
+        int genderPosition;
+        if (HealthInfo.getSingleton().getGender() == Gender.FEMALE){
+            genderPosition = gender_adapter.getPosition("Female");
+        }
+
+        else genderPosition = gender_adapter.getPosition("Male");
         gender_spinner.setSelection(genderPosition);
-        int activityPosition = activity_adapter.getPosition(HealthInfo.getSingleton().getDailyActivityLevel().name());
-        activity_spinner.setSelection(activityPosition);
+
+        //int activityPosition = activity_adapter.getPosition(HealthInfo.getSingleton().getDailyActivityLevel().name());
+        //activity_spinner.setSelection(activityPosition);
 
 
         String compareValue = HealthInfo.getSingleton().getGender().name();
         if (compareValue != null) {
             int spinnerPosition = gender_adapter.getPosition(compareValue);
             gender_spinner.setSelection(spinnerPosition);
-        }*/
+        }
 
         /**
          * Submit button:

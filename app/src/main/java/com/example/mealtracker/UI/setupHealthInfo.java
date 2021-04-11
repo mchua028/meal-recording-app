@@ -27,7 +27,8 @@ import java.util.List;
 // todo: check the input validity
 public class setupHealthInfo extends AppCompatActivity {
 
-    private String gender, activity;
+    private String gender = null;
+    private String activity = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +50,7 @@ public class setupHealthInfo extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (parent.getItemAtPosition(position).equals("Select a gender ")) {
+                    gender = null;
                 } else {
                     String item = parent.getItemAtPosition(position).toString();
                     gender = item;
@@ -58,7 +60,7 @@ public class setupHealthInfo extends AppCompatActivity {
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                return;
+                //return;
             }
         });
 
@@ -79,6 +81,7 @@ public class setupHealthInfo extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (parent.getItemAtPosition(position).equals("Select an activity ")) {
+                    activity = null;
                 } else {
                     String item = parent.getItemAtPosition(position).toString();
                     activity = item;
@@ -87,7 +90,7 @@ public class setupHealthInfo extends AppCompatActivity {
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                return;
+                //return;
             }
         });
     }
@@ -115,7 +118,7 @@ public class setupHealthInfo extends AppCompatActivity {
         String ageInput = textInputAge.getEditText().getText().toString().trim();
         String goalWeightInput = textInputGoalWeight.getEditText().getText().toString().trim();
 
-        if (gender=="Select a gender "){
+        if (gender==null){
             Toast.makeText(view.getContext(), "Please select a gender", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -156,13 +159,13 @@ public class setupHealthInfo extends AppCompatActivity {
         }
 
 
-        if  (Double.parseDouble(goalWeightInput)>=4){
+        if (Double.parseDouble(goalWeightInput)>=4){
             textInputGoalWeight.setError("Goal weight loss per month is too unhealthy!");
             return;
         }
 
 
-        if (activity=="Select an activity "){
+        if (activity==null){
             Toast.makeText(view.getContext(), "Please select an activity", Toast.LENGTH_SHORT).show();
             return;
         }
