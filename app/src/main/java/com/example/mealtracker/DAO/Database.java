@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
 
 import java.lang.reflect.Array;
 import java.time.LocalDate;
@@ -43,6 +44,9 @@ public class Database {
     private FirebaseAuth firebaseAuth;
     public final DataSnapshot[] dataSnapshot = {null, null};
     private HealthInfo healthInfo;
+
+    private DatabaseReference imageUpload;
+    public static int numOfUploads;
 
     public  String userId;  // this attribute only for testing purpose
 
@@ -84,6 +88,23 @@ public class Database {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 dataSnapshot[1] = snapshot;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        /**
+         * to obtain numOfUploads to effectively have different names for each image in GalleryFragmentUpload
+         */
+        imageUpload = database.getReference().child("Uploads");
+        Query qImageUpload = imageUpload.orderByKey();
+        qImageUpload.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                numOfUploads = (int) snapshot.getChildrenCount();
             }
 
             @Override
