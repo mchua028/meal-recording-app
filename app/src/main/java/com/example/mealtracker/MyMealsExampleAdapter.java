@@ -17,6 +17,7 @@ import com.example.mealtracker.DAO.MealRecord;
 
 import java.lang.reflect.Array;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -75,11 +76,12 @@ public class MyMealsExampleAdapter extends RecyclerView.Adapter<MyMealsExampleAd
         for(int i=0;i<mealRecords.size();i++){
             //Log.d("time",mealRecords.get(i).getTimeString().split("T'")[1]);
               //  time = mealRecords.get(i).getTimeString().split("T'")[1];
-            String hour = Integer.toString(mealRecords.get(i).getTime().getHour());
-            String min = Integer.toString(mealRecords.get(i).getTime().getMinute());
-            String sec = Integer.toString(mealRecords.get(i).getTime().getSecond());
+            //String hour = Integer.toString(mealRecords.get(i).getTime().getHour());
+            //String min = Integer.toString(mealRecords.get(i).getTime().getMinute());
+            //String sec = Integer.toString(mealRecords.get(i).getTime().getSecond());
 
-                foodTimes += hour+":"+min+":"+sec+"\n\n\n\n";
+                //foodTimes += hour+":"+min+":"+sec+"\n\n\n\n";
+                foodTimes += mealRecords.get(i).getTime().toLocalTime().truncatedTo(ChronoUnit.SECONDS)+"\n\n\n\n";
             }
 
         /*MealRecord[] mealRecords1 = mealRecordManager.getMealRecords1();
