@@ -154,8 +154,15 @@ public class myCalories extends Fragment {
         yAxisLeft.setAxisMinimum(0);
         yAxisRight.setAxisMinimum(0);
         double suggestedCalorieToThousand = Math.ceil(suggestedCalorie/500)*500;
-        yAxisLeft.setAxisMaximum((float) suggestedCalorieToThousand);
-        yAxisRight.setAxisMaximum((float) suggestedCalorieToThousand);
+        // if user eats below suggestedCalorie
+        if (calorieConsumed < suggestedCalorie) {
+            yAxisLeft.setAxisMaximum((float) suggestedCalorieToThousand);
+            yAxisRight.setAxisMaximum((float) suggestedCalorieToThousand);
+        }
+        else {
+            yAxisLeft.setAxisMaximum((float) calorieConsumed + 500);
+            yAxisRight.setAxisMaximum((float) calorieConsumed + 500);
+        }
 
         // get max calories as limit
         LimitLine mLimitLine = new LimitLine((float) suggestedCalorie);
