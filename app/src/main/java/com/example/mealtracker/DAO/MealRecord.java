@@ -111,12 +111,12 @@ public class MealRecord {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static ArrayList<MealRecord> queryByDate (LocalDate startDate, LocalDate endDate) throws EmptyResultException {
-        return new ArrayList<>(Arrays.asList(Database.getSingleton().queryByDate(startDate, endDate)));
+        return new ArrayList<MealRecord>(Database.getSingleton().queryByDate(startDate, endDate));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static ArrayList<MealRecord> queryAll() throws EmptyResultException {
-        return new ArrayList<>(Arrays.asList(Database.getSingleton().queryAllMealRecords()));
+        return new ArrayList<MealRecord>(Database.getSingleton().queryAllMealRecords());
     }
 
     /**

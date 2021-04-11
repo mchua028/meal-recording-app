@@ -47,7 +47,7 @@ public class MealRecordManager {
     public double getCalorieConsumedToday() {
         double total = 0;
         try {
-            MealRecord[] allMealRecords = Database.getSingleton().queryAllMealRecords();
+            ArrayList<MealRecord> allMealRecords = Database.getSingleton().queryAllMealRecords();
             for (MealRecord mealRecord: allMealRecords) {
                 if (LocalDate.now().equals(LocalDate.from(mealRecord.getTime()))) {
                     total += mealRecord.getTotalCalorie();
@@ -302,7 +302,7 @@ public class MealRecordManager {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public MealRecord[] queryFood(LocalDate date) throws EmptyResultException {
+    public ArrayList<MealRecord> queryFood(LocalDate date) throws EmptyResultException {
         return Database.getSingleton().queryByDate(date);
     }
 }
