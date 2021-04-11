@@ -96,7 +96,6 @@ public class HealthInfo {
 
     public void calculateCalorie() {
         double bmr = 0;
-        double new_weight;
 
         if (getGender() == Gender.FEMALE) {
             bmr = 9.247*getWeight() + 3.098*getHeight() - 4.330*getAge() + 447.593;

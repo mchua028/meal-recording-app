@@ -22,6 +22,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.example.mealtracker.Activity;
 import com.example.mealtracker.AppLogic.HealthInfoManager;
 import com.example.mealtracker.DAO.HealthInfo;
 import com.example.mealtracker.Gender;
@@ -74,6 +75,19 @@ public class accountAndSettings extends Fragment {
         gender_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         gender_spinner.setAdapter(gender_adapter);
         gender_spinner.setPrompt("Gender: ");
+
+        int genderPosition;
+        if (HealthInfo.getSingleton().getGender() == Gender.FEMALE){
+            Log.d("gender", "female");
+            genderPosition = gender_adapter.getPosition("Female");
+        }
+
+        else {
+            Log.d("gender", "male");
+            genderPosition = gender_adapter.getPosition("Male");
+        }
+
+        gender_spinner.setSelection(genderPosition);
         gender_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -103,6 +117,22 @@ public class accountAndSettings extends Fragment {
         activity_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         activity_spinner.setAdapter(activity_adapter);
         activity_spinner.setPrompt("Activity: ");
+
+        int activityPosition;
+        if (HealthInfo.getSingleton().getDailyActivityLevel() == Activity.NONE){
+            activityPosition = activity_adapter.getPosition("None");
+        }
+        else if (HealthInfo.getSingleton().getDailyActivityLevel() == Activity.LITTLE){
+            activityPosition = activity_adapter.getPosition("Little");
+        }
+        else if (HealthInfo.getSingleton().getDailyActivityLevel() == Activity.MODERATE){
+            activityPosition = activity_adapter.getPosition("Moderate");
+        }
+        else {
+            activityPosition = activity_adapter.getPosition("High");
+        }
+        activity_spinner.setSelection(activityPosition);
+
         activity_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -144,28 +174,6 @@ public class accountAndSettings extends Fragment {
 
         // TODO: display old information from Gender spinner and Activity spinner
 
-        int genderPosition;
-        if (HealthInfo.getSingleton().getGender() == Gender.FEMALE){
-            Log.d("gender", "female");
-            genderPosition = gender_adapter.getPosition("Female");
-        }
-
-        else {
-            Log.d("gender", "male");
-            genderPosition = gender_adapter.getPosition("Male");
-        }
-
-        gender_spinner.setSelection(genderPosition);
-
-        //int activityPosition = activity_adapter.getPosition(HealthInfo.getSingleton().getDailyActivityLevel().name());
-        //activity_spinner.setSelection(activityPosition);
-
-
-        String compareValue = HealthInfo.getSingleton().getGender().name();
-        if (compareValue != null) {
-            int spinnerPosition = gender_adapter.getPosition(compareValue);
-            gender_spinner.setSelection(spinnerPosition);
-        }
 
         /**
          * Submit button:
