@@ -24,6 +24,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.HashMap;
 
+import static android.view.View.Z;
+
 public class Register extends AppCompatActivity {
 
     @Override
@@ -67,9 +69,14 @@ public class Register extends AppCompatActivity {
         String password = textInputPassword.getEditText().getText().toString().trim();
         String confirmPassword = textInputConfirmPassword.getEditText().getText().toString().trim();
 
+
         if (TextUtils.isEmpty(usernameInput)) {
             textInputUsername.setError("Username is required.");
             return;
+        }
+
+        if (!usernameInput.matches("^[0-9a-zA-Z]*$")){
+            textInputUsername.setError("Username must only contain alphabets and numbers.");
         }
 
         if (TextUtils.isEmpty(firstNameInput)){
@@ -77,13 +84,26 @@ public class Register extends AppCompatActivity {
             return;
         }
 
+        if (!firstNameInput.matches("^[a-zA-Z]*$")){
+            textInputFirstName.setError("First name must only contain alphabets.");
+        }
+
         if (TextUtils.isEmpty(lastNameInput)){
             textInputLastName.setError("Last Name is required.");
             return;
         }
 
+        if (!lastNameInput.matches("^[a-zA-Z]*$")){
+            textInputLastName.setError("Last name must only contain alphabets.");
+        }
+
         if (TextUtils.isEmpty(emailInput)){
             textInputEmail.setError("Email is required.");
+            return;
+        }
+
+        if (!emailInput.contains("@")){
+            textInputEmail.setError("Invalid email.");
             return;
         }
 
