@@ -56,6 +56,7 @@ public class myMeals extends Fragment {
     private TextView mText1;
     private TextView mText2;
     private TextView mText3;
+    private TextView mText4;
     //private SearchView mSearchView;
 
     DatePickerDialog datePicker;
@@ -168,7 +169,7 @@ public class myMeals extends Fragment {
         if(position>0) {
             mExampleList.remove(position - 1);
         }
-        mExampleList.add(position, new MyMealsExampleItem(mText1, mText2, mText3));
+        mExampleList.add(position, new MyMealsExampleItem(mText1, mText2, mText3,mText4));
 
         mAdapter.notifyItemInserted(position);
     }

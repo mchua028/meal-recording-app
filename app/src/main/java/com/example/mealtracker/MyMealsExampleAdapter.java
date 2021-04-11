@@ -18,6 +18,9 @@ import com.example.mealtracker.DAO.MealRecord;
 import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class MyMealsExampleAdapter extends RecyclerView.Adapter<MyMealsExampleAdapter.ExampleViewHolder> {
 
@@ -27,12 +30,14 @@ public class MyMealsExampleAdapter extends RecyclerView.Adapter<MyMealsExampleAd
         public TextView mTextView1;
         public TextView mTextView2;
         public TextView mTextView3;
+        public TextView mTextView4;
 
         public ExampleViewHolder(View itemView) {
             super(itemView);
             mTextView1 = itemView.findViewById(R.id.dateTxt);
             mTextView2 = itemView.findViewById(R.id.dayText);
             mTextView3 = itemView.findViewById(R.id.mealRecord);
+            mTextView4 = itemView.findViewById(R.id.foodRecordTime);
         }
     }
 
@@ -63,6 +68,20 @@ public class MyMealsExampleAdapter extends RecyclerView.Adapter<MyMealsExampleAd
                 foodNames+= foodRecords.get(j).getName()+"\n"+foodRecords.get(j).getActualIntake()+"g\n"+foodRecords.get(j).getTotalCalorie()+"kcal\n\n";
             }
         }
+
+        String foodTimes = "";
+        if(mealRecords==null){return;}
+        String time;
+        for(int i=0;i<mealRecords.size();i++){
+            //Log.d("time",mealRecords.get(i).getTimeString().split("T'")[1]);
+              //  time = mealRecords.get(i).getTimeString().split("T'")[1];
+            String hour = Integer.toString(mealRecords.get(i).getTime().getHour());
+            String min = Integer.toString(mealRecords.get(i).getTime().getMinute());
+            String sec = Integer.toString(mealRecords.get(i).getTime().getSecond());
+
+                foodTimes += hour+":"+min+":"+sec+"\n\n\n\n";
+            }
+
         /*MealRecord[] mealRecords1 = mealRecordManager.getMealRecords1();
         String foodNames = "";
         if(mealRecords1==null){return;}
@@ -76,6 +95,7 @@ public class MyMealsExampleAdapter extends RecyclerView.Adapter<MyMealsExampleAd
         LocalDate date = mealRecords.get(0).getTime().toLocalDate();
         holder.mTextView1.setText(date.toString());
         holder.mTextView2.setText(date.getDayOfWeek().name());
+        holder.mTextView4.setText(foodTimes);
 
         //holder.mTextView1.setText((CharSequence) currentItem.getText1());
         //holder.mTextView2.setText((CharSequence) currentItem.getText2());

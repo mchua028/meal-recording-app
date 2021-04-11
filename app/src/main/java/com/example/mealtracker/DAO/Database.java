@@ -62,7 +62,7 @@ public class Database {
         database = FirebaseDatabase.getInstance(DATABASE_URL);
         Log.d("firebaseauth","get instance");
         firebaseAuth = FirebaseAuth.getInstance();
-        Log.d("get","userid"+firebaseAuth.getCurrentUser().getUid());
+//        Log.d("get","userid"+firebaseAuth.getCurrentUser().getUid());
         userReference = database.getReference("Users").child(firebaseAuth.getCurrentUser().getUid());
         Log.d("going","addvalueeventlistener");
         userReference.addValueEventListener(new ValueEventListener() {
