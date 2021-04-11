@@ -135,9 +135,11 @@ public class myMeals extends Fragment {
                 LocalDate endDate = startDate;
                 //Toast.makeText(getActivity(),"date chosen:"+startDate.toString(), Toast.LENGTH_SHORT).show();
                 Log.d("dategotten",startDate.toString()+"hiii");
+                ArrayList<MealRecord> mealRecords = new ArrayList<MealRecord>();
+                MealRecord[] mealRecords1=null;
                 try {
                     Log.d("inside","try");
-                    MealRecord[] mealRecords1 = Database.getSingleton().queryByDate(startDate,endDate);
+                    mealRecords = Database.getSingleton().queryByDate(startDate);
                     //mealRecords1 = Database.getSingleton().queryByDate(startDate,endDate);
                     /*MealRecord mealRecord1 = new MealRecord();
                     DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
@@ -161,16 +163,17 @@ public class myMeals extends Fragment {
                     }
                     Log.d("queryfrom","databasebydate");
                     */
-                    // make the type of variables match 
-                    mealRecordManager.setMealRecords(new ArrayList<>(Arrays.asList(mealRecords1)));
+                    mealRecordManager.setMealRecords(mealRecords);
 
                     //mealRecordManager.setMealRecords1(mealRecords1);
                     Log.d("set","mealrecords");
-                } catch (EmptyResultException e) {
-                    // when there is no result found
-                    Toast.makeText(getActivity(),"There are no meal records for the chosen date",Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 Log.d("after","trycatch");
+                if(mealRecords.size()==0){
+                    Toast.makeText(getActivity(),"There are no meal records for the chosen date",Toast.LENGTH_SHORT).show();
+                }
                 //if(mealRecords1.length==0){
                  //   Toast.makeText(getActivity(),"There are no meal records for the chosen date",Toast.LENGTH_SHORT).show();
                 //}
@@ -282,6 +285,11 @@ public class myMeals extends Fragment {
 
         mAdapter.notifyItemInserted(position);
     }
+    /*public void removeIteem(int position) {
+        mExampleList.remove(mAdapter.getAdapterPosition());
+        mAdapter.notifyItemRemoved(holder.getAdapterPosition());
+        mAdapter.notifyItemRangeChanged(holder.getAdapterPosition(), mExampleList.size());
+    }*/
 
     // get mExampleList size
     public int getExampleListSize() {
