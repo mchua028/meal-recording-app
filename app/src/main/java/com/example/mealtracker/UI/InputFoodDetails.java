@@ -97,6 +97,7 @@ public class InputFoodDetails extends AppCompatActivity {
                     }
                 } catch (Exception e) {
                     Toast.makeText(InputFoodDetails.this, "The weight is invalid.", Toast.LENGTH_SHORT).show();
+                    return;
                 }
 
                 Log.d("got foodinfo","foodinfo:"+foodName);
